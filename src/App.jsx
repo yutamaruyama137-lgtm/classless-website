@@ -247,7 +247,8 @@ const LandingPage = ({ onNavigate }) => {
             </div>
             
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight text-slate-900">
-              外国人UGCでインバウンドの<br />
+              外国人目線で<br />
+              インバウンドの
               <span className="relative inline-block whitespace-nowrap mr-2">
                 <span className="relative z-10 text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]" style={{ textShadow: '4px 4px 0 #0f172a' }}>「行きたい」</span>
                 <span className="absolute -bottom-2 left-0 w-full h-1/2 bg-rose-400 -z-0 skew-x-12 border-2 border-slate-900"></span>
