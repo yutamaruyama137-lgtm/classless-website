@@ -5,6 +5,13 @@ import {
   ArrowRight, Download, Mail, MessageCircle, FileText,
   MousePointer2, Sparkles
 } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+
+// EmailJS設定
+const EMAILJS_SERVICE_ID = 'service_2halzzu'; // EmailJSのService ID
+const EMAILJS_TEMPLATE_ID_CONTACT = 'template_xm857rk'; // お問い合わせフォーム用のTemplate ID
+const EMAILJS_TEMPLATE_ID_DOWNLOAD = 'YOUR_TEMPLATE_ID_DOWNLOAD'; // 資料ダウンロードフォーム用のTemplate ID（未設定）
+const EMAILJS_PUBLIC_KEY = '4X-cAwUOs5FYULv7O'; // EmailJSのPublic Key
 
 /* Classless UI Theme V2 (Refined)
   - Concept: Neo-Brutalism x Pop
@@ -152,6 +159,7 @@ const PhoneMockup = ({ className = "" }) => (
 
 const LandingPage = ({ onNavigate }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSubmittingContact, setIsSubmittingContact] = useState(false);
 
   const scrollToSection = (id) => {
     setIsMenuOpen(false);
@@ -162,6 +170,61 @@ const LandingPage = ({ onNavigate }) => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmittingContact(true);
+
+    const form = e.target;
+    const formData = {
+      company_name: form.company_name.value,
+      contact_name: form.contact_name.value,
+      email: form.email.value,
+      menu: form.menu.value,
+      message: form.message.value,
+      case_study: form.case_study.checked ? '同意' : '未同意',
+    };
+
+    try {
+      // EmailJSを初期化
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+
+      // 現在時刻を取得（日本時間）
+      const now = new Date();
+      const timeString = now.toLocaleString('ja-JP', { 
+        year: 'numeric', 
+        month: '2-digit', 
+        day: '2-digit', 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      });
+
+      // メール送信
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID_CONTACT,
+        {
+          to_email: 'yuta.maruyama137@gmail.com',
+          name: formData.contact_name, // テンプレートの{{name}}用
+          time: timeString, // テンプレートの{{time}}用
+          company_name: formData.company_name,
+          contact_name: formData.contact_name,
+          email: formData.email,
+          menu: formData.menu,
+          message: formData.message,
+          case_study: formData.case_study,
+        }
+      );
+
+      alert('お問い合わせありがとうございます。送信が完了しました。');
+      form.reset();
+    } catch (error) {
+      console.error('メール送信エラー:', error);
+      alert('送信に失敗しました。しばらくしてから再度お試しください。');
+    } finally {
+      setIsSubmittingContact(false);
     }
   };
 
@@ -666,27 +729,27 @@ const LandingPage = ({ onNavigate }) => {
           <SectionTitle title="無料相談 / モニター応募" subtitle="フォーム送信後、原則24時間以内に担当者よりご連絡いたします。" centered={true} />
           
           <div className="bg-white p-8 md:p-12 rounded-[2rem] border-2 border-slate-900 shadow-[12px_12px_0px_0px_#0f172a]">
-            <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-8" onSubmit={handleContactSubmit}>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-bold ml-1">会社名 / 店舗名</label>
-                  <input type="text" className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white" placeholder="例：合同会社Classless" />
+                  <input type="text" name="company_name" className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white" placeholder="例：合同会社Classless" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-bold ml-1">ご担当者名</label>
-                  <input type="text" className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white" placeholder="例：山田 太郎" />
+                  <input type="text" name="contact_name" className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white" placeholder="例：山田 太郎" />
                 </div>
               </div>
 
               <div className="space-y-2">
                 <label className="text-sm font-bold ml-1">メールアドレス <span className="text-rose-500">*</span></label>
-                <input type="email" required className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white" placeholder="name@example.com" />
+                <input type="email" name="email" required className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white" placeholder="name@example.com" />
               </div>
 
               <div className="space-y-2">
                 <label className="text-sm font-bold ml-1">ご希望のメニュー</label>
                 <div className="relative">
-                  <select className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white appearance-none cursor-pointer">
+                  <select name="menu" className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white appearance-none cursor-pointer">
                     <option>無料モニター（先着）</option>
                     <option>UGC制作</option>
                     <option>MEO対策</option>
@@ -700,11 +763,11 @@ const LandingPage = ({ onNavigate }) => {
 
               <div className="space-y-2">
                 <label className="text-sm font-bold ml-1">ご相談内容</label>
-                <textarea rows="4" className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white resize-none" placeholder="現状の課題や、気になる点をご記入ください"></textarea>
+                <textarea name="message" rows="4" className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white resize-none" placeholder="現状の課題や、気になる点をご記入ください"></textarea>
               </div>
               
               <div className="flex items-start gap-3 p-4 bg-sky-50 rounded-xl border border-sky-100">
-                <input type="checkbox" id="case-study" className="mt-1 w-5 h-5 text-sky-500 rounded border-slate-300 focus:ring-sky-500 cursor-pointer" />
+                <input type="checkbox" name="case_study" id="case-study" className="mt-1 w-5 h-5 text-sky-500 rounded border-slate-300 focus:ring-sky-500 cursor-pointer" />
                 <label htmlFor="case-study" className="text-sm text-slate-700 cursor-pointer select-none">
                   <span className="font-bold block mb-1">事例公開の許可（モニター条件）</span>
                   WebサイトやSNSでの事例紹介（店舗名・成果物）に同意します。
@@ -712,8 +775,8 @@ const LandingPage = ({ onNavigate }) => {
               </div>
 
               <div className="pt-4 text-center space-y-6">
-                <Button variant="primary" type="submit" className="w-full md:w-2/3 text-lg h-16 shadow-[8px_8px_0px_0px_#0f172a]" icon={Mail}>
-                  上記の内容で送信する
+                <Button variant="primary" type="submit" disabled={isSubmittingContact} className="w-full md:w-2/3 text-lg h-16 shadow-[8px_8px_0px_0px_#0f172a]" icon={Mail}>
+                  {isSubmittingContact ? '送信中...' : '上記の内容で送信する'}
                 </Button>
                 <p className="text-xs text-slate-400">
                   送信することで <a href="#" className="underline hover:text-slate-600">プライバシーポリシー</a> に同意したものとみなされます。
@@ -785,6 +848,47 @@ const LandingPage = ({ onNavigate }) => {
 /* --- Download Page (Refined) --- */
 
 const DownloadPage = ({ onNavigate }) => {
+  const [isSubmittingDownload, setIsSubmittingDownload] = useState(false);
+
+  const handleDownloadSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmittingDownload(true);
+
+    const form = e.target;
+    const formData = {
+      company_name: form.company_name.value,
+      contact_name: form.contact_name.value,
+      email: form.email.value,
+      industry: form.industry.value,
+    };
+
+    try {
+      // EmailJSを初期化
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+
+      // メール送信
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID_DOWNLOAD,
+        {
+          to_email: 'yuta.maruyama137@gmail.com',
+          company_name: formData.company_name,
+          contact_name: formData.contact_name,
+          email: formData.email,
+          industry: formData.industry,
+        }
+      );
+
+      // メール送信成功後、サンクスページに遷移
+      onNavigate('thanks');
+    } catch (error) {
+      console.error('メール送信エラー:', error);
+      alert('送信に失敗しました。しばらくしてから再度お試しください。');
+    } finally {
+      setIsSubmittingDownload(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-800 relative">
       <DotPattern />
@@ -841,23 +945,23 @@ const DownloadPage = ({ onNavigate }) => {
                <p className="text-xs text-slate-500">下記をご入力の上、ダウンロードボタンを押してください</p>
              </div>
              
-             <form className="space-y-5" onSubmit={(e) => { e.preventDefault(); onNavigate('thanks'); }}>
+             <form className="space-y-5" onSubmit={handleDownloadSubmit}>
                 <div>
                   <label className="block text-xs font-bold mb-1 ml-1 text-slate-500 uppercase">Company Name</label>
-                  <input type="text" className="w-full p-3 rounded-lg border-2 border-slate-200 focus:border-slate-900 outline-none transition-colors bg-slate-50 focus:bg-white" placeholder="会社名 / 店舗名" />
+                  <input type="text" name="company_name" className="w-full p-3 rounded-lg border-2 border-slate-200 focus:border-slate-900 outline-none transition-colors bg-slate-50 focus:bg-white" placeholder="会社名 / 店舗名" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold mb-1 ml-1 text-slate-500 uppercase">Your Name</label>
-                  <input type="text" className="w-full p-3 rounded-lg border-2 border-slate-200 focus:border-slate-900 outline-none transition-colors bg-slate-50 focus:bg-white" placeholder="お名前" />
+                  <input type="text" name="contact_name" className="w-full p-3 rounded-lg border-2 border-slate-200 focus:border-slate-900 outline-none transition-colors bg-slate-50 focus:bg-white" placeholder="お名前" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold mb-1 ml-1 text-slate-500 uppercase">Email Address <span className="text-rose-500">*</span></label>
-                  <input type="email" required className="w-full p-3 rounded-lg border-2 border-slate-200 focus:border-slate-900 outline-none transition-colors bg-slate-50 focus:bg-white" placeholder="メールアドレス" />
+                  <input type="email" name="email" required className="w-full p-3 rounded-lg border-2 border-slate-200 focus:border-slate-900 outline-none transition-colors bg-slate-50 focus:bg-white" placeholder="メールアドレス" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold mb-1 ml-1 text-slate-500 uppercase">Industry</label>
                   <div className="relative">
-                    <select className="w-full p-3 rounded-lg border-2 border-slate-200 focus:border-slate-900 outline-none transition-colors bg-slate-50 focus:bg-white appearance-none cursor-pointer">
+                    <select name="industry" className="w-full p-3 rounded-lg border-2 border-slate-200 focus:border-slate-900 outline-none transition-colors bg-slate-50 focus:bg-white appearance-none cursor-pointer">
                       <option>選択してください</option>
                       <option>宿泊業</option>
                       <option>飲食業</option>
@@ -876,8 +980,8 @@ const DownloadPage = ({ onNavigate }) => {
                    </label>
                 </div>
 
-                <Button type="submit" variant="primary" className="w-full py-4 shadow-md hover:shadow-lg">
-                   資料を受け取る
+                <Button type="submit" variant="primary" disabled={isSubmittingDownload} className="w-full py-4 shadow-md hover:shadow-lg">
+                   {isSubmittingDownload ? '送信中...' : '資料を受け取る'}
                 </Button>
              </form>
           </div>
