@@ -155,6 +155,10 @@ const LandingPage = ({ onNavigate }) => {
 
   const scrollToSection = (id) => {
     setIsMenuOpen(false);
+    if (id === 'download') {
+      onNavigate('download');
+      return;
+    }
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -747,21 +751,21 @@ const LandingPage = ({ onNavigate }) => {
           <div className="flex flex-col sm:flex-row gap-12 text-sm font-bold tracking-wide">
              <div className="flex flex-col gap-4">
                <span className="text-slate-500 text-xs uppercase tracking-widest mb-2">Service</span>
-               <a href="#" className="hover:text-sky-400 transition-colors">特徴・強み</a>
-               <a href="#" className="hover:text-sky-400 transition-colors">サービス一覧</a>
-               <a href="#" className="hover:text-sky-400 transition-colors">料金プラン</a>
-               <a href="#" className="hover:text-sky-400 transition-colors">導入事例</a>
+               <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('features'); }} className="hover:text-sky-400 transition-colors cursor-pointer">特徴・強み</a>
+               <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('services'); }} className="hover:text-sky-400 transition-colors cursor-pointer">サービス一覧</a>
+               <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('plans'); }} className="hover:text-sky-400 transition-colors cursor-pointer">料金プラン</a>
+               <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('services'); }} className="hover:text-sky-400 transition-colors cursor-pointer">導入事例</a>
              </div>
              <div className="flex flex-col gap-4">
                <span className="text-slate-500 text-xs uppercase tracking-widest mb-2">Support</span>
-               <a href="#" className="hover:text-sky-400 transition-colors">よくある質問</a>
-               <a href="#" className="hover:text-sky-400 transition-colors">お問い合わせ</a>
-               <a href="#" className="hover:text-sky-400 transition-colors">資料ダウンロード</a>
+               <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('faq'); }} className="hover:text-sky-400 transition-colors cursor-pointer">よくある質問</a>
+               <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="hover:text-sky-400 transition-colors cursor-pointer">お問い合わせ</a>
+               <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('download'); }} className="hover:text-sky-400 transition-colors cursor-pointer">資料ダウンロード</a>
              </div>
              <div className="flex flex-col gap-4">
                <span className="text-slate-500 text-xs uppercase tracking-widest mb-2">Legal</span>
                <a href="#" onClick={(e) => { e.preventDefault(); onNavigate('company'); }} className="hover:text-sky-400 transition-colors cursor-pointer">運営会社</a>
-               <a href="#" className="hover:text-sky-400 transition-colors">プライバシーポリシー</a>
+               <a href="#" onClick={(e) => { e.preventDefault(); onNavigate('privacy'); }} className="hover:text-sky-400 transition-colors cursor-pointer">プライバシーポリシー</a>
                <a href="#" className="hover:text-sky-400 transition-colors">特商法に基づく表記</a>
              </div>
           </div>
@@ -1033,7 +1037,7 @@ const ThanksPage = ({ onNavigate }) => {
 /* --- Main App Controller --- */
 
 const App = () => {
-  const [currentPage, setCurrentPage] = useState('home'); // home | download | thanks
+  const [currentPage, setCurrentPage] = useState('home'); // home | download | thanks | company | privacy
 
   // Reset scroll on page change
   useEffect(() => {
@@ -1065,6 +1069,7 @@ const App = () => {
       {currentPage === 'download' && <DownloadPage onNavigate={setCurrentPage} />}
       {currentPage === 'thanks' && <ThanksPage onNavigate={setCurrentPage} />}
       {currentPage === 'company' && <CompanyPage onNavigate={setCurrentPage} />}
+      {currentPage === 'privacy' && <PrivacyPage onNavigate={setCurrentPage} />}
     </>
   );
 };
