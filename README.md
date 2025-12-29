@@ -97,7 +97,7 @@ vercel
 vercel --prod
 ```
 
-### 方法2: GitHub経由でデプロイ
+### 方法2: GitHub経由でデプロイ（推奨・自動デプロイ）
 
 1. **GitHubリポジトリを作成**
    - GitHubで新しいリポジトリを作成
@@ -108,12 +108,18 @@ git branch -M main
 git push -u origin main
 ```
 
-2. **Vercelに接続**
+2. **Vercelに接続（自動デプロイ設定）**
    - [Vercel](https://vercel.com)にアクセスしてログイン
    - 「Add New Project」をクリック
    - GitHubリポジトリを選択
    - プロジェクト設定を確認（自動検出されます）
    - 「Deploy」をクリック
+
+3. **自動デプロイの確認**
+   - Vercelダッシュボードの「Settings」→「Git」で、GitHub連携が有効になっていることを確認
+   - `main`ブランチへのプッシュで自動的にデプロイされます
+
+**重要**: GitHubにプッシュするだけで、Vercelが自動的にデプロイを開始します。手動での操作は不要です。
 
 ### ビルド設定
 
