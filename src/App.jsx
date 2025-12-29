@@ -887,6 +887,179 @@ const DownloadPage = ({ onNavigate }) => {
   );
 };
 
+/* --- Privacy Policy Page --- */
+
+const PrivacyPage = ({ onNavigate }) => {
+  return (
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 relative">
+      <DotPattern />
+      <div className="container mx-auto max-w-4xl px-4 py-12 relative z-10">
+        <button onClick={() => onNavigate('home')} className="group flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-slate-900 mb-12 bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm transition-all hover:-translate-x-1">
+          <ArrowRight className="rotate-180 transition-transform group-hover:-translate-x-1" size={16} /> TOPへ戻る
+        </button>
+
+        <div className="relative">
+          {/* Background Decorative Text */}
+          <div className="absolute -top-20 -left-10 text-[200px] font-black text-slate-100/30 select-none pointer-events-none z-0">
+            PRIVACY
+          </div>
+
+          {/* Main Content Card */}
+          <div className="relative bg-white rounded-3xl border-2 border-slate-900 shadow-[12px_12px_0px_0px_#0f172a] p-8 md:p-12 z-10">
+            <h1 className="text-4xl md:text-5xl font-black mb-8 text-slate-900 relative z-10">
+              プライバシーポリシー
+            </h1>
+            <p className="text-sm text-slate-500 mb-8">最終更新日: {new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+
+            <div className="space-y-8 text-slate-700 leading-relaxed">
+              {/* 1. 事業者情報 */}
+              <section>
+                <h2 className="text-2xl font-black mb-4 text-slate-900">1. 事業者情報</h2>
+                <div className="space-y-2">
+                  <p><span className="font-bold">事業者名：</span>合同会社Classless</p>
+                  <p><span className="font-bold">所在地：</span>〒150-0046 東京都渋谷区円山町5番3号 MIEUX渋谷ビル8階</p>
+                  <p><span className="font-bold">代表者：</span>丸山侑太</p>
+                  <p><span className="font-bold">連絡先：</span>yuta.maruyama137@gmail.com / 070-6615-9159</p>
+                </div>
+              </section>
+
+              {/* 2. 定義 */}
+              <section>
+                <h2 className="text-2xl font-black mb-4 text-slate-900">2. 定義</h2>
+                <p>本ポリシーにおいて、「個人情報」「個人データ」等の用語は、個人情報の保護に関する法律および関係ガイドラインに従います。</p>
+              </section>
+
+              {/* 3. 取得する情報 */}
+              <section>
+                <h2 className="text-2xl font-black mb-4 text-slate-900">3. 取得する情報</h2>
+                <p className="mb-4">当社は、以下の情報を取得することがあります。</p>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="font-bold mb-2">(1) お客様（店舗・企業担当者等）から取得する情報</h3>
+                    <ul className="list-disc list-inside space-y-1 ml-4">
+                      <li>氏名、会社名/店舗名、部署名、役職</li>
+                      <li>メールアドレス、電話番号</li>
+                      <li>相談内容、希望メニュー、事例公開可否</li>
+                      <li>打合せ内容（議事メモ等）、契約/請求に必要な情報</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="font-bold mb-2">(2) 留学生クリエイター/テスター登録者から取得する情報</h3>
+                    <ul className="list-disc list-inside space-y-1 ml-4">
+                      <li>氏名（または活動名）、メールアドレス、SNSアカウント</li>
+                      <li>国籍/使用言語/居住エリア等（活動調整に必要な範囲）</li>
+                      <li>作品/実績、撮影可能条件、希望案件情報</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="font-bold mb-2">(3) イベント参加者・調査協力者から取得する情報</h3>
+                    <ul className="list-disc list-inside space-y-1 ml-4">
+                      <li>氏名（またはニックネーム）、連絡先</li>
+                      <li>アンケート回答、インタビュー内容（録音/文字起こしを含む場合あり）</li>
+                      <li>参加ログ（参加日時など）</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="font-bold mb-2">(4) Webアクセス情報（自動取得）</h3>
+                    <ul className="list-disc list-inside space-y-1 ml-4">
+                      <li>Cookie、IPアドレス、端末情報、ブラウザ情報、閲覧履歴、アクセス日時</li>
+                      <li>利用状況データ（ページ滞在、クリック等）</li>
+                    </ul>
+                    <p className="mt-2 text-sm">※当社はアクセス解析等のためにCookie等を使用する場合があります（詳細は「10. Cookie等の利用」参照）。</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* 4. 利用目的 */}
+              <section>
+                <h2 className="text-2xl font-black mb-4 text-slate-900">4. 利用目的</h2>
+                <p className="mb-4">当社は、取得した情報を以下の目的で利用します。</p>
+                <ul className="list-disc list-inside space-y-2 ml-4">
+                  <li>お問い合わせ対応、無料相談・モニター応募への対応</li>
+                  <li>サービス提供（UGC制作、MEO支援、調査、テスター運用、イベント運営等）</li>
+                  <li>連絡、日程調整、資料送付、納品、請求等の事務処理</li>
+                  <li>クリエイター/テスターへの案件連絡、選定、稼働管理</li>
+                  <li>調査・イベントの実施、集計、分析、レポート作成</li>
+                  <li>品質改善、新サービス開発、コンテンツ改善</li>
+                  <li>重要なお知らせ（規約変更等）の連絡</li>
+                  <li>不正利用の防止、セキュリティ確保</li>
+                  <li>法令・ガイドラインへの対応、紛争対応</li>
+                </ul>
+              </section>
+
+              {/* 5. 第三者提供 */}
+              <section>
+                <h2 className="text-2xl font-black mb-4 text-slate-900">5. 第三者提供</h2>
+                <p>当社は、法令に基づく場合等を除き、本人の同意なく個人データを第三者に提供しません。</p>
+                <p className="mt-2 text-sm">※なお、次条の「委託」は第三者提供に該当しない場合があります。</p>
+              </section>
+
+              {/* 6. 委託 */}
+              <section>
+                <h2 className="text-2xl font-black mb-4 text-slate-900">6. 委託（業務委託先の利用）</h2>
+                <p className="mb-2">当社は、利用目的の達成に必要な範囲で、個人情報の取扱いを外部に委託することがあります（例：フォーム/メール配信、クラウドストレージ、アクセス解析、会計、業務連絡ツール等）。</p>
+                <p>この場合、当社は委託先を適切に選定し、契約等により適切な監督を行います。</p>
+              </section>
+
+              {/* 7. 安全管理措置 */}
+              <section>
+                <h2 className="text-2xl font-black mb-4 text-slate-900">7. 安全管理措置</h2>
+                <p className="mb-2">当社は、個人データの漏えい、滅失、毀損等を防止するため、必要かつ適切な安全管理措置を講じます。</p>
+                <p className="text-sm">（例：アクセス権限管理、パスワード管理、委託先管理、取り扱い担当者の限定 等）</p>
+              </section>
+
+              {/* 8. 保有個人データの開示等の請求 */}
+              <section>
+                <h2 className="text-2xl font-black mb-4 text-slate-900">8. 保有個人データの開示等の請求</h2>
+                <p className="mb-2">本人は、当社が保有する保有個人データについて、開示、訂正、追加、削除、利用停止、第三者提供停止等を請求できます（法令に基づく範囲）。</p>
+                <p className="mb-2"><span className="font-bold">請求手続：</span>下記「13. お問い合わせ窓口」までご連絡ください。本人確認のうえ対応します。</p>
+                <p className="text-sm">※請求内容により、手数料をいただく場合があります（発生する場合は事前に通知します）。</p>
+              </section>
+
+              {/* 9. 保存期間 */}
+              <section>
+                <h2 className="text-2xl font-black mb-4 text-slate-900">9. 保存期間</h2>
+                <p>当社は、利用目的に必要な期間に限り個人情報を保管し、不要となった場合は適切な方法で削除・廃棄します。</p>
+                <p className="mt-2">ただし、法令上の保存義務がある場合はこの限りではありません。</p>
+              </section>
+
+              {/* 10. Cookie等の利用 */}
+              <section>
+                <h2 className="text-2xl font-black mb-4 text-slate-900">10. Cookie等の利用（アクセス解析・広告）</h2>
+                <p className="mb-2">当社サイトでは、利便性向上・利用状況分析・広告効果測定等のためにCookie等を利用する場合があります。</p>
+                <p>ユーザーはブラウザ設定によりCookieを無効化できますが、一部機能が利用できなくなる場合があります。</p>
+              </section>
+
+              {/* 11. 未成年の個人情報 */}
+              <section>
+                <h2 className="text-2xl font-black mb-4 text-slate-900">11. 未成年の個人情報</h2>
+                <p>未成年の方が当社サービスに関する申込み・登録を行う場合、必要に応じて保護者の同意を求めることがあります。</p>
+              </section>
+
+              {/* 12. 本ポリシーの変更 */}
+              <section>
+                <h2 className="text-2xl font-black mb-4 text-slate-900">12. 本ポリシーの変更</h2>
+                <p>当社は、法令の変更や運用改善等により本ポリシーを改定することがあります。</p>
+                <p className="mt-2">重要な変更がある場合は、当社サイト上で告知します。</p>
+              </section>
+
+              {/* 13. お問い合わせ窓口 */}
+              <section>
+                <h2 className="text-2xl font-black mb-4 text-slate-900">13. お問い合わせ窓口</h2>
+                <p className="mb-4">個人情報の取扱いに関するお問い合わせ、開示等の請求は、下記までご連絡ください。</p>
+                <div className="bg-sky-50 p-6 rounded-2xl border-2 border-sky-200">
+                  <p className="font-bold mb-2">連絡先：yuta.maruyama137@gmail.com</p>
+                  <p className="font-bold">受付：平日 9:00～17:00</p>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 /* --- Company Page --- */
 
 const CompanyPage = ({ onNavigate }) => {
