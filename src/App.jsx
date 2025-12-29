@@ -760,7 +760,7 @@ const LandingPage = ({ onNavigate }) => {
              </div>
              <div className="flex flex-col gap-4">
                <span className="text-slate-500 text-xs uppercase tracking-widest mb-2">Legal</span>
-               <a href="#" className="hover:text-sky-400 transition-colors">運営会社</a>
+               <a href="#" onClick={(e) => { e.preventDefault(); onNavigate('company'); }} className="hover:text-sky-400 transition-colors cursor-pointer">運営会社</a>
                <a href="#" className="hover:text-sky-400 transition-colors">プライバシーポリシー</a>
                <a href="#" className="hover:text-sky-400 transition-colors">特商法に基づく表記</a>
              </div>
@@ -883,6 +883,106 @@ const DownloadPage = ({ onNavigate }) => {
   );
 };
 
+/* --- Company Page --- */
+
+const CompanyPage = ({ onNavigate }) => {
+  return (
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 relative">
+      <DotPattern />
+      <div className="container mx-auto max-w-4xl px-4 py-12 relative z-10">
+        <button onClick={() => onNavigate('home')} className="group flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-slate-900 mb-12 bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm transition-all hover:-translate-x-1">
+          <ArrowRight className="rotate-180 transition-transform group-hover:-translate-x-1" size={16} /> TOPへ戻る
+        </button>
+
+        <div className="relative">
+          {/* Background Decorative Text */}
+          <div className="absolute -top-20 -left-10 text-[200px] font-black text-slate-100/30 select-none pointer-events-none z-0">
+            COMPANY
+          </div>
+
+          {/* Decorative Shapes */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/20 rounded-full blur-3xl -z-0"></div>
+          <div className="absolute bottom-0 left-0 w-40 h-40 bg-sky-500/20 rounded-full blur-3xl -z-0"></div>
+
+          {/* Main Content Card */}
+          <div className="relative bg-white rounded-3xl border-2 border-slate-900 shadow-[12px_12px_0px_0px_#0f172a] p-8 md:p-12 z-10">
+            <h1 className="text-4xl md:text-5xl font-black mb-12 text-slate-900 relative z-10">
+              会社概要
+            </h1>
+
+            <div className="space-y-6">
+              {/* Company Name */}
+              <div className="flex flex-col md:flex-row md:items-center border-b-2 border-slate-100 pb-6">
+                <div className="md:w-1/3 mb-2 md:mb-0">
+                  <span className="text-sm font-bold text-slate-500 uppercase tracking-wide">会社名</span>
+                </div>
+                <div className="md:w-2/3">
+                  <span className="text-lg font-bold text-slate-900">合同会社Classless</span>
+                </div>
+              </div>
+
+              {/* Address */}
+              <div className="flex flex-col md:flex-row md:items-center border-b-2 border-slate-100 pb-6">
+                <div className="md:w-1/3 mb-2 md:mb-0">
+                  <span className="text-sm font-bold text-slate-500 uppercase tracking-wide">所在地</span>
+                </div>
+                <div className="md:w-2/3">
+                  <span className="text-lg font-bold text-slate-900">〒150-0046<br className="md:hidden"/>東京都渋谷区円山町5番3号<br className="md:hidden"/>MIEUX渋谷ビル8階</span>
+                </div>
+              </div>
+
+              {/* Phone */}
+              <div className="flex flex-col md:flex-row md:items-center border-b-2 border-slate-100 pb-6">
+                <div className="md:w-1/3 mb-2 md:mb-0">
+                  <span className="text-sm font-bold text-slate-500 uppercase tracking-wide">電話番号</span>
+                </div>
+                <div className="md:w-2/3">
+                  <span className="text-lg font-bold text-slate-900">TEL: 070-6615-9159</span>
+                  <p className="text-sm text-slate-600 mt-1">受付時間: 平日 12:00～17:00</p>
+                </div>
+              </div>
+
+              {/* Representative */}
+              <div className="flex flex-col md:flex-row md:items-center">
+                <div className="md:w-1/3 mb-2 md:mb-0">
+                  <span className="text-sm font-bold text-slate-500 uppercase tracking-wide">代表取締役</span>
+                </div>
+                <div className="md:w-2/3">
+                  <span className="text-lg font-bold text-slate-900">丸山 侑太</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Contact Information */}
+            <div className="mt-12 pt-8 border-t-4 border-slate-900">
+              <h2 className="text-2xl font-black mb-6 text-slate-900">お問い合わせ</h2>
+              <div className="bg-sky-50 p-6 rounded-2xl border-2 border-sky-200">
+                <p className="text-slate-700 font-medium mb-4">
+                  お問い合わせは以下の連絡先までお願いいたします。
+                </p>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <Mail size={20} className="text-sky-600" />
+                    <a href="mailto:yuta.maruyama137@gmail.com" className="text-lg font-bold text-slate-900 hover:text-sky-600 transition-colors">
+                      yuta.maruyama137@gmail.com
+                    </a>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <MessageCircle size={20} className="text-sky-600" />
+                    <a href="tel:070-6615-9159" className="text-lg font-bold text-slate-900 hover:text-sky-600 transition-colors">
+                      070-6615-9159
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 /* --- Thanks Page (Refined) --- */
 
 const ThanksPage = ({ onNavigate }) => {
@@ -964,6 +1064,7 @@ const App = () => {
       {currentPage === 'home' && <LandingPage onNavigate={setCurrentPage} />}
       {currentPage === 'download' && <DownloadPage onNavigate={setCurrentPage} />}
       {currentPage === 'thanks' && <ThanksPage onNavigate={setCurrentPage} />}
+      {currentPage === 'company' && <CompanyPage onNavigate={setCurrentPage} />}
     </>
   );
 };
