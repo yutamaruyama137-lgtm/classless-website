@@ -766,7 +766,6 @@ const LandingPage = ({ onNavigate }) => {
                <span className="text-slate-500 text-xs uppercase tracking-widest mb-2">Legal</span>
                <a href="#" onClick={(e) => { e.preventDefault(); onNavigate('company'); }} className="hover:text-sky-400 transition-colors cursor-pointer">運営会社</a>
                <a href="#" onClick={(e) => { e.preventDefault(); onNavigate('privacy'); }} className="hover:text-sky-400 transition-colors cursor-pointer">プライバシーポリシー</a>
-               <a href="#" className="hover:text-sky-400 transition-colors">特商法に基づく表記</a>
              </div>
           </div>
         </div>
