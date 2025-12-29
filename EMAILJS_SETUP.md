@@ -69,6 +69,37 @@
 4. 「Save」をクリック
 5. Template IDをコピー
 
+### 資料ダウンロードフォーム用の自動返信テンプレート
+
+1. 同様に「Create New Template」をクリック
+2. 以下の設定を行う：
+
+**Template Name**: `Download Form Auto Reply`
+
+**Subject**: `【Classless】資料ダウンロードありがとうございます`
+
+**Content**:
+```
+{{to_name}} 様
+
+この度は、Classlessのサービス資料ダウンロードにお申し込みいただき、誠にありがとうございます。
+
+資料は以下のリンクからダウンロードいただけます：
+{{download_link}}
+
+ご不明な点がございましたら、お気軽にお問い合わせください。
+
+今後ともよろしくお願いいたします。
+
+合同会社Classless
+```
+
+3. 「To Email」に `{{to_email}}` を設定（動的にフォーム送信者のメールアドレスが入ります）
+4. 「Save」をクリック
+5. Template IDをコピー
+
+**重要**: このテンプレートでは、フォーム送信者のメールアドレスに自動返信が送られます。
+
 ## 4. Public Keyの取得
 
 1. 「Account」→「General」をクリック
@@ -81,8 +112,12 @@
 ```javascript
 const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID'; // ここにService IDを入力
 const EMAILJS_TEMPLATE_ID_CONTACT = 'YOUR_TEMPLATE_ID_CONTACT'; // お問い合わせフォーム用のTemplate ID
-const EMAILJS_TEMPLATE_ID_DOWNLOAD = 'YOUR_TEMPLATE_ID_DOWNLOAD'; // 資料ダウンロードフォーム用のTemplate ID
+const EMAILJS_TEMPLATE_ID_DOWNLOAD = 'YOUR_TEMPLATE_ID_DOWNLOAD'; // 資料ダウンロードフォーム用のTemplate ID（管理者への通知用）
+const EMAILJS_TEMPLATE_ID_DOWNLOAD_REPLY = 'YOUR_TEMPLATE_ID_DOWNLOAD_REPLY'; // 資料ダウンロードフォーム用の自動返信Template ID
 const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY'; // Public Keyを入力
+
+// 資料ダウンロードリンク（実際の資料URLに変更してください）
+const DOWNLOAD_LINK = 'https://example.com/classless-service-guide.pdf'; // 資料のURL
 ```
 
 ## 6. 動作確認

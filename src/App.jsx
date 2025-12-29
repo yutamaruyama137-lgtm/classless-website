@@ -10,8 +10,11 @@ import emailjs from '@emailjs/browser';
 // EmailJS設定
 const EMAILJS_SERVICE_ID = 'service_2halzzu'; // EmailJSのService ID
 const EMAILJS_TEMPLATE_ID_CONTACT = 'template_xm857rk'; // お問い合わせフォーム用のTemplate ID
-const EMAILJS_TEMPLATE_ID_DOWNLOAD = 'YOUR_TEMPLATE_ID_DOWNLOAD'; // 資料ダウンロードフォーム用のTemplate ID（未設定）
+const EMAILJS_TEMPLATE_ID_DOWNLOAD = 'template_dxc8fxn'; // 資料ダウンロードフォーム用のTemplate ID（管理者への通知用）
 const EMAILJS_PUBLIC_KEY = '4X-cAwUOs5FYULv7O'; // EmailJSのPublic Key
+
+// 資料ダウンロードリンク
+const DOWNLOAD_LINK = 'https://drive.google.com/uc?export=download&id=1D8yevDVLqC88gCJfHIE4plwCuEFpF1qE'; // Google Driveの資料URL
 
 /* Classless UI Theme V2 (Refined)
   - Concept: Neo-Brutalism x Pop
@@ -866,12 +869,24 @@ const DownloadPage = ({ onNavigate }) => {
       // EmailJSを初期化
       emailjs.init(EMAILJS_PUBLIC_KEY);
 
-      // メール送信
+      // 現在時刻を取得（日本時間）
+      const now = new Date();
+      const timeString = now.toLocaleString('ja-JP', { 
+        year: 'numeric', 
+        month: '2-digit', 
+        day: '2-digit', 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      });
+
+      // 管理者への通知メールを送信
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID_DOWNLOAD,
         {
           to_email: 'yuta.maruyama137@gmail.com',
+          name: formData.contact_name,
+          time: timeString,
           company_name: formData.company_name,
           contact_name: formData.contact_name,
           email: formData.email,
@@ -879,8 +894,8 @@ const DownloadPage = ({ onNavigate }) => {
         }
       );
 
-      // メール送信成功後、サンクスページに遷移
-      onNavigate('thanks');
+      // メール送信成功後、サンクスページに遷移（ダウンロード用）
+      onNavigate('thanks', { fromDownload: true });
     } catch (error) {
       console.error('メール送信エラー:', error);
       alert('送信に失敗しました。しばらくしてから再度お試しください。');
@@ -1266,7 +1281,12 @@ const CompanyPage = ({ onNavigate }) => {
 
 /* --- Thanks Page (Refined) --- */
 
-const ThanksPage = ({ onNavigate }) => {
+const ThanksPage = ({ onNavigate, fromDownload = false }) => {
+  const handleDownload = () => {
+    // 資料をダウンロード
+    window.open(DOWNLOAD_LINK, '_blank');
+  };
+
   return (
     <div className="min-h-screen bg-sky-50 flex items-center justify-center p-4 font-sans text-slate-800 relative overflow-hidden">
       <DotPattern />
@@ -1286,19 +1306,41 @@ const ThanksPage = ({ onNavigate }) => {
          
          <div>
            <h1 className="text-3xl font-black mb-4 text-slate-900">Thank You!</h1>
-           <p className="text-slate-600 font-medium leading-relaxed">
-             お問い合わせありがとうございます。<br/>
-             ご入力いただいたメールアドレス宛に<br className="md:hidden"/>資料のURLをお送りしました。
-           </p>
+           {fromDownload ? (
+             <p className="text-slate-600 font-medium leading-relaxed">
+               ダウンロードありがとうございます！！<br/>
+               こちらのボタンから資料をダウンロードしてください。
+             </p>
+           ) : (
+             <p className="text-slate-600 font-medium leading-relaxed">
+               お問い合わせありがとうございます。<br/>
+               ご入力いただいたメールアドレス宛に<br className="md:hidden"/>資料のURLをお送りしました。
+             </p>
+           )}
          </div>
 
-         <div className="py-2">
-           <a href="#" className="group inline-flex items-center gap-3 font-bold text-white bg-slate-900 px-6 py-3 rounded-xl border-2 border-slate-900 hover:bg-white hover:text-slate-900 transition-all shadow-md">
-             <FileText size={20} />
-             資料を今すぐ開く (PDF)
-             <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform"/>
-           </a>
-         </div>
+         {fromDownload && (
+           <div className="py-2">
+             <button 
+               onClick={handleDownload}
+               className="group inline-flex items-center gap-3 font-bold text-white bg-rose-500 px-8 py-4 rounded-xl border-2 border-slate-900 hover:bg-rose-600 hover:-translate-y-1 transition-all shadow-[6px_6px_0px_0px_#0f172a] hover:shadow-[8px_8px_0px_0px_#0f172a]"
+             >
+               <Download size={24} />
+               資料をダウンロード
+               <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform"/>
+             </button>
+           </div>
+         )}
+
+         {!fromDownload && (
+           <div className="py-2">
+             <a href="#" className="group inline-flex items-center gap-3 font-bold text-white bg-slate-900 px-6 py-3 rounded-xl border-2 border-slate-900 hover:bg-white hover:text-slate-900 transition-all shadow-md">
+               <FileText size={20} />
+               資料を今すぐ開く (PDF)
+               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform"/>
+             </a>
+           </div>
+         )}
 
          <div className="border-t-2 border-slate-100 pt-8 space-y-4">
            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Next Action</p>
@@ -1315,11 +1357,18 @@ const ThanksPage = ({ onNavigate }) => {
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState('home'); // home | download | thanks | company | privacy
+  const [pageProps, setPageProps] = useState({}); // ページ遷移時の追加情報
 
   // Reset scroll on page change
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
+
+  // ページ遷移関数（追加情報も渡せるように拡張）
+  const handleNavigate = (page, props = {}) => {
+    setPageProps(props);
+    setCurrentPage(page);
+  };
 
   return (
     <>
@@ -1342,11 +1391,11 @@ const App = () => {
         .clip-path-slant { clip-path: polygon(0 100%, 100% 0, 100% 100%); }
       `}</style>
       
-      {currentPage === 'home' && <LandingPage onNavigate={setCurrentPage} />}
-      {currentPage === 'download' && <DownloadPage onNavigate={setCurrentPage} />}
-      {currentPage === 'thanks' && <ThanksPage onNavigate={setCurrentPage} />}
-      {currentPage === 'company' && <CompanyPage onNavigate={setCurrentPage} />}
-      {currentPage === 'privacy' && <PrivacyPage onNavigate={setCurrentPage} />}
+      {currentPage === 'home' && <LandingPage onNavigate={handleNavigate} />}
+      {currentPage === 'download' && <DownloadPage onNavigate={handleNavigate} />}
+      {currentPage === 'thanks' && <ThanksPage onNavigate={handleNavigate} fromDownload={pageProps.fromDownload} />}
+      {currentPage === 'company' && <CompanyPage onNavigate={handleNavigate} />}
+      {currentPage === 'privacy' && <PrivacyPage onNavigate={handleNavigate} />}
     </>
   );
 };
