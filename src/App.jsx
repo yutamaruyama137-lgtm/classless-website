@@ -311,8 +311,7 @@ const LandingPage = ({ onNavigate }) => {
             </div>
             
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight text-slate-900">
-              外国人目線で<br />
-              インバウンドの
+              外国人UGCでインバウンドの<br />
               <span className="relative inline-block whitespace-nowrap mr-2">
                 <span className="relative z-10 text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]" style={{ textShadow: '4px 4px 0 #0f172a' }}>「行きたい」</span>
                 <span className="absolute -bottom-2 left-0 w-full h-1/2 bg-rose-400 -z-0 skew-x-12 border-2 border-slate-900"></span>
@@ -572,8 +571,8 @@ const LandingPage = ({ onNavigate }) => {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             {/* Monitor Plan - Highlighted */}
             <div className="relative z-10">
-              <div className="absolute -top-[39px] left-1/2 -translate-x-1/2 bg-rose-500 text-white px-4 py-1 rounded-full text-sm font-bold border-2 border-slate-900 shadow-md">
-                外国人ネットワーク
+              <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-rose-500 text-white px-4 py-1 rounded-full text-sm font-bold border-2 border-slate-900 shadow-md">
+                おすすめ / 限定数あり
               </div>
               <Card className="border-4 border-rose-400 bg-white relative overflow-hidden !p-10 !shadow-[12px_12px_0px_0px_#0f172a]">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-rose-100 rounded-bl-[100px] -z-0"></div>
@@ -716,7 +715,7 @@ const LandingPage = ({ onNavigate }) => {
             東京で撮影・体験できる方、SNS発信が得意な方、これから伸ばしたい方。<br/>
             参加登録で最新の案件情報を共有します。
           </p>
-          <Button variant="secondary" className="px-10 py-5 text-lg" icon={ArrowRight} onClick={() => onNavigate('creator')}>
+          <Button variant="secondary" className="px-10 py-5 text-lg" icon={ArrowRight}>
             クリエイター登録フォームへ
           </Button>
         </div>
@@ -831,6 +830,7 @@ const LandingPage = ({ onNavigate }) => {
                <span className="text-slate-500 text-xs uppercase tracking-widest mb-2">Legal</span>
                <a href="#" onClick={(e) => { e.preventDefault(); onNavigate('company'); }} className="hover:text-sky-400 transition-colors cursor-pointer">運営会社</a>
                <a href="#" onClick={(e) => { e.preventDefault(); onNavigate('privacy'); }} className="hover:text-sky-400 transition-colors cursor-pointer">プライバシーポリシー</a>
+               <a href="#" className="hover:text-sky-400 transition-colors">特商法に基づく表記</a>
              </div>
           </div>
         </div>
@@ -929,22 +929,13 @@ const DownloadPage = ({ onNavigate }) => {
             
             {/* Document Preview Visual */}
             <div className="relative aspect-[4/5] bg-white border-2 border-slate-900 rounded-2xl shadow-[12px_12px_0px_0px_#0f172a] overflow-hidden flex flex-col group cursor-pointer hover:-translate-y-2 transition-transform duration-300">
-               <div className="bg-slate-900 text-white p-4 text-center font-bold text-sm tracking-widest">Classlessサービス資料</div>
+               <div className="bg-slate-900 text-white p-4 text-center font-bold text-sm tracking-widest">CONFIDENTIAL</div>
                <div className="flex-1 p-8 flex flex-col items-center justify-center bg-slate-50 relative">
                  <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]"></div>
-                 <div className="w-24 h-24 bg-white rounded-full border-4 border-slate-900 flex items-center justify-center mb-4 shadow-lg relative z-10">
-                   <img 
-                     src="/classless-logo.png" 
-                     alt="Classless" 
-                     className="w-full h-full object-contain p-2"
-                     onError={(e) => {
-                       console.error('ロゴ画像の読み込みエラー:', e.target.src);
-                       e.target.style.display = 'none';
-                       e.target.parentElement.innerHTML = '<div class="text-4xl font-black text-slate-900">C</div>';
-                     }}
-                   />
+                 <div className="w-24 h-24 bg-white rounded-full border-4 border-slate-900 flex items-center justify-center mb-4 shadow-lg">
+                   <div className="text-4xl font-black text-slate-900">C</div>
                  </div>
-                 <div className="text-2xl font-black text-center text-slate-800 relative z-10">Service Guide<br/>2026</div>
+                 <div className="text-2xl font-black text-center text-slate-800">Media Guide<br/>2024</div>
                </div>
                <div className="absolute bottom-4 right-4 bg-sky-400 text-white p-2 rounded-full border-2 border-slate-900 shadow-md">
                  <Download size={20} />
@@ -1006,7 +997,7 @@ const DownloadPage = ({ onNavigate }) => {
                 </div>
 
                 <Button type="submit" variant="primary" disabled={isSubmittingDownload} className="w-full py-4 shadow-md hover:shadow-lg">
-                   {isSubmittingDownload ? '送信中...' : '資料を受け取る'}
+                    {isSubmittingDownload ? '送信中...' : '資料を受け取る'}
                 </Button>
              </form>
           </div>
@@ -1289,172 +1280,6 @@ const CompanyPage = ({ onNavigate }) => {
   );
 };
 
-/* --- Creator Registration Page --- */
-
-const CreatorPage = ({ onNavigate }) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Formspreeのエンドポイント（後で設定してください）
-  const FORMPREE_ENDPOINT = 'YOUR_FORMPREE_ENDPOINT'; // FormspreeのエンドポイントURLに変更してください
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    const form = e.target;
-    const formData = new FormData(form);
-
-    try {
-      // Formspreeに送信
-      const response = await fetch(FORMPREE_ENDPOINT, {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
-      });
-
-      if (response.ok) {
-        alert('登録ありがとうございます！確認次第、ご連絡いたします。');
-        form.reset();
-        onNavigate('home');
-      } else {
-        throw new Error('送信に失敗しました');
-      }
-    } catch (error) {
-      console.error('フォーム送信エラー:', error);
-      alert('送信に失敗しました。しばらくしてから再度お試しください。\nまたは、yuta.maruyama137@gmail.com まで直接ご連絡ください。');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 relative">
-      <DotPattern />
-      <div className="container mx-auto max-w-4xl px-4 py-12 relative z-10">
-        <button onClick={() => onNavigate('home')} className="group flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-slate-900 mb-12 bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm transition-all hover:-translate-x-1">
-          <ArrowRight className="rotate-180 transition-transform group-hover:-translate-x-1" size={16} /> TOPへ戻る
-        </button>
-
-        <div className="relative">
-          {/* Background Decorative Text */}
-          <div className="absolute -top-20 -left-10 text-[200px] font-black text-slate-100/30 select-none pointer-events-none z-0">
-            CREATOR
-          </div>
-
-          {/* Main Content Card */}
-          <div className="relative bg-white rounded-3xl border-2 border-slate-900 shadow-[12px_12px_0px_0px_#0f172a] p-8 md:p-12 z-10">
-            <div className="text-center mb-8">
-              <div className="inline-block bg-rose-100 text-rose-600 px-4 py-1 rounded-full text-xs font-black border border-rose-200 mb-4 tracking-wider">
-                FOR STUDENTS
-              </div>
-              <h1 className="text-4xl md:text-5xl font-black mb-4 text-slate-900">
-                クリエイター登録フォーム
-              </h1>
-              <p className="text-slate-600 font-medium">
-                留学生クリエイター・テスターとして登録いただくと、最新の案件情報をお送りします。
-              </p>
-            </div>
-
-            <form className="space-y-6" onSubmit={handleSubmit}>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-bold ml-1">お名前 <span className="text-rose-500">*</span></label>
-                  <input 
-                    type="text" 
-                    name="name" 
-                    required 
-                    className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white" 
-                    placeholder="例：山田 太郎" 
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-bold ml-1">メールアドレス <span className="text-rose-500">*</span></label>
-                  <input 
-                    type="email" 
-                    name="email" 
-                    required 
-                    className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white" 
-                    placeholder="name@example.com" 
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-bold ml-1">SNSアカウント</label>
-                <input 
-                  type="text" 
-                  name="sns_account" 
-                  className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white" 
-                  placeholder="例：@your_instagram, @your_tiktok" 
-                />
-                <p className="text-xs text-slate-500 ml-1">Instagram、TikTok、YouTubeなどのアカウント名</p>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-bold ml-1">国籍 / 使用言語</label>
-                  <input 
-                    type="text" 
-                    name="nationality_language" 
-                    className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white" 
-                    placeholder="例：アメリカ / 英語" 
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-bold ml-1">居住エリア</label>
-                  <input 
-                    type="text" 
-                    name="area" 
-                    className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white" 
-                    placeholder="例：東京都渋谷区" 
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-bold ml-1">撮影可能条件</label>
-                <textarea 
-                  name="shooting_conditions" 
-                  rows="3" 
-                  className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white resize-none" 
-                  placeholder="例：平日の午後、週末など"
-                ></textarea>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-bold ml-1">自己PR・実績</label>
-                <textarea 
-                  name="self_pr" 
-                  rows="4" 
-                  className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white resize-none" 
-                  placeholder="これまでの実績や、得意なコンテンツの種類などをご記入ください"
-                ></textarea>
-              </div>
-
-              <div className="pt-4 text-center space-y-6">
-                <Button 
-                  variant="primary" 
-                  type="submit" 
-                  disabled={isSubmitting} 
-                  className="w-full md:w-2/3 text-lg h-16 shadow-[8px_8px_0px_0px_#0f172a]" 
-                  icon={Mail}
-                >
-                  {isSubmitting ? '送信中...' : '登録する'}
-                </Button>
-                <p className="text-xs text-slate-400">
-                  送信することで <a href="#" onClick={(e) => { e.preventDefault(); onNavigate('privacy'); }} className="underline hover:text-slate-600">プライバシーポリシー</a> に同意したものとみなされます。
-                </p>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 /* --- Thanks Page (Refined) --- */
 
 const ThanksPage = ({ onNavigate, fromDownload = false }) => {
@@ -1549,7 +1374,7 @@ const ThanksPage = ({ onNavigate, fromDownload = false }) => {
 /* --- Main App Controller --- */
 
 const App = () => {
-  const [currentPage, setCurrentPage] = useState('home'); // home | download | thanks | company | privacy | creator
+  const [currentPage, setCurrentPage] = useState('home'); // home | download | thanks | company | privacy
   const [pageProps, setPageProps] = useState({}); // ページ遷移時の追加情報
 
   // EmailJSを初期化（アプリ起動時に一度だけ）
@@ -1594,7 +1419,6 @@ const App = () => {
       {currentPage === 'thanks' && <ThanksPage onNavigate={handleNavigate} fromDownload={pageProps.fromDownload} />}
       {currentPage === 'company' && <CompanyPage onNavigate={handleNavigate} />}
       {currentPage === 'privacy' && <PrivacyPage onNavigate={handleNavigate} />}
-      {currentPage === 'creator' && <CreatorPage onNavigate={handleNavigate} />}
     </>
   );
 };
