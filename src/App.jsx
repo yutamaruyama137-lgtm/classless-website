@@ -14,7 +14,8 @@ const EMAILJS_TEMPLATE_ID_DOWNLOAD = 'template_dxc8fxn'; // 資料ダウンロ�
 const EMAILJS_PUBLIC_KEY = '4X-cAwUOs5FYULv7O'; // EmailJSのPublic Key
 
 // 資料ダウンロードリンク
-const DOWNLOAD_LINK = 'https://drive.google.com/uc?export=download&id=1D8yevDVLqC88gCJfHIE4plwCuEFpF1qE'; // Google Driveの資料URL
+const DOWNLOAD_LINK = 'https://drive.google.com/file/d/1D8yevDVLqC88gCJfHIE4plwCuEFpF1qE/view?usp=sharing'; // Google Driveの共有リンク
+const DOWNLOAD_DIRECT_LINK = 'https://drive.google.com/uc?export=download&id=1D8yevDVLqC88gCJfHIE4plwCuEFpF1qE'; // 直接ダウンロードリンク（フォールバック用）
 
 /* Classless UI Theme V2 (Refined)
   - Concept: Neo-Brutalism x Pop
@@ -191,9 +192,6 @@ const LandingPage = ({ onNavigate }) => {
     };
 
     try {
-      // EmailJSを初期化
-      emailjs.init(EMAILJS_PUBLIC_KEY);
-
       // 現在時刻を取得（日本時間）
       const now = new Date();
       const timeString = now.toLocaleString('ja-JP', { 
@@ -866,9 +864,6 @@ const DownloadPage = ({ onNavigate }) => {
     };
 
     try {
-      // EmailJSを初期化
-      emailjs.init(EMAILJS_PUBLIC_KEY);
-
       // 現在時刻を取得（日本時間）
       const now = new Date();
       const timeString = now.toLocaleString('ja-JP', { 
@@ -879,26 +874,32 @@ const DownloadPage = ({ onNavigate }) => {
         minute: '2-digit' 
       });
 
-      // 管理者への通知メールを送信
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID_DOWNLOAD,
-        {
-          to_email: 'yuta.maruyama137@gmail.com',
-          name: formData.contact_name,
-          time: timeString,
-          company_name: formData.company_name,
-          contact_name: formData.contact_name,
-          email: formData.email,
-          industry: formData.industry,
-        }
-      );
+      // 管理者への通知メールを送信（エラーが発生してもダウンロードページには遷移）
+      try {
+        await emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID_DOWNLOAD,
+          {
+            to_email: 'yuta.maruyama137@gmail.com',
+            name: formData.contact_name,
+            time: timeString,
+            company_name: formData.company_name,
+            contact_name: formData.contact_name,
+            email: formData.email,
+            industry: formData.industry,
+          }
+        );
+      } catch (emailError) {
+        // メール送信エラーはログに記録するが、ダウンロードページへの遷移は続行
+        console.error('メール送信エラー（ダウンロードページには遷移します）:', emailError);
+      }
 
-      // メール送信成功後、サンクスページに遷移（ダウンロード用）
+      // メール送信の成否に関わらず、サンクスページに遷移（ダウンロード用）
       onNavigate('thanks', { fromDownload: true });
     } catch (error) {
-      console.error('メール送信エラー:', error);
-      alert('送信に失敗しました。しばらくしてから再度お試しください。');
+      console.error('フォーム送信エラー:', error);
+      // エラーが発生してもダウンロードページには遷移
+      onNavigate('thanks', { fromDownload: true });
     } finally {
       setIsSubmittingDownload(false);
     }
@@ -928,13 +929,22 @@ const DownloadPage = ({ onNavigate }) => {
             
             {/* Document Preview Visual */}
             <div className="relative aspect-[4/5] bg-white border-2 border-slate-900 rounded-2xl shadow-[12px_12px_0px_0px_#0f172a] overflow-hidden flex flex-col group cursor-pointer hover:-translate-y-2 transition-transform duration-300">
-               <div className="bg-slate-900 text-white p-4 text-center font-bold text-sm tracking-widest">CONFIDENTIAL</div>
+               <div className="bg-slate-900 text-white p-4 text-center font-bold text-sm tracking-widest">Classlessサービス資料</div>
                <div className="flex-1 p-8 flex flex-col items-center justify-center bg-slate-50 relative">
                  <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]"></div>
-                 <div className="w-24 h-24 bg-white rounded-full border-4 border-slate-900 flex items-center justify-center mb-4 shadow-lg">
-                   <div className="text-4xl font-black text-slate-900">C</div>
+                 <div className="w-24 h-24 bg-white rounded-full border-4 border-slate-900 flex items-center justify-center mb-4 shadow-lg relative z-10">
+                   <img 
+                     src="/classless-logo.png" 
+                     alt="Classless" 
+                     className="w-full h-full object-contain p-2"
+                     onError={(e) => {
+                       console.error('ロゴ画像の読み込みエラー:', e.target.src);
+                       e.target.style.display = 'none';
+                       e.target.parentElement.innerHTML = '<div class="text-4xl font-black text-slate-900">C</div>';
+                     }}
+                   />
                  </div>
-                 <div className="text-2xl font-black text-center text-slate-800">Media Guide<br/>2024</div>
+                 <div className="text-2xl font-black text-center text-slate-800 relative z-10">Service Guide<br/>2026</div>
                </div>
                <div className="absolute bottom-4 right-4 bg-sky-400 text-white p-2 rounded-full border-2 border-slate-900 shadow-md">
                  <Download size={20} />
@@ -1283,8 +1293,25 @@ const CompanyPage = ({ onNavigate }) => {
 
 const ThanksPage = ({ onNavigate, fromDownload = false }) => {
   const handleDownload = () => {
-    // 資料をダウンロード
-    window.open(DOWNLOAD_LINK, '_blank');
+    // まず直接ダウンロードを試す
+    try {
+      const link = document.createElement('a');
+      link.href = DOWNLOAD_DIRECT_LINK;
+      link.download = 'Classlessサービス紹介資料.pdf';
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // 直接ダウンロードが失敗した場合のフォールバック（少し待ってから共有リンクを開く）
+      setTimeout(() => {
+        window.open(DOWNLOAD_LINK, '_blank');
+      }, 500);
+    } catch (error) {
+      // エラーが発生した場合は共有リンクを開く
+      console.error('ダウンロードエラー:', error);
+      window.open(DOWNLOAD_LINK, '_blank');
+    }
   };
 
   return (
@@ -1358,6 +1385,11 @@ const ThanksPage = ({ onNavigate, fromDownload = false }) => {
 const App = () => {
   const [currentPage, setCurrentPage] = useState('home'); // home | download | thanks | company | privacy
   const [pageProps, setPageProps] = useState({}); // ページ遷移時の追加情報
+
+  // EmailJSを初期化（アプリ起動時に一度だけ）
+  useEffect(() => {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+  }, []);
 
   // Reset scroll on page change
   useEffect(() => {
