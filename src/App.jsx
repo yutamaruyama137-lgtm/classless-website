@@ -571,7 +571,7 @@ const LandingPage = ({ onNavigate }) => {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             {/* Monitor Plan - Highlighted */}
             <div className="relative z-10">
-              <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-rose-500 text-white px-4 py-1 rounded-full text-sm font-bold border-2 border-slate-900 shadow-md">
+              <div className="absolute -top-[43px] left-1/2 -translate-x-1/2 bg-rose-500 text-white px-4 py-1 rounded-full text-sm font-bold border-2 border-slate-900 shadow-md">
                 おすすめ / 限定数あり
               </div>
               <Card className="border-4 border-rose-400 bg-white relative overflow-hidden !p-10 !shadow-[12px_12px_0px_0px_#0f172a]">
