@@ -412,7 +412,7 @@ const LandingPage = ({ onNavigate }) => {
       <section className="py-24 px-4 bg-sky-50 border-b-2 border-slate-900 overflow-hidden">
         <div className="container mx-auto max-w-6xl">
           <SectionTitle 
-            title="留学生ネットワークを「集客インフラ」に" 
+            title="外国人ネットワークを「集客インフラ」に" 
             subtitle="Classlessは、単なる制作会社ではありません。外国人コミュニティの熱量と、マーケティングの論理を融合させます。"
           />
 
