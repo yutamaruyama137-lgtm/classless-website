@@ -715,9 +715,9 @@ const LandingPage = ({ onNavigate }) => {
             東京で撮影・体験できる方、SNS発信が得意な方、これから伸ばしたい方。<br/>
             参加登録で最新の案件情報を共有します。
           </p>
-          <Button variant="secondary" className="px-10 py-5 text-lg" icon={ArrowRight}>
-            クリエイター登録フォームへ
-          </Button>
+          <p className="text-slate-200 text-base font-medium">
+            お問い合わせは <a href="mailto:contact@classless.jp" className="text-white font-bold underline hover:text-sky-400 transition-colors">contact@classless.jp</a> までご連絡ください。
+          </p>
         </div>
       </section>
 
