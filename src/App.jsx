@@ -14,8 +14,8 @@ const EMAILJS_TEMPLATE_ID_DOWNLOAD = 'template_dxc8fxn'; // 資料ダウンロ�
 const EMAILJS_PUBLIC_KEY = '4X-cAwUOs5FYULv7O'; // EmailJSのPublic Key
 
 // 資料ダウンロードリンク
-const DOWNLOAD_LINK = 'https://drive.google.com/file/d/1D8yevDVLqC88gCJfHIE4plwCuEFpF1qE/view?usp=sharing'; // Google Driveの共有リンク
-const DOWNLOAD_DIRECT_LINK = 'https://drive.google.com/uc?export=download&id=1D8yevDVLqC88gCJfHIE4plwCuEFpF1qE'; // 直接ダウンロードリンク（フォールバック用）
+const DOWNLOAD_LINK = 'https://drive.google.com/file/d/1m4DOTA2XZsMFLVH5Q2fBXhbLq9A6OgHs/view?usp=sharing'; // Google Driveの共有リンク
+const DOWNLOAD_DIRECT_LINK = 'https://drive.google.com/uc?export=download&id=1m4DOTA2XZsMFLVH5Q2fBXhbLq9A6OgHs'; // 直接ダウンロードリンク（フォールバック用）
 
 /* Classless UI Theme V2 (Refined)
   - Concept: Neo-Brutalism x Pop
