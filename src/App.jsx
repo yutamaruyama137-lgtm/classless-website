@@ -422,10 +422,10 @@ const LandingPage = ({ onNavigate }) => {
               <div className="bg-white p-8 rounded-3xl border-2 border-slate-900 shadow-[8px_8px_0px_0px_#0f172a]">
                 <h3 className="text-2xl font-black mb-6 flex items-center gap-3">
                   <div className="w-8 h-8 bg-rose-500 rounded-lg flex items-center justify-center text-white text-lg">1</div>
-                  UGC制作 × MEO
+                  ショート動画×MEO
                 </h3>
                 <p className="text-slate-600 mb-4">
-                  留学生が実際に体験し、スマホで撮影・編集。広告臭のない「リアルな動画」を作成し、Googleマップにも投稿します。
+                  SNS集客のためのショート動画とGoogle Mapの順位最適化のためのMEOを掛け合わせて多角的に集客を行います。
                 </p>
                 <div className="flex gap-2">
                   <Badge text="Shorts動画" color="bg-slate-900" />
@@ -440,7 +440,7 @@ const LandingPage = ({ onNavigate }) => {
                   調査 × イベント送客
                 </h3>
                 <p className="text-slate-600 mb-4">
-                  「なぜ買ったのか」「何が不安だったか」を直接ヒアリング。さらに大学コミュニティを活用したイベントやサンプリングも可能です。
+                  「なぜ買ったのか」「何が不安だったか」を直接ヒアリング。さらに外国人コミュニティを活用したイベントやサンプリングも可能です。
                 </p>
                 <div className="flex gap-2">
                   <Badge text="アンケート" color="bg-slate-900" />
@@ -500,7 +500,7 @@ const LandingPage = ({ onNavigate }) => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               { 
-                title: "インバウンドUGC制作", 
+                title: "インバウンド向けショート動画制作", 
                 tag: "CORE",
                 desc: "TikTok/Reels/Shorts向けのショート動画、写真、英語キャプションを一式制作します。",
                 icon: <Play />, color: "bg-rose-100", accent: "text-rose-600"
@@ -532,7 +532,7 @@ const LandingPage = ({ onNavigate }) => {
               { 
                 title: "イベント協賛・送客", 
                 tag: "EVENT",
-                desc: "TUJコネクションを活用したイベント運営や、店舗へのリアル送客支援。",
+                desc: "外国人コネクションを活用したイベント運営や、店舗へのリアル送客支援。",
                 icon: <Heart />, color: "bg-orange-100", accent: "text-orange-600"
               },
               { 
@@ -612,7 +612,7 @@ const LandingPage = ({ onNavigate }) => {
             {/* Standard Plans */}
             <div className="space-y-6">
               {[
-                { title: "UGC Sprint", type: "単発", desc: "動画3本〜 / 写真10枚〜 / 字幕・キャプション込", color: "bg-slate-100" },
+                { title: "Shorts Sprint", type: "単発", desc: "動画3本〜 / 写真10枚〜 / 字幕・キャプション込", color: "bg-slate-100" },
                 { title: "UGC + MEO Growth", type: "月額", desc: "毎月の素材追加 ＋ Googleマップ運用代行", color: "bg-sky-50" },
                 { title: "Research Add-on", type: "調査", desc: "アンケート(100名) ＋ インタビュー ＋ レポート", color: "bg-purple-50" }
               ].map((plan, i) => (
