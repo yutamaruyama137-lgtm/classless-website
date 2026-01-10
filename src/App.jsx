@@ -458,7 +458,7 @@ const LandingPage = ({ onNavigate }) => {
                 <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[220px] h-[220px] bg-rose-200/90 rounded-full border-2 border-slate-900 flex flex-col items-center justify-center z-10 hover:scale-105 transition-transform duration-300 shadow-lg">
                   <Play size={28} className="text-slate-900 mb-2" strokeWidth={2.5} fill="currentColor" />
                   <span className="font-black text-lg text-slate-900 leading-tight">Creative</span>
-                  <span className="text-xs font-bold text-slate-700 mt-1 px-2 text-center">UGC & MEO</span>
+                  <span className="text-xs font-bold text-slate-700 mt-1 px-2 text-center">Short Video×MEO</span>
                 </div>
 
                 {/* Circle 2: Marketing (Right) */}
