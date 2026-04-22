@@ -521,48 +521,32 @@ const LandingPage = ({ onNavigate }) => {
       {/* Plans */}
       <section id="plans" className="py-24 px-4 bg-slate-50 border-y-2 border-slate-900">
         <div className="container mx-auto max-w-5xl">
-          <SectionTitle title="料金プラン例" subtitle="まずは効果を実感していただくために、無料AI業務診断をご用意しました。" />
+          <SectionTitle title="料金プラン例" subtitle="支援範囲・期間・実装規模に合わせて柔軟にカスタマイズします。まずはメールでお気軽にご相談ください。" />
 
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            {/* Free Diagnosis Plan - Highlighted */}
-            <div className="relative z-10">
-              <div className="absolute -top-[43px] left-1/2 -translate-x-1/2 bg-rose-500 text-white px-4 py-1 rounded-full text-sm font-bold border-2 border-slate-900 shadow-md whitespace-nowrap">
-                おすすめ / 先着受付中
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            {/* Contact CTA Card */}
+            <Card className="border-4 border-slate-900 bg-white relative overflow-hidden !p-10 !shadow-[12px_12px_0px_0px_#0f172a]">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-sky-100 rounded-bl-[100px] -z-0"></div>
+              <h3 className="text-3xl font-black mb-2 relative z-10">まずはご相談</h3>
+              <p className="text-slate-600 mb-8 relative z-10 leading-relaxed">
+                課題・予算・スケジュールをお聞かせください。<br/>状況に合った最適なプランをご提案します。
+              </p>
+              <div className="space-y-3 mb-8 relative z-10">
+                {[
+                  '現状の業務課題をヒアリング',
+                  'AI化・自動化の優先度を整理',
+                  '最適なプラン・費用をご提案',
+                ].map((item, i) => (
+                  <div key={i} className="flex gap-2 items-center text-sm font-medium">
+                    <Check size={16} className="text-sky-500 flex-shrink-0" />
+                    {item}
+                  </div>
+                ))}
               </div>
-              <Card className="border-4 border-rose-400 bg-white relative overflow-hidden !p-10 !shadow-[12px_12px_0px_0px_#0f172a]">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-rose-100 rounded-bl-[100px] -z-0"></div>
-
-                <h3 className="text-3xl font-black mb-2 relative z-10">無料AI業務診断</h3>
-                <div className="flex items-baseline gap-2 mb-6 relative z-10">
-                   <span className="text-5xl font-black text-rose-500">¥0</span>
-                   <span className="text-slate-500 font-bold">/ 30分</span>
-                </div>
-
-                <div className="space-y-4 mb-8 relative z-10">
-                  <div className="bg-rose-50 p-4 rounded-xl border border-rose-200">
-                    <p className="font-bold text-rose-700 text-sm mb-2">【提供内容】</p>
-                    <ul className="space-y-2 text-sm font-medium">
-                      <li className="flex gap-2 items-center"><Check size={16} className="text-rose-500" /> 業務ヒアリング 30分</li>
-                      <li className="flex gap-2 items-center"><Check size={16} className="text-rose-500" /> 自動化候補リスト（簡易版）</li>
-                      <li className="flex gap-2 items-center"><Check size={16} className="text-rose-500" /> 優先度マップ & 概算効果</li>
-                    </ul>
-                  </div>
-
-                  <div className="p-2">
-                    <p className="font-bold text-slate-700 text-sm mb-2">【適用条件】</p>
-                    <ul className="space-y-2 text-sm text-slate-600">
-                      <li className="flex gap-2">・事例公開OK（Web/SNS）</li>
-                      <li className="flex gap-2">・フィードバックの提供</li>
-                      <li className="flex gap-2">・知人企業のご紹介 (1社)</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <a href="mailto:yuta.maruyama137@gmail.com" className="group relative inline-flex items-center justify-center font-bold rounded-full border-2 border-slate-900 transition-all duration-200 active:translate-y-1 active:shadow-none px-8 py-4 cursor-pointer text-base md:text-lg tracking-wide overflow-hidden w-full bg-yellow-300 text-slate-900 shadow-[4px_4px_0px_0px_#0f172a] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#0f172a] hover:bg-yellow-200">
-                  お問い合わせはこちら
-                </a>
-              </Card>
-            </div>
+              <a href="mailto:yuta.maruyama137@gmail.com" className="group relative inline-flex items-center justify-center font-bold rounded-full border-2 border-slate-900 transition-all duration-200 active:translate-y-1 active:shadow-none px-8 py-4 cursor-pointer text-base md:text-lg tracking-wide overflow-hidden w-full bg-yellow-300 text-slate-900 shadow-[4px_4px_0px_0px_#0f172a] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#0f172a] hover:bg-yellow-200">
+                お問い合わせはこちら
+              </a>
+            </Card>
 
             {/* Standard Plans */}
             <div className="space-y-6">
@@ -595,7 +579,7 @@ const LandingPage = ({ onNavigate }) => {
       {/* Flow */}
       <section id="flow" className="py-24 px-4 bg-white">
         <div className="container mx-auto max-w-6xl">
-          <SectionTitle title="導入の流れ" subtitle="複雑な手続きはありません。無料診断から最短2週間で業務改善を実感できます。" />
+          <SectionTitle title="導入の流れ" subtitle="複雑な手続きはありません。ご相談から最短2週間で業務改善を実感できます。" />
 
           <div className="relative">
             {/* Connecting Line (Desktop) */}
@@ -605,7 +589,7 @@ const LandingPage = ({ onNavigate }) => {
 
             <div className="grid md:grid-cols-4 gap-8">
               {[
-                { step: "01", title: "無料診断ヒアリング", desc: "業種・課題・目標を30分でヒアリング" },
+                { step: "01", title: "初回ヒアリング", desc: "業種・課題・目標をヒアリング" },
                 { step: "02", title: "優先度の整理", desc: "AI化候補業務を特定し削減効果を試算" },
                 { step: "03", title: "実装・ツール設定", desc: "AIツール導入・プロセス設計・研修実施" },
                 { step: "04", title: "効果測定・改善", desc: "定量評価と次フェーズのアクション設計" },
@@ -634,7 +618,7 @@ const LandingPage = ({ onNavigate }) => {
             {[
               { q: "どんな企業・業種が向いていますか？", a: "中小企業・スタートアップから大企業まで対応しています。特に「繰り返し業務が多い」「担当者が属人化している」「DXを始めたいが何から手をつけるかわからない」企業に効果的です。業種を問わず対応可能です。" },
               { q: "ITが詳しくなくても大丈夫ですか？", a: "問題ありません。ヒアリングから実装まで一緒に進め、専門用語を使わずに分かりやすく説明します。「IT担当者がいない」という企業のご支援実績も多数あります。" },
-              { q: "費用はどう決まりますか？", a: "支援範囲・期間・実装規模によって調整します。まず無料AI診断（30分）でご状況をお聞かせいただき、最適なプランをご提案します。お気軽にご相談ください。" },
+              { q: "費用はどう決まりますか？", a: "支援範囲・期間・実装規模によって調整します。まずメールにてご状況をお聞かせいただき、最適なプランをご提案します。お気軽にご相談ください。" },
               { q: "どのくらいで効果が出ますか？", a: "業務自動化は最短1〜2週間で効果を実感できます。DX戦略設計は3ヶ月を目安としています。まず小さく始めて成果を確認してから拡大する進め方をお勧めしています。" }
             ].map((item, i) => (
               <details key={i} className="group bg-white rounded-2xl border-2 border-slate-900 overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-all">
