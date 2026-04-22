@@ -2,17 +2,10 @@ import React, { useState, useEffect } from 'react';
 import {
   Menu, X, ChevronRight, Check, Play,
   Search, Users, Star, Globe, Heart, Smartphone,
-  ArrowRight, Download, Mail, MessageCircle, FileText,
+  ArrowRight, Mail, MessageCircle, FileText,
   MousePointer2, Sparkles, BarChart2, Zap, Target,
   Settings, BookOpen, TrendingUp, Database, PenTool, Layers
 } from 'lucide-react';
-import emailjs from '@emailjs/browser';
-
-// EmailJS設定
-const EMAILJS_SERVICE_ID = 'service_2halzzu';
-const EMAILJS_TEMPLATE_ID_CONTACT = 'template_xm857rk';
-const EMAILJS_TEMPLATE_ID_DOWNLOAD = 'template_dxc8fxn';
-const EMAILJS_PUBLIC_KEY = '4X-cAwUOs5FYULv7O';
 
 
 /* Classless UI Theme V2 (Refined)
@@ -203,67 +196,12 @@ const DXHeroVisual = () => (
 
 const LandingPage = ({ onNavigate }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSubmittingContact, setIsSubmittingContact] = useState(false);
 
   const scrollToSection = (id) => {
     setIsMenuOpen(false);
-    if (id === 'download') {
-      onNavigate('download');
-      return;
-    }
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleContactSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmittingContact(true);
-
-    const form = e.target;
-    const formData = {
-      company_name: form.company_name.value,
-      contact_name: form.contact_name.value,
-      email: form.email.value,
-      menu: form.menu.value,
-      message: form.message.value,
-      case_study: form.case_study.checked ? '同意' : '未同意',
-    };
-
-    try {
-      const now = new Date();
-      const timeString = now.toLocaleString('ja-JP', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID_CONTACT,
-        {
-          to_email: 'yuta.maruyama137@gmail.com',
-          name: formData.contact_name,
-          time: timeString,
-          company_name: formData.company_name,
-          contact_name: formData.contact_name,
-          email: formData.email,
-          menu: formData.menu,
-          message: formData.message,
-          case_study: formData.case_study,
-        }
-      );
-
-      alert('お問い合わせありがとうございます。送信が完了しました。');
-      form.reset();
-    } catch (error) {
-      console.error('メール送信エラー:', error);
-      alert('送信に失敗しました。しばらくしてから再度お試しください。');
-    } finally {
-      setIsSubmittingContact(false);
     }
   };
 
@@ -298,11 +236,6 @@ const LandingPage = ({ onNavigate }) => {
             })}
           </div>
 
-          <div className="hidden lg:flex gap-4">
-            <Button variant="primary" className="!px-6 !py-2 !text-sm" onClick={() => scrollToSection('contact')}>
-              無料AI診断
-            </Button>
-          </div>
 
           <button className="lg:hidden p-2 hover:bg-slate-100 rounded-lg" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -320,9 +253,6 @@ const LandingPage = ({ onNavigate }) => {
                  </button>
                )
             })}
-            <Button variant="primary" className="w-full" onClick={() => scrollToSection('contact')}>
-              無料AI診断
-            </Button>
           </div>
         )}
       </header>
@@ -358,16 +288,12 @@ const LandingPage = ({ onNavigate }) => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button variant="primary" onClick={() => scrollToSection('contact')} icon={ArrowRight}>
-                無料AI診断 (30分)
-              </Button>
-              <Button variant="secondary" onClick={() => scrollToSection('services')} icon={MousePointer2}>
+              <Button variant="primary" onClick={() => scrollToSection('services')} icon={ArrowRight}>
                 サービスを見る
               </Button>
             </div>
 
             <div className="flex flex-wrap gap-4 md:gap-8 text-sm font-bold text-slate-600 pt-4 border-t-2 border-slate-100/50">
-              <span className="flex items-center gap-2"><div className="bg-sky-500 rounded-full p-0.5"><Check size={12} className="text-white"/></div> 無料診断30分〜</span>
               <span className="flex items-center gap-2"><div className="bg-sky-500 rounded-full p-0.5"><Check size={12} className="text-white"/></div> ツール選定〜実装まで</span>
               <span className="flex items-center gap-2"><div className="bg-sky-500 rounded-full p-0.5"><Check size={12} className="text-white"/></div> 中小〜大企業対応</span>
             </div>
@@ -632,9 +558,9 @@ const LandingPage = ({ onNavigate }) => {
                   </div>
                 </div>
 
-                <Button variant="accent" className="w-full text-lg" onClick={() => scrollToSection('contact')}>
-                  今すぐ無料診断を申し込む
-                </Button>
+                <a href="mailto:yuta.maruyama137@gmail.com" className="group relative inline-flex items-center justify-center font-bold rounded-full border-2 border-slate-900 transition-all duration-200 active:translate-y-1 active:shadow-none px-8 py-4 cursor-pointer text-base md:text-lg tracking-wide overflow-hidden w-full bg-yellow-300 text-slate-900 shadow-[4px_4px_0px_0px_#0f172a] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#0f172a] hover:bg-yellow-200">
+                  お問い合わせはこちら
+                </a>
               </Card>
             </div>
 
@@ -750,71 +676,6 @@ const LandingPage = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* Contact Form */}
-      <section id="contact" className="py-24 px-4 bg-white relative">
-        <div className="absolute top-0 left-0 w-full h-1/2 bg-slate-50 -z-0"></div>
-
-        <div className="container mx-auto max-w-3xl relative z-10">
-          <SectionTitle title="無料相談 / AI診断申し込み" subtitle="フォーム送信後、原則24時間以内に担当者よりご連絡いたします。" centered={true} />
-
-          <div className="bg-white p-8 md:p-12 rounded-[2rem] border-2 border-slate-900 shadow-[12px_12px_0px_0px_#0f172a]">
-            <form className="space-y-8" onSubmit={handleContactSubmit}>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-bold ml-1">会社名 / 屋号</label>
-                  <input type="text" name="company_name" className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white" placeholder="例：株式会社〇〇" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-bold ml-1">ご担当者名</label>
-                  <input type="text" name="contact_name" className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white" placeholder="例：山田 太郎" />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-bold ml-1">メールアドレス <span className="text-rose-500">*</span></label>
-                <input type="email" name="email" required className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white" placeholder="name@example.com" />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-bold ml-1">ご希望のメニュー</label>
-                <div className="relative">
-                  <select name="menu" className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white appearance-none cursor-pointer">
-                    <option>無料AI業務診断（先着）</option>
-                    <option>AI導入コンサルティング</option>
-                    <option>業務自動化診断</option>
-                    <option>DX戦略相談</option>
-                    <option>AI活用研修</option>
-                    <option>その他・相談したい</option>
-                  </select>
-                  <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 rotate-90 pointer-events-none text-slate-500" size={20}/>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-bold ml-1">ご相談内容</label>
-                <textarea name="message" rows="4" className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-slate-900 focus:ring-0 outline-none transition-all bg-slate-50 focus:bg-white resize-none" placeholder="現状の業務課題や、気になる点をご記入ください（例：毎週〇〇作業に〇時間かかっている、など）"></textarea>
-              </div>
-
-              <div className="flex items-start gap-3 p-4 bg-sky-50 rounded-xl border border-sky-100">
-                <input type="checkbox" name="case_study" id="case-study" className="mt-1 w-5 h-5 text-sky-500 rounded border-slate-300 focus:ring-sky-500 cursor-pointer" />
-                <label htmlFor="case-study" className="text-sm text-slate-700 cursor-pointer select-none">
-                  <span className="font-bold block mb-1">事例公開の許可（無料診断の条件）</span>
-                  WebサイトやSNSでの事例紹介（企業名・成果内容）に同意します。
-                </label>
-              </div>
-
-              <div className="pt-4 text-center space-y-6">
-                <Button variant="primary" type="submit" disabled={isSubmittingContact} className="w-full md:w-2/3 text-lg h-16 shadow-[8px_8px_0px_0px_#0f172a]" icon={Mail}>
-                  {isSubmittingContact ? '送信中...' : '上記の内容で送信する'}
-                </Button>
-                <p className="text-xs text-slate-400">
-                  送信することで <a href="#" className="underline hover:text-slate-600">プライバシーポリシー</a> に同意したものとみなされます。
-                </p>
-              </div>
-            </form>
-          </div>
-        </div>
-      </section>
 
       {/* Footer */}
       <footer className="bg-slate-900 text-white py-16 px-4 border-t-8 border-rose-400">
@@ -851,7 +712,7 @@ const LandingPage = ({ onNavigate }) => {
              <div className="flex flex-col gap-4">
                <span className="text-slate-500 text-xs uppercase tracking-widest mb-2">Support</span>
                <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('faq'); }} className="hover:text-sky-400 transition-colors cursor-pointer">よくある質問</a>
-               <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="hover:text-sky-400 transition-colors cursor-pointer">お問い合わせ</a>
+               <a href="mailto:yuta.maruyama137@gmail.com" className="hover:text-sky-400 transition-colors cursor-pointer">お問い合わせ</a>
              </div>
              <div className="flex flex-col gap-4">
                <span className="text-slate-500 text-xs uppercase tracking-widest mb-2">Legal</span>
@@ -1115,51 +976,11 @@ const CompanyPage = ({ onNavigate }) => {
 
 /* --- Thanks Page --- */
 
-const ThanksPage = ({ onNavigate }) => {
-  return (
-    <div className="min-h-screen bg-sky-50 flex items-center justify-center p-4 font-sans text-slate-800 relative overflow-hidden">
-      <DotPattern />
-
-      <div className="absolute top-1/4 left-1/4 w-4 h-4 bg-rose-400 rounded-full animate-bounce"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-6 h-6 bg-yellow-400 rounded-sm rotate-12 animate-pulse"></div>
-
-      <div className="bg-white p-8 md:p-16 rounded-[2.5rem] border-2 border-slate-900 shadow-[16px_16px_0px_0px_#0f172a] max-w-lg w-full text-center space-y-8 relative z-10 animate-in zoom-in-95 duration-300">
-
-         <div className="relative inline-block">
-           <div className="w-24 h-24 bg-sky-100 rounded-full border-2 border-slate-900 flex items-center justify-center mx-auto mb-2 relative z-10">
-              <Check size={48} className="text-sky-500" strokeWidth={3} />
-           </div>
-           <div className="absolute -inset-2 bg-sky-200 rounded-full blur-lg opacity-50 animate-pulse"></div>
-         </div>
-
-         <div>
-           <h1 className="text-3xl font-black mb-4 text-slate-900">Thank You!</h1>
-           <p className="text-slate-600 font-medium leading-relaxed">
-             お問い合わせありがとうございます。<br/>
-             担当者より24時間以内にご連絡いたします。
-           </p>
-         </div>
-
-         <div className="border-t-2 border-slate-100 pt-8 space-y-4">
-           <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Next Action</p>
-           <Button variant="outline" className="w-full border-slate-200 hover:border-slate-900" onClick={() => onNavigate('home')}>
-             TOPへ戻る
-           </Button>
-         </div>
-      </div>
-    </div>
-  );
-};
-
 /* --- Main App Controller --- */
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState('home');
   const [pageProps, setPageProps] = useState({});
-
-  useEffect(() => {
-    emailjs.init(EMAILJS_PUBLIC_KEY);
-  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -1192,7 +1013,6 @@ const App = () => {
       `}</style>
 
       {currentPage === 'home' && <LandingPage onNavigate={handleNavigate} />}
-      {currentPage === 'thanks' && <ThanksPage onNavigate={handleNavigate} />}
       {currentPage === 'company' && <CompanyPage onNavigate={handleNavigate} />}
       {currentPage === 'privacy' && <PrivacyPage onNavigate={handleNavigate} />}
     </>
