@@ -67,7 +67,39 @@
 }
 @media (prefers-reduced-motion: no-preference) {
   .draw-underline:not(.in)::after { transform: scaleX(0); }
-  .draw-underline.in::after { animation: draw-line 0.9s 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+  .draw-underline.in::after { animation: draw-line 0.9s var(--underline-delay, 0.55s) cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+}
+
+/* ---- Per-character hero entrance (LayerX-style 一文字フェードイン) ---- */
+@keyframes char-in {
+  from { opacity: 0; transform: translateY(0.5em); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0);     filter: blur(0); }
+}
+.char { display: inline-block; white-space: pre; }
+@media (prefers-reduced-motion: no-preference) {
+  .char { opacity: 0; animation: char-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+}
+
+/* ---- Hero aurora: slow-drifting color wash behind the color field ---- */
+.hero-aurora {
+  position: absolute;
+  inset: -25%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  background:
+    radial-gradient(40% 50% at 24% 30%, var(--blue-200),   transparent 70%),
+    radial-gradient(45% 50% at 76% 34%, var(--orange-200), transparent 70%),
+    radial-gradient(50% 55% at 56% 80%, var(--green-200),  transparent 72%),
+    radial-gradient(42% 46% at 20% 76%, var(--red-200),    transparent 72%);
+  filter: blur(64px);
+}
+@keyframes aurora-shift {
+  from { transform: translate3d(-3%, -2%, 0) scale(1);    }
+  to   { transform: translate3d(4%, 3%, 0)   scale(1.12); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-aurora { animation: aurora-shift 22s ease-in-out infinite alternate; }
 }
 
 /* ---- Scroll cue ---- */

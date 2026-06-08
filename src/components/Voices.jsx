@@ -1,21 +1,33 @@
-/* Classless corporate site — VOICES (note 埋め込み式の導入事例カード)
-   note に公開した導入事例を、ご自身の言葉で読んでもらうセクション。
-   記事が増えたら voices 配列に追加するだけ。将来 microCMS 等へ差し替え可能。 */
+/* Classless corporate site — VOICES（note 記事の自動表示）
+   /api/voices（サーバーレス関数）が note RSS を取得して返す。
+   記事が0件のときはセクションごと非表示。記事が公開されると自動でカード表示。 */
+const NOTE_URL = 'https://note.com/classlessllc_731';
+
 function Voices() {
   const { Button } = window.ClasslessDesignSystem_225e16;
   const { useReveal, Eyebrow, BrandVisual, Arrow } = window;
   const ref = useReveal();
 
-  // ▼▼ note 記事を追加・編集するのはここだけ ▼▼
-  //   thumb: 画像URL（/voices/xxx.png を public に置く）or 省略でブランドビジュアル
-  //   tone : blue / orange / green / red（サムネ未指定時の色）
-  //   href : note 記事のURL（'#' のままなら準備中表示）
-  const voices = [
-    { tone: 'blue',   cat: '導入事例',     title: '繰り返し業務をAIに任せ、コア業務に集中できる体制へ。', href: '#' },
-    { tone: 'orange', cat: '導入事例',     title: '業種特化AIエージェントの内製化で、現場のスピードが変わった。', href: '#' },
-    { tone: 'green',  cat: '導入事例',     title: '散在データの構造化で、AI活用の土台を整える。', href: '#' },
-  ];
-  // ▲▲ ここまで ▲▲
+  const [items, setItems] = React.useState(null); // null=未取得 / []=記事なし / [...]
+  React.useEffect(() => {
+    let alive = true;
+    fetch('/api/voices')
+      .then((r) => (r.ok ? r.json() : { items: [] }))
+      .then((d) => { if (alive) setItems(Array.isArray(d.items) ? d.items : []); })
+      .catch(() => { if (alive) setItems([]); });
+    return () => { alive = false; };
+  }, []);
+
+  // 記事がまだ無い／取得失敗 → セクションを出さない
+  if (!items || items.length === 0) return null;
+
+  const tones = ['blue', 'orange', 'green', 'red'];
+  const fmtDate = (s) => {
+    const d = new Date(s);
+    if (isNaN(d)) return '';
+    const p = (n) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}.${p(d.getMonth() + 1)}.${p(d.getDate())}`;
+  };
 
   return (
     <section id="voices" ref={ref} style={{ background: 'var(--color-bg)', paddingTop: 'var(--section-y)', paddingBottom: 'var(--section-y)' }}>
@@ -25,40 +37,40 @@ function Voices() {
           導入事例を、記事で読む。
         </h2>
         <p className="reveal" style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text-secondary)', fontWeight: 500, marginTop: 16, maxWidth: '34em', animationDelay: '0.14s' }}>
-          導入事例を、お客様ご自身の言葉で note に公開しています。
+          導入事例や活用のヒントを、Classless の note に公開しています。
         </p>
 
         <div className="cards-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, marginTop: 'clamp(40px, 5vw, 64px)' }}>
-          {voices.map((v, i) => {
-            const ready = v.href && v.href !== '#';
-            const Tag = ready ? 'a' : 'div';
-            const tagProps = ready ? { href: v.href, target: '_blank', rel: 'noopener noreferrer' } : {};
+          {items.map((v, i) => {
+            const tone = tones[i % tones.length];
             return (
-              <Tag key={i} {...tagProps} className="reveal voice-card" style={{
-                display: 'flex', flexDirection: 'column', background: '#fff',
-                border: '1px solid var(--color-border)', borderRadius: 'var(--radius-2xl)', overflow: 'hidden',
-                boxShadow: 'var(--shadow-sm)', color: 'var(--text-primary)', animationDelay: `${0.08 * i}s`,
-                transition: 'transform .3s var(--ease-out), box-shadow .3s var(--ease-out)',
-              }}
+              <a key={v.link || i} href={v.link} target="_blank" rel="noopener noreferrer"
+                className="reveal voice-card" style={{
+                  display: 'flex', flexDirection: 'column', background: '#fff',
+                  border: '1px solid var(--color-border)', borderRadius: 'var(--radius-2xl)', overflow: 'hidden',
+                  boxShadow: 'var(--shadow-sm)', color: 'var(--text-primary)', animationDelay: `${0.08 * i}s`,
+                  transition: 'transform .3s var(--ease-out), box-shadow .3s var(--ease-out)',
+                }}
                 onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = 'var(--shadow-lg)'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'var(--shadow-sm)'; }}>
-                {v.thumb
-                  ? <img src={v.thumb} alt="" style={{ width: '100%', aspectRatio: '16 / 10', objectFit: 'cover' }} />
-                  : <BrandVisual tone={v.tone} ratio="16 / 10" label="note" radius="0" style={{ boxShadow: 'none' }} />}
-                <div style={{ padding: '24px 22px 26px', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.08em', color: `var(--brand-${v.tone})` }}>{v.cat}</span>
-                  <h3 style={{ fontSize: 18, fontWeight: 900, lineHeight: 1.5, marginTop: 12, flex: 1 }}>{v.title}</h3>
-                  <span className="arrow-link" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 22, fontWeight: 700, fontSize: 14, color: ready ? 'var(--text-primary)' : 'var(--text-muted)' }}>
-                    {ready ? <React.Fragment><b style={{ fontWeight: 800 }}>note</b> で読む <Arrow s={16} /></React.Fragment> : '準備中'}
+                {v.image
+                  ? <img src={v.image} alt="" loading="lazy" style={{ width: '100%', aspectRatio: '16 / 10', objectFit: 'cover' }} />
+                  : <BrandVisual tone={tone} ratio="16 / 10" label="note" radius="0" style={{ boxShadow: 'none' }} />}
+                <div style={{ padding: '22px 22px 24px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.06em', color: `var(--brand-${tone})` }}>{fmtDate(v.pubDate)}</span>
+                  <h3 style={{ fontSize: 17, fontWeight: 900, lineHeight: 1.5, marginTop: 10 }}>{v.title}</h3>
+                  {v.excerpt && <p style={{ fontSize: 13, lineHeight: 1.85, color: 'var(--text-secondary)', marginTop: 10, flex: 1 }}>{v.excerpt}…</p>}
+                  <span className="arrow-link" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 18, fontWeight: 700, fontSize: 14 }}>
+                    <b style={{ fontWeight: 800 }}>note</b> で読む <Arrow s={16} />
                   </span>
                 </div>
-              </Tag>
+              </a>
             );
           })}
         </div>
 
         <div className="reveal" style={{ display: 'flex', justifyContent: 'center', marginTop: 'clamp(40px, 5vw, 64px)' }}>
-          <a href="https://note.com/" target="_blank" rel="noopener noreferrer">
+          <a href={NOTE_URL} target="_blank" rel="noopener noreferrer">
             <Button variant="secondary" tone="ink" size="lg" iconRight={<Arrow />}>note で記事を見る</Button>
           </a>
         </div>

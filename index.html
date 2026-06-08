@@ -29,31 +29,20 @@
     <meta property="og:image" content="https://www.classless.jp/assets/logo-classless-horizontal.png" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- ===== Google Tag Manager =====
-         本番のGTMコンテナIDを設定したら下のコメントを外して GTM-XXXXXXX を置き換えてください。
-         （現状リポジトリにGTMタグは存在しなかったため、差し込み口のみ用意しています）
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
-    -->
-    <!-- ===== End Google Tag Manager ===== -->
+    <!-- ===== Google Analytics (GA4) =====
+         旧サイトで使用していた測定ID(G-E72Y97T6QC)を復元。
+         別IDに変える場合は2箇所の G-E72Y97T6QC を置き換えてください。 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-E72Y97T6QC"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-E72Y97T6QC');
+    </script>
+    <!-- ===== End Google Analytics ===== -->
   </head>
   <body>
-    <!-- ===== Google Tag Manager (noscript) =====
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    -->
-
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-
-    <!-- AI Sales Widget -->
-    <script
-      src="https://ai-sales-widget.vercel.app/widget.js"
-      data-client-id="d97ed303-f2e5-4fdd-b7cd-6bb3d52914e1"
-      data-api-url="https://ai-salesapi-production.up.railway.app"
-    ></script>
   </body>
 </html>
