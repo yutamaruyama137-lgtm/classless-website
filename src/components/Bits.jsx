@@ -35,7 +35,7 @@ function useReveal() {
       entries.forEach((e) => {
         if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
       });
-    }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+    }, { threshold: 0.2, rootMargin: '0px 0px -26% 0px' });
     el.querySelectorAll('.reveal, .draw-underline, .slide-l, .slide-r, .gather-host, .pop-in').forEach((n) => io.observe(n));
     if (el.classList.contains('reveal') || el.classList.contains('draw-underline')) io.observe(el);
     return () => io.disconnect();
@@ -187,7 +187,9 @@ function StarField({ count = 70, color = '255,255,255', shooting = true }) {
 
 /* Drives a CSS variable --p (0→1) on the element as it scrolls through the
    viewport. No React re-render (sets the var directly), so it's cheap. */
-function useScrollVar(centerBias = 0.5) {
+function useScrollVar(centerBias = 0.5, startFrac = 0.82, endFrac = 0.5) {
+  // --p ramps 0→1 only while the element's center travels from startFrac of
+  // the viewport height up to endFrac. Default: starts late, completes dead-center.
   const ref = React.useRef(null);
   React.useEffect(() => {
     const el = ref.current;
@@ -197,8 +199,8 @@ function useScrollVar(centerBias = 0.5) {
       raf = 0;
       const vh = window.innerHeight || document.documentElement.clientHeight;
       const r = el.getBoundingClientRect();
-      const center = r.top + r.height * centerBias;
-      const p = 1 - (center - vh * 0.5) / (vh * 0.65);
+      const center = (r.top + r.height * centerBias) / vh;
+      const p = (startFrac - center) / (startFrac - endFrac);
       el.style.setProperty('--p', Math.max(0, Math.min(1, p)).toFixed(4));
     };
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(upd); };

@@ -66,21 +66,6 @@ function ServiceBlock({ b, flip }) {
               </div>
             </div>
             <p className="reveal" style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text-secondary)', marginTop: 30 }}>{b.body}</p>
-
-            <div className="reveal" style={{ marginTop: 30, animationDelay: '0.06s' }}>
-              <Eyebrow tone={b.tone}>Service Items</Eyebrow>
-              <div style={{ marginTop: 18, borderTop: '1px solid var(--color-border)' }}>
-                {b.items.map((it, i) => (
-                  <a key={i} href="#contact" style={{ display: 'grid', gridTemplateColumns: '108px 1fr 20px', alignItems: 'center', gap: 16, padding: '18px 4px', borderBottom: '1px solid var(--color-border)', color: 'var(--text-primary)' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.background = flip ? 'var(--color-bg)' : 'var(--color-bg-subtle)'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--text-muted)' }}>{it.d}</span>
-                    <span style={{ fontSize: 14.5, fontWeight: 700, lineHeight: 1.6 }}>{it.t}</span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l6 6-6 6" /></svg>
-                  </a>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </div>

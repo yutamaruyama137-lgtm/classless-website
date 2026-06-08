@@ -98,8 +98,13 @@
   from { transform: translate3d(-3%, -2%, 0) scale(1);    }
   to   { transform: translate3d(4%, 3%, 0)   scale(1.12); }
 }
+/* gentle breathing glow on the first look, active from load */
+@keyframes hero-glow {
+  0%, 100% { opacity: 0.34; filter: blur(64px) saturate(1);    }
+  50%      { opacity: 0.62; filter: blur(58px) saturate(1.18); }
+}
 @media (prefers-reduced-motion: no-preference) {
-  .hero-aurora { animation: aurora-shift 22s ease-in-out infinite alternate; }
+  .hero-aurora { animation: aurora-shift 22s ease-in-out infinite alternate, hero-glow 7.5s ease-in-out infinite; }
 }
 
 /* ---- Scroll cue ---- */

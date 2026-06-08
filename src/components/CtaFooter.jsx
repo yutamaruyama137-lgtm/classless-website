@@ -17,14 +17,19 @@ function Company() {
             <div className="reveal"><Eyebrow tone="orange">Company</Eyebrow></div>
             <h2 className="reveal" style={{ fontSize: 'clamp(26px, 3.4vw, 44px)', fontWeight: 900, marginTop: 18, lineHeight: 1.3, animationDelay: '0.08s' }}>会社概要</h2>
           </div>
-          <dl className="reveal" style={{ margin: 0, borderTop: '1px solid var(--color-border)', animationDelay: '0.16s' }}>
-            {rows.map(([k, v]) => (
-              <div key={k} style={{ display: 'grid', gridTemplateColumns: '160px 1fr', gap: 20, padding: '22px 4px', borderBottom: '1px solid var(--color-border)' }}>
-                <dt style={{ fontFamily: 'var(--font-jp)', fontWeight: 700, fontSize: 14, color: 'var(--text-muted)' }}>{k}</dt>
-                <dd style={{ margin: 0, fontFamily: 'var(--font-jp)', fontWeight: 700, fontSize: 16, color: 'var(--text-primary)', lineHeight: 1.7 }}>{v}</dd>
-              </div>
-            ))}
-          </dl>
+          <div className="reveal" style={{ animationDelay: '0.16s' }}>
+            <dl style={{ margin: 0, borderTop: '1px solid var(--color-border)' }}>
+              {rows.map(([k, v]) => (
+                <div key={k} style={{ display: 'grid', gridTemplateColumns: '160px 1fr', gap: 20, padding: '22px 4px', borderBottom: '1px solid var(--color-border)' }}>
+                  <dt style={{ fontFamily: 'var(--font-jp)', fontWeight: 700, fontSize: 14, color: 'var(--text-muted)' }}>{k}</dt>
+                  <dd style={{ margin: 0, fontFamily: 'var(--font-jp)', fontWeight: 700, fontSize: 16, color: 'var(--text-primary)', lineHeight: 1.7 }}>{v}</dd>
+                </div>
+              ))}
+            </dl>
+            <p style={{ fontSize: 11, lineHeight: 1.7, color: 'var(--text-muted)', marginTop: 14, opacity: 0.8 }}>
+              所在地：東京都渋谷区円山町5番3号 MIEUX渋谷ビル8階（バーチャルオフィス／移転予定）
+            </p>
+          </div>
         </div>
       </div>
     </section>
