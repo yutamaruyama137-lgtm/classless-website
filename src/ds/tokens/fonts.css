@@ -1,0 +1,14 @@
+/* ============================================================
+   Classless — Webfonts
+   ------------------------------------------------------------
+   Brand JP face is セザンヌ (Cézanne, Fontworks) — a commercial
+   humanist gothic. It is NOT freely redistributable, so the
+   system ships the closest free substitute:
+
+     セザンヌ  →  Zen Kaku Gothic New   (humanist, warm, full weight range)
+
+   Replace the @import below with a self-hosted @font-face block
+   pointing at licensed Cézanne binaries for production.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Jost:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');

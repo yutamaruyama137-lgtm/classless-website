@@ -1,0 +1,33 @@
+/* ============================================================
+   Classless — Elevation, Borders & Motion Tokens
+   Shadows stay soft and neutral so color does the talking.
+   ============================================================ */
+
+:root {
+  /* ---- Shadows ---- */
+  --shadow-xs: 0 1px 2px rgba(26, 29, 34, 0.06);
+  --shadow-sm: 0 1px 2px rgba(26, 29, 34, 0.06),
+               0 1px 3px rgba(26, 29, 34, 0.08);
+  --shadow-md: 0 4px 12px rgba(26, 29, 34, 0.08),
+               0 2px 4px rgba(26, 29, 34, 0.04);
+  --shadow-lg: 0 12px 28px rgba(26, 29, 34, 0.12),
+               0 4px 8px rgba(26, 29, 34, 0.06);
+  --shadow-xl: 0 24px 56px rgba(26, 29, 34, 0.16),
+               0 8px 16px rgba(26, 29, 34, 0.08);
+
+  /* Lifted card on hover */
+  --shadow-hover: 0 16px 40px rgba(26, 29, 34, 0.14);
+
+  /* ---- Motion ---- */
+  --dur-fast: 120ms; /* @kind other */
+  --dur: 200ms; /* @kind other */
+  --dur-slow: 360ms; /* @kind other */
+  --dur-slower: 560ms; /* @kind other */
+
+  --ease-out: cubic-bezier(0.22, 0.8, 0.28, 1); /* @kind other */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* @kind other */
+  /* Slight overshoot — the energetic, playful side of the brand */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* @kind other */
+
+  --transition-base: var(--dur) var(--ease-out); /* @kind other */
+}

@@ -1,0 +1,97 @@
+/* ============================================================
+   Classless — corporate site (custom layer on top of the DS)
+   Only motion + a few page-level helpers live here; all color,
+   type and spacing come from the design-system tokens.
+   ============================================================ */
+
+/* ---- Animated overlapping color field (LayerX-style first look) ---- */
+.cf {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.cf__blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(58px);
+  mix-blend-mode: multiply;
+  opacity: 0.82;
+  will-change: transform;
+}
+.cf__blob.red    { background: radial-gradient(circle at 50% 50%, var(--brand-red),    transparent 68%); }
+.cf__blob.orange { background: radial-gradient(circle at 50% 50%, var(--brand-orange), transparent 68%); }
+.cf__blob.blue   { background: radial-gradient(circle at 50% 50%, var(--brand-blue),   transparent 68%); }
+.cf__blob.green  { background: radial-gradient(circle at 50% 50%, var(--brand-green),  transparent 68%); }
+
+@keyframes drift-a { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(7vw, 5vh) scale(1.18); } 66% { transform: translate(-4vw, 9vh) scale(0.92); } }
+@keyframes drift-b { 0%,100% { transform: translate(0,0) scale(1.05); } 30% { transform: translate(-8vw, 6vh) scale(0.9); } 60% { transform: translate(5vw, -4vh) scale(1.22); } }
+@keyframes drift-c { 0%,100% { transform: translate(0,0) scale(0.95); } 40% { transform: translate(6vw, -7vh) scale(1.2); } 70% { transform: translate(-7vw, 3vh) scale(1.02); } }
+@keyframes drift-d { 0%,100% { transform: translate(0,0) scale(1.1); } 35% { transform: translate(-5vw, -6vh) scale(0.95); } 65% { transform: translate(8vw, 6vh) scale(1.15); } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .cf__blob.red    { animation: drift-a 26s var(--ease-out, ease) infinite; }
+  .cf__blob.orange { animation: drift-b 30s var(--ease-out, ease) infinite; }
+  .cf__blob.blue   { animation: drift-c 24s var(--ease-out, ease) infinite; }
+  .cf__blob.green  { animation: drift-d 28s var(--ease-out, ease) infinite; }
+}
+
+/* ---- Entrance reveal (staggered) — visible by default; only hidden
+   pre-animation when live motion is allowed, so static capture / reduced
+   motion / no-JS all show content. ---- */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .reveal:not(.in) { opacity: 0; transform: translateY(22px); }
+  .reveal.in { animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+}
+
+/* ---- Spectrum underline that draws itself ---- */
+@keyframes draw-line { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.draw-underline {
+  display: inline-block;
+  position: relative;
+}
+.draw-underline::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -0.14em;
+  height: 0.16em;
+  border-radius: var(--radius-pill);
+  background: var(--gradient-spectrum-smooth);
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .draw-underline:not(.in)::after { transform: scaleX(0); }
+  .draw-underline.in::after { animation: draw-line 0.9s 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+}
+
+/* ---- Scroll cue ---- */
+@keyframes nudge { 0%,100% { transform: translateY(0); opacity: 0.5; } 50% { transform: translateY(7px); opacity: 1; } }
+.scroll-cue svg { animation: nudge 1.8s ease-in-out infinite; }
+
+/* ---- Service row hover image tint shift ---- */
+.svc-visual { transition: transform 0.5s var(--ease-out, ease); }
+.svc-row:hover .svc-visual { transform: scale(1.03); }
+
+/* ---- Directional slide-in (photos enter from alternating sides) ---- */
+@keyframes slide-from-l { from { opacity: 0; transform: translateX(-46px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes slide-from-r { from { opacity: 0; transform: translateX(46px); }  to { opacity: 1; transform: translateX(0); } }
+@media (prefers-reduced-motion: no-preference) {
+  .slide-l:not(.in) { opacity: 0; transform: translateX(-46px); }
+  .slide-r:not(.in) { opacity: 0; transform: translateX(46px); }
+  .slide-l.in { animation: slide-from-l 1s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+  .slide-r.in { animation: slide-from-r 1s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+}
+
+/* ---- Scroll parallax: JS sets --py on [data-parallax] wrappers ---- */
+.parallax { transform: translate3d(0, var(--py, 0px), 0); will-change: transform; }
+@media (prefers-reduced-motion: reduce) { .parallax { transform: none !important; } }
+
+/* ---- Generic link arrow slide ---- */
+.arrow-link svg { transition: transform 0.25s var(--ease-out, ease); }
+.arrow-link:hover svg { transform: translateX(4px); }
