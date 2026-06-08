@@ -18,6 +18,7 @@ import './components/Bits.jsx'
 import './components/Header.jsx'
 import './components/Hero.jsx'
 import './components/Mission.jsx'
+import './components/ColorMerge.jsx'
 import './components/Services.jsx'
 import './components/Voices.jsx'
 import './components/ServicesDetail.jsx'
@@ -47,7 +48,7 @@ function scrollToId(id) {
 function App() {
   const {
     Header, Hero, Mission, Services, Company, JoinCta,
-    ServicesDetail, Philosophy, ContactBand, Footer, Voices,
+    ServicesDetail, Philosophy, ContactBand, Footer, Voices, ColorMerge,
   } = window
 
   const route = getRoute()
@@ -101,6 +102,7 @@ function App() {
       <main>
         <Hero onNav={scrollToId} />
         <Mission />
+        <ColorMerge />
         <Services />
         <Voices />
         <Company />
@@ -117,7 +119,7 @@ createRoot(document.getElementById('root')).render(<App />)
 if (window.initParallax) window.initParallax()
 setTimeout(() => {
   document
-    .querySelectorAll('.reveal, .draw-underline, .slide-l, .slide-r')
+    .querySelectorAll('.reveal, .draw-underline, .slide-l, .slide-r, .gather-host, .pop-in')
     .forEach((n) => n.classList.add('in'))
 }, 1200)
 

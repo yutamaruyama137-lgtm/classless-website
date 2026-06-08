@@ -33,17 +33,19 @@ function Company() {
 
 function JoinCta({ onNav }) {
   const { Button } = window.ClasslessDesignSystem_225e16;
-  const { ColorField, useReveal, Arrow } = window;
+  const { ColorField, useReveal, Arrow, StarField, gatherChars } = window;
   const ref = useReveal();
   return (
     <section id="contact" ref={ref} style={{ background: 'var(--neutral-900)', position: 'relative', overflow: 'hidden' }}>
       <ColorField density="cta" style={{ opacity: 0.55 }} />
+      <StarField color="255,255,255" />
       <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(900px 420px at 50% -10%, rgba(55,171,217,0.22), transparent 62%)', pointerEvents: 'none' }} />
       <div className="cl-container" style={{ position: 'relative', zIndex: 1, paddingTop: 'var(--section-y)', paddingBottom: 'var(--section-y)', textAlign: 'center' }}>
         <span className="cl-spectrum-bar reveal" style={{ width: 72, height: 6, margin: '0 auto 30px' }} />
         <div className="reveal" style={{ fontFamily: 'var(--font-eyebrow)', fontWeight: 700, fontSize: 14, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--brand-blue)', animationDelay: '0.06s' }}>Let's Build Together</div>
-        <h2 className="reveal" style={{ color: '#fff', fontSize: 'clamp(30px, 4.6vw, 62px)', fontWeight: 900, marginTop: 22, lineHeight: 1.26, letterSpacing: '0.02em', animationDelay: '0.14s' }}>
-          地方の未来を、<br />一緒に実装しよう。
+        <h2 className="gather-host" style={{ color: '#fff', fontSize: 'clamp(30px, 4.6vw, 62px)', fontWeight: 900, marginTop: 22, lineHeight: 1.26, letterSpacing: '0.02em' }}>
+          <span style={{ display: 'block' }}>{gatherChars('地方の未来を、')}</span>
+          <span style={{ display: 'block' }}>{gatherChars('一緒に実装しよう。', { base: 0.1 })}</span>
         </h2>
         <p className="reveal" style={{ color: 'rgba(255,255,255,0.74)', fontSize: 17, lineHeight: 1.95, maxWidth: '40em', margin: '24px auto 0', fontWeight: 500, animationDelay: '0.22s' }}>
           AI BPOのご相談から、システム開発・人材育成まで。<br className="hide-sp" />まずはお気軽にお問い合わせください。初回のご相談は無料です。
