@@ -75,7 +75,7 @@ function Section({ children, bg = 'transparent', id, style = {}, pad = 'var(--se
 
 /* Brand-tinted visual block standing in for production photography.
    Cohesive with the color-field motif; carries a soft mark watermark. */
-function BrandVisual({ tone = 'blue', label, ratio = '4 / 3', radius = 'var(--radius-2xl)', className = '', style = {}, tilt = true }) {
+function BrandVisual({ tone = 'blue', label, image, ratio = '4 / 3', radius = 'var(--radius-2xl)', className = '', style = {}, tilt = true }) {
   const ramp = {
     blue:   ['var(--blue-200)', 'var(--blue-500)'],
     green:  ['var(--green-200)', 'var(--green-500)'],
@@ -102,13 +102,17 @@ function BrandVisual({ tone = 'blue', label, ratio = '4 / 3', radius = 'var(--ra
   return (
     <div className={`bv-tilt ${className}`} onMouseMove={onMove} onMouseLeave={onLeave} style={{
       aspectRatio: ratio, width: '100%', borderRadius: radius, overflow: 'hidden',
-      background: `linear-gradient(140deg, ${ramp[0]}, ${ramp[1]})`,
+      background: image ? 'var(--color-bg-subtle)' : `linear-gradient(140deg, ${ramp[0]}, ${ramp[1]})`,
       position: 'relative', boxShadow: 'var(--shadow-lg)', transformStyle: 'preserve-3d', ...style,
     }}>
-      <img src="/assets/mark-classless.png" alt="" style={{
-        position: 'absolute', right: -28, bottom: -24, width: '46%', opacity: 0.16,
-        filter: 'grayscale(1) brightness(3)', mixBlendMode: 'soft-light',
-      }} />
+      {image ? (
+        <img src={image} alt={label || ''} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+      ) : (
+        <img src="/assets/mark-classless.png" alt="" style={{
+          position: 'absolute', right: -28, bottom: -24, width: '46%', opacity: 0.16,
+          filter: 'grayscale(1) brightness(3)', mixBlendMode: 'soft-light',
+        }} />
+      )}
       <span className="bv-sheen" aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'transparent', transition: 'background .2s', pointerEvents: 'none' }} />
       {label && (
         <span style={{ position: 'absolute', left: 18, bottom: 14, fontFamily: 'var(--font-mono)',

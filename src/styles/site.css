@@ -145,7 +145,8 @@
 }
 
 /* ---- Sitewide ambient flow: faint light streaks drifting across the page ---- */
-.ambient-flow { position: fixed; inset: 0; z-index: 5; pointer-events: none; overflow: hidden; }
+#root { position: relative; z-index: 1; }
+.ambient-flow { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
 .afl {
   position: absolute;
   top: 0; left: 0;

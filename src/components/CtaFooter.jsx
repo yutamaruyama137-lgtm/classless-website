@@ -9,7 +9,6 @@ function Company() {
   const cTitleN = s.count();
   const rows = [
     ['会社名', '合同会社Classless'],
-    ['拠点', '宮城県仙台市（東北）'],
     ['事業内容', 'AI BPO / AIシステム開発 / データベース最適化 / AI教育'],
   ];
   return (
@@ -77,7 +76,7 @@ function ContactBand() {
   const { useReveal, Arrow } = window;
   const ref = useReveal();
   return (
-    <section id="contact" ref={ref} style={{ background: 'var(--color-bg)', borderTop: '1px solid var(--color-border)' }}>
+    <section id="contact" ref={ref} style={{ background: 'transparent', borderTop: '1px solid var(--color-border)' }}>
       <div className="cl-container" style={{ paddingTop: 'clamp(64px, 8vw, 120px)', paddingBottom: 'clamp(64px, 8vw, 120px)' }}>
         <div className="grid2" style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 32, alignItems: 'center' }}>
           <div className="reveal">

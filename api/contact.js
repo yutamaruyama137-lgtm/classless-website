@@ -7,7 +7,7 @@
 // 依存パッケージは追加せず、Resend の REST API を fetch で直接叩く。
 
 const TO = 'contact@classless.jp'
-const FROM = 'Classless お問い合わせ <contact@classless.jp>'
+const FROM = process.env.MAIL_FROM || 'Classless お問い合わせ <contact@classless.jp>'
 
 function esc(s) {
   return String(s == null ? '' : s).replace(/[<>&]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]))

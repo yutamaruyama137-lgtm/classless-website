@@ -55,7 +55,7 @@ function Values() {
     { tone: 'orange', en: 'Stay curious', t: 'おもしろがる', d: 'むずかしさも、変化も、まず楽しんでみる。前向きさが、いい仕事を生みます。', icon: 'M12 2a10 10 0 100 20 10 10 0 000-20zM9 9h.01M15 9h.01M8 14s1.5 2 4 2 4-2 4-2' },
   ];
   return (
-    <section ref={ref} style={{ background: 'var(--color-bg)', paddingTop: 'clamp(56px, 8vw, 112px)', paddingBottom: 'clamp(56px, 8vw, 112px)' }}>
+    <section ref={ref} style={{ background: 'transparent', paddingTop: 'clamp(56px, 8vw, 112px)', paddingBottom: 'clamp(56px, 8vw, 112px)' }}>
       <div className="cl-container">
         <div className="reveal" style={{ textAlign: 'center' }}>
           <div style={{ display: 'flex', justifyContent: 'center' }}><Eyebrow>Values</Eyebrow></div>
@@ -86,7 +86,7 @@ function Philosophy() {
       <PhilosophyHero />
       <Statement
         kind="Mission" tone="green"
-        bg="var(--color-bg)"
+        bg="transparent"
         glow="radial-gradient(620px 420px at 82% 12%, rgba(20,169,137,0.14), transparent 60%), radial-gradient(520px 360px at 70% 80%, rgba(55,171,217,0.10), transparent 62%)"
         linesData={[
           [{ t: 'AIで、人間を' }, { t: '面白く', c: 'green' }, { t: 'する。' }],

@@ -73,7 +73,7 @@ function ContactPage() {
   const topics = ['AI BPO', 'AIシステム開発', 'データベース最適化', 'AI教育', '採用・その他'];
 
   return (
-    <section id="contact" ref={ref} style={{ position: 'relative', overflow: 'hidden', background: 'var(--color-bg)' }}>
+    <section id="contact" ref={ref} style={{ position: 'relative', overflow: 'hidden', background: 'transparent' }}>
       <div className="hero-aurora" aria-hidden="true" style={{ opacity: 0.32 }} />
       <ColorField density="cta" style={{ opacity: 0.4 }} />
 

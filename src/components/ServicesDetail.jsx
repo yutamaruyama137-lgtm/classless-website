@@ -49,7 +49,7 @@ function ServiceBlock({ b, flip }) {
   const bTitle = s.chars(b.title);
   const bTitleN = s.count();
   return (
-    <section id={b.id} ref={ref} style={{ background: flip ? 'var(--color-bg-subtle)' : 'var(--color-bg)', paddingTop: 'clamp(56px, 8vw, 112px)', paddingBottom: 'clamp(56px, 8vw, 112px)' }}>
+    <section id={b.id} ref={ref} style={{ background: flip ? 'var(--color-bg-subtle)' : 'transparent', paddingTop: 'clamp(56px, 8vw, 112px)', paddingBottom: 'clamp(56px, 8vw, 112px)' }}>
       <div className="cl-container">
         <div className="grid2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(32px, 5vw, 72px)', alignItems: 'start' }}>
 
@@ -69,7 +69,7 @@ function ServiceBlock({ b, flip }) {
           <div style={{ order: flip ? 1 : 2 }}>
             <div className={flip ? 'slide-l' : 'slide-r'}>
               <div className="parallax" data-parallax={flip ? 0.05 : 0.06}>
-                <BrandVisual tone={b.tone} ratio="16 / 10" label={`business / ${b.tag.toLowerCase()}`} className="svc-visual" />
+                <BrandVisual tone={b.tone} image={b.image} ratio="16 / 10" label={`business / ${b.tag.toLowerCase()}`} className="svc-visual" />
               </div>
             </div>
             <p className="reveal" style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text-secondary)', marginTop: 30 }}>{b.body}</p>
@@ -82,7 +82,7 @@ function ServiceBlock({ b, flip }) {
 
 function ServicesDetail() {
   const businesses = [
-    { no: '01', id: 'svc-01', tone: 'blue', tag: 'AI BPO', title: 'AI BPO',
+    { no: '01', id: 'svc-01', tone: 'blue', tag: 'AI BPO', title: 'AI BPO', image: '/business/ai-bpo.png',
       subtitle: '繰り返しの業務をAIに任せ、人はより価値ある仕事へ。',
       body: 'ヒアリングから設計・実装・定着支援まで一気通貫で対応します。SNS運用・営業メール・データ処理など、あらゆる定型業務を自動化し、人にしかできない仕事に集中できる環境をつくります。',
       items: [
@@ -90,7 +90,7 @@ function ServicesDetail() {
         { d: '2026.04.10', t: '営業メールの自動生成・送信フローを構築し、返信率が向上' },
         { d: '2026.03.02', t: 'バックオフィスのデータ入力をAIエージェントで自動化' },
       ] },
-    { no: '02', id: 'svc-02', tone: 'orange', tag: 'System Development', title: 'AIシステム開発',
+    { no: '02', id: 'svc-02', tone: 'orange', tag: 'System Development', title: 'AIシステム開発', image: '/business/ai-system.png',
       subtitle: '業種特化型のAIエージェントを、御社専用に。',
       body: '既製ツールでは解決できない課題に対し、業務フローに合わせたオーダーメイドのAIシステムを設計・開発します。外部CAIO（AI統括人材）の派遣もセットで提供し、開発から運用までを伴走します。',
       items: [
@@ -98,7 +98,7 @@ function ServicesDetail() {
         { d: '2026.04.18', t: '外部CAIO（AI統括人材）派遣プログラムの提供を開始' },
         { d: '2026.03.15', t: '社内ナレッジ検索AIをオーダーメイドで構築' },
       ] },
-    { no: '03', id: 'svc-03', tone: 'green', tag: 'Database Optimization', title: 'データベース最適化',
+    { no: '03', id: 'svc-03', tone: 'green', tag: 'Database Optimization', title: 'データベース最適化', image: '/business/database.png',
       subtitle: 'AIが正しく機能する、データの土台をつくる。',
       body: 'データの整理・構造化・最適化を行い、社内に散らばった情報資産を整備します。AIが本来の力を発揮できる基盤を構築し、導入効果を最大化します。',
       items: [
@@ -106,7 +106,7 @@ function ServicesDetail() {
         { d: '2026.04.05', t: '社内ドキュメントの構造化・タグ付けを自動化' },
         { d: '2026.02.28', t: 'データ品質を可視化するダッシュボードを提供' },
       ] },
-    { no: '04', id: 'svc-04', tone: 'red', tag: 'AI Education', title: 'AI教育',
+    { no: '04', id: 'svc-04', tone: 'red', tag: 'AI Education', title: 'AI教育', image: '/business/ai-education.png',
       subtitle: 'ツールを導入して終わりにしない。',
       body: '社内でAIを使いこなせる人材を育てる研修・ワークショップを提供します。現場で即実践できるプログラム設計が強みで、組織にAI活用の文化を根づかせます。',
       items: [

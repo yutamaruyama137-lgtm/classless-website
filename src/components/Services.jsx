@@ -16,6 +16,7 @@ function Services() {
       lead: '繰り返しの業務をAIに任せ、人間はより価値ある仕事へ。',
       body: 'ヒアリングから設計・実装・定着支援まで一気通貫で対応します。SNS運用・営業メール・データ処理など、あらゆる定型業務を自動化します。',
       chips: ['SNS運用', '営業メール', 'データ処理', '定着支援'],
+      image: '/business/ai-bpo.png',
     },
     {
       no: '02', tone: 'orange', tag: 'System Development',
@@ -23,6 +24,7 @@ function Services() {
       lead: '業種特化型のAIエージェントを、御社専用に。',
       body: '既製ツールでは解決できない課題に対し、業務フローに合わせたオーダーメイドのAIシステムを設計・開発。外部CAIO（AI統括人材）の派遣もセットで提供します。',
       chips: ['AIエージェント', 'オーダーメイド', '外部CAIO派遣'],
+      image: '/business/ai-system.png',
     },
     {
       no: '03', tone: 'green', tag: 'Database Optimization',
@@ -30,6 +32,7 @@ function Services() {
       lead: 'AIが正しく機能する、データの土台をつくる。',
       body: 'AIの価値を最大化するために、データの整理・構造化・最適化を行います。社内に散らばった情報資産を整備し、AIが力を発揮できる基盤を構築します。',
       chips: ['整理', '構造化', '最適化'],
+      image: '/business/database.png',
     },
     {
       no: '04', tone: 'red', tag: 'AI Education',
@@ -37,11 +40,12 @@ function Services() {
       lead: 'ツールを導入して終わりにしない。',
       body: '社内でAIを使いこなせる人材を育てるための研修・ワークショップを提供します。現場で即実践できるプログラム設計が、私たちの強みです。',
       chips: ['研修', 'ワークショップ', '実践プログラム'],
+      image: '/business/ai-education.png',
     },
   ];
 
   return (
-    <section id="services" ref={ref} style={{ background: 'var(--color-bg)', paddingTop: 'var(--section-y)', paddingBottom: 'var(--section-y)' }}>
+    <section id="services" ref={ref} style={{ paddingTop: 'var(--section-y)', paddingBottom: 'var(--section-y)' }}>
       <div className="cl-container">
         {/* heading */}
         <div className="grid2" style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 'clamp(24px, 4vw, 64px)', alignItems: 'end', marginBottom: 'clamp(48px, 6vw, 88px)' }}>
@@ -87,7 +91,7 @@ function Services() {
                 {/* visual */}
                 <div className={flip ? 'slide-l' : 'slide-r'} style={{ order: flip ? 1 : 2 }}>
                   <div className="parallax" data-parallax={flip ? 0.045 : 0.06} style={{ position: 'relative' }}>
-                    <BrandVisual tone={it.tone} ratio="5 / 4" label={`service / ${it.tag.toLowerCase()}`} className="svc-visual" />
+                    <BrandVisual tone={it.tone} image={it.image} ratio="5 / 4" label={`service / ${it.tag.toLowerCase()}`} className="svc-visual" />
                     <span style={{
                       position: 'absolute', top: -16, [flip ? 'right' : 'left']: -10, zIndex: 2,
                       fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 13, letterSpacing: '0.16em',
