@@ -1,8 +1,13 @@
 /* Classless corporate site — 事業内容 (4 business segments, Digital-Gorilla-style rows) */
 function Services() {
   const { Badge, Button } = window.ClasslessDesignSystem_225e16;
-  const { useReveal, Eyebrow, BrandVisual, Arrow } = window;
+  const { useReveal, Eyebrow, BrandVisual, Arrow, useScrollVar, makeSplit } = window;
   const ref = useReveal();
+  const titleRef = useScrollVar(0.5, 0.9, 0.46);
+  const s = makeSplit();
+  const sl1 = s.chars('4つの領域で、');
+  const sl2 = s.chars('AI活用をまるごと支える。');
+  const sTitleN = s.count();
 
   const items = [
     {
@@ -42,8 +47,9 @@ function Services() {
         <div className="grid2" style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 'clamp(24px, 4vw, 64px)', alignItems: 'end', marginBottom: 'clamp(48px, 6vw, 88px)' }}>
           <div>
             <div className="reveal"><Eyebrow>What We Do</Eyebrow></div>
-            <h2 className="reveal" style={{ fontSize: 'clamp(27px, 3.5vw, 46px)', fontWeight: 900, marginTop: 18, letterSpacing: '0.01em', lineHeight: 1.32, animationDelay: '0.1s' }}>
-              4つの領域で、<br />AI活用をまるごと支える。
+            <h2 ref={titleRef} className="split-host" style={{ fontSize: 'clamp(27px, 3.5vw, 46px)', fontWeight: 900, marginTop: 18, letterSpacing: '0.01em', lineHeight: 1.32, '--n': sTitleN, '--win': 7 }}>
+              <span style={{ display: 'block' }}>{sl1}</span>
+              <span style={{ display: 'block' }}>{sl2}</span>
             </h2>
           </div>
           <p className="reveal" style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text-secondary)', fontWeight: 500, animationDelay: '0.18s' }}>

@@ -2,9 +2,14 @@
    4つのブランドカラーがスクロールに連動して中央へ集まり、重なって
    Classless のマークが浮かび上がる。--p (0→1) は useScrollVar が駆動。 */
 function ColorMerge() {
-  const { useReveal, Eyebrow, useScrollVar, gatherChars } = window;
+  const { useReveal, Eyebrow, useScrollVar, makeSplit } = window;
   const ref = useReveal();
   const stageRef = useScrollVar(0.5);
+  const titleRef = useScrollVar(0.5, 0.9, 0.46);
+  const s = makeSplit();
+  const cl1 = s.chars('4つの領域が重なって、');
+  const cl2 = s.chars('ひとつのAI活用力になる。');
+  const cmTitleN = s.count();
 
   const orbs = [
     { c: 'red',    ox: '-150px', oy: '-96px' },
@@ -28,9 +33,9 @@ function ColorMerge() {
           <img className="merge-mark" src="/assets/mark-classless.png" alt="" aria-hidden="true" />
         </div>
 
-        <h2 className="gather-host" style={{ fontSize: 'clamp(24px, 3.4vw, 46px)', fontWeight: 900, lineHeight: 1.4, letterSpacing: '0.01em', marginTop: 'clamp(8px, 2vw, 24px)' }}>
-          <span style={{ display: 'block' }}>{gatherChars('4つの領域が重なって、')}</span>
-          <span style={{ display: 'block' }}>{gatherChars('ひとつのAI活用力になる。', { base: 0.12 })}</span>
+        <h2 ref={titleRef} className="split-host" style={{ fontSize: 'clamp(24px, 3.4vw, 46px)', fontWeight: 900, lineHeight: 1.4, letterSpacing: '0.01em', marginTop: 'clamp(8px, 2vw, 24px)', '--n': cmTitleN, '--win': 7 }}>
+          <span style={{ display: 'block' }}>{cl1}</span>
+          <span style={{ display: 'block' }}>{cl2}</span>
         </h2>
         <p className="reveal" style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text-secondary)', fontWeight: 500, maxWidth: '34em', margin: '20px auto 0', animationDelay: '0.1s' }}>
           AI BPO・システム開発・データベース最適化・AI教育。バラバラの点ではなく、重なり合う面で、御社のAI活用を支えます。

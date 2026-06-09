@@ -1,13 +1,16 @@
 /* Classless corporate site — company info, dark CTA, footer */
 
 function Company() {
-  const { useReveal, Eyebrow } = window;
+  const { useReveal, Eyebrow, useScrollVar, makeSplit } = window;
   const ref = useReveal();
+  const titleRef = useScrollVar(0.5, 0.9, 0.46);
+  const s = makeSplit();
+  const cTitle = s.chars('会社概要');
+  const cTitleN = s.count();
   const rows = [
     ['会社名', '合同会社Classless'],
     ['拠点', '宮城県仙台市（東北）'],
     ['事業内容', 'AI BPO / AIシステム開発 / データベース最適化 / AI教育'],
-    ['ミッション', '地方からAIで、人間の可能性を解放する。'],
   ];
   return (
     <section id="company" ref={ref} style={{ background: 'var(--color-bg-subtle)', paddingTop: 'var(--section-y)', paddingBottom: 'var(--section-y)' }}>
@@ -15,7 +18,7 @@ function Company() {
         <div className="grid2" style={{ display: 'grid', gridTemplateColumns: '0.8fr 1.2fr', gap: 'clamp(32px, 5vw, 80px)', alignItems: 'start' }}>
           <div>
             <div className="reveal"><Eyebrow tone="orange">Company</Eyebrow></div>
-            <h2 className="reveal" style={{ fontSize: 'clamp(26px, 3.4vw, 44px)', fontWeight: 900, marginTop: 18, lineHeight: 1.3, animationDelay: '0.08s' }}>会社概要</h2>
+            <h2 ref={titleRef} className="split-host" style={{ fontSize: 'clamp(26px, 3.4vw, 44px)', fontWeight: 900, marginTop: 18, lineHeight: 1.3, '--n': cTitleN, '--win': 4 }}>{cTitle}</h2>
           </div>
           <div className="reveal" style={{ animationDelay: '0.16s' }}>
             <dl style={{ margin: 0, borderTop: '1px solid var(--color-border)' }}>
@@ -38,8 +41,13 @@ function Company() {
 
 function JoinCta({ onNav }) {
   const { Button } = window.ClasslessDesignSystem_225e16;
-  const { ColorField, useReveal, Arrow, StarField, gatherChars } = window;
+  const { ColorField, useReveal, Arrow, StarField, useScrollVar, makeSplit } = window;
   const ref = useReveal();
+  const titleRef = useScrollVar(0.5, 0.92, 0.5);
+  const s = makeSplit();
+  const jl1 = s.chars('地方の未来を、');
+  const jl2 = s.chars('一緒に実装しよう。');
+  const jTitleN = s.count();
   return (
     <section id="contact" ref={ref} style={{ background: 'var(--neutral-900)', position: 'relative', overflow: 'hidden' }}>
       <ColorField density="cta" style={{ opacity: 0.55 }} />
@@ -48,16 +56,16 @@ function JoinCta({ onNav }) {
       <div className="cl-container" style={{ position: 'relative', zIndex: 1, paddingTop: 'var(--section-y)', paddingBottom: 'var(--section-y)', textAlign: 'center' }}>
         <span className="cl-spectrum-bar reveal" style={{ width: 72, height: 6, margin: '0 auto 30px' }} />
         <div className="reveal" style={{ fontFamily: 'var(--font-eyebrow)', fontWeight: 700, fontSize: 14, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--brand-blue)', animationDelay: '0.06s' }}>Let's Build Together</div>
-        <h2 className="gather-host" style={{ color: '#fff', fontSize: 'clamp(30px, 4.6vw, 62px)', fontWeight: 900, marginTop: 22, lineHeight: 1.26, letterSpacing: '0.02em' }}>
-          <span style={{ display: 'block' }}>{gatherChars('地方の未来を、')}</span>
-          <span style={{ display: 'block' }}>{gatherChars('一緒に実装しよう。', { base: 0.1 })}</span>
+        <h2 ref={titleRef} className="split-host" style={{ color: '#fff', fontSize: 'clamp(30px, 4.6vw, 62px)', fontWeight: 900, marginTop: 22, lineHeight: 1.26, letterSpacing: '0.02em', '--n': jTitleN, '--win': 7 }}>
+          <span style={{ display: 'block' }}>{jl1}</span>
+          <span style={{ display: 'block' }}>{jl2}</span>
         </h2>
         <p className="reveal" style={{ color: 'rgba(255,255,255,0.74)', fontSize: 17, lineHeight: 1.95, maxWidth: '40em', margin: '24px auto 0', fontWeight: 500, animationDelay: '0.22s' }}>
           AI BPOのご相談から、システム開発・人材育成まで。<br className="hide-sp" />まずはお気軽にお問い合わせください。初回のご相談は無料です。
         </p>
         <div className="reveal" style={{ display: 'flex', gap: 14, justifyContent: 'center', marginTop: 40, flexWrap: 'wrap', animationDelay: '0.3s' }}>
-          <Button size="lg" iconRight={<Arrow />}>無料で相談する</Button>
-          <Button size="lg" variant="secondary" tone="ink" style={{ background: 'transparent', color: '#fff', borderColor: 'rgba(255,255,255,0.4)' }}>資料をダウンロード</Button>
+          <Button size="lg" iconRight={<Arrow />} onClick={() => onNav && onNav('contact')}>無料で相談する</Button>
+          <a href="/business"><Button size="lg" variant="secondary" tone="ink" style={{ background: 'transparent', color: '#fff', borderColor: 'rgba(255,255,255,0.4)' }}>事業内容を見る</Button></a>
         </div>
       </div>
     </section>
@@ -76,7 +84,7 @@ function ContactBand() {
             <div style={{ fontFamily: 'var(--font-eyebrow)', fontWeight: 700, fontSize: 'clamp(34px, 5vw, 64px)', letterSpacing: '0.01em', color: 'var(--text-primary)' }}>Contact</div>
             <p style={{ fontSize: 16, color: 'var(--text-secondary)', fontWeight: 600, marginTop: 10 }}>AI活用のご相談・お見積りはこちらから。</p>
           </div>
-          <a href="#" onClick={(e) => e.preventDefault()} className="reveal" style={{ animationDelay: '0.1s' }}>
+          <a href="/contact" className="reveal" style={{ animationDelay: '0.1s' }}>
             <Button size="lg" iconRight={<Arrow />}>お問い合わせ</Button>
           </a>
         </div>
@@ -99,8 +107,8 @@ function Footer({ onNav }) {
       { l: '会社概要', href: '/#company' },
     ] },
     { h: 'お問い合わせ', items: [
-      { l: '無料相談', href: '#contact' },
-      { l: '資料ダウンロード', href: '#contact' },
+      { l: 'お問い合わせフォーム', href: '/contact' },
+      { l: '無料相談', href: '/contact' },
     ] },
   ];
   return (

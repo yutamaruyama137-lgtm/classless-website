@@ -1,13 +1,23 @@
 /* Classless — 事業内容 detail page (LayerX-style scroll-through) */
 
 function DetailHero() {
-  const { ColorField, useReveal, Eyebrow } = window;
+  const { ColorField, useReveal, Eyebrow, useScrollVar, makeSplit } = window;
   const ref = useReveal();
+  const h1Ref = useScrollVar(0.5, 0.92, 0.5);
+  const s1 = makeSplit();
+  const dTitle = s1.chars('事業内容');
+  const dTitleN = s1.count();
+  const h2Ref = useScrollVar(0.5, 0.9, 0.46);
+  const s2 = makeSplit();
+  const dl1 = s2.chars('Classless は、地方の');
+  const dl2 = s2.chars('あらゆる現場の課題解決に');
+  const dl3 = s2.chars('挑戦を続けています。');
+  const dLeadN = s2.count();
   return (
     <section ref={ref} style={{ paddingTop: 'clamp(72px, 9vw, 128px)', paddingBottom: 'clamp(40px, 5vw, 72px)' }}>
       <div className="cl-container">
         <div className="reveal"><Eyebrow>Business</Eyebrow></div>
-        <h1 className="reveal" style={{ fontSize: 'clamp(40px, 6vw, 84px)', fontWeight: 900, marginTop: 18, letterSpacing: '0.02em', animationDelay: '0.06s' }}>事業内容</h1>
+        <h1 ref={h1Ref} className="split-host" style={{ fontSize: 'clamp(40px, 6vw, 84px)', fontWeight: 900, marginTop: 18, letterSpacing: '0.02em', '--n': dTitleN, '--win': 4 }}>{dTitle}</h1>
 
         {/* animated color band (the overlapping-color signature) */}
         <div className="reveal" style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-2xl)', height: 'clamp(200px, 28vw, 360px)', marginTop: 'clamp(36px, 5vw, 64px)', background: 'var(--color-bg-subtle)', boxShadow: 'var(--shadow-sm)', border: '1px solid var(--color-border)', animationDelay: '0.12s' }}>
@@ -16,8 +26,10 @@ function DetailHero() {
         </div>
 
         <div className="grid2" style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: 'clamp(28px, 5vw, 80px)', alignItems: 'end', marginTop: 'clamp(40px, 5vw, 72px)' }}>
-          <h2 className="reveal" style={{ fontSize: 'clamp(24px, 3.2vw, 42px)', fontWeight: 900, lineHeight: 1.4, letterSpacing: '0.01em' }}>
-            Classless は、地方のあらゆる現場の<br />課題解決に向けた挑戦を続けています。
+          <h2 ref={h2Ref} className="split-host" style={{ fontSize: 'clamp(24px, 3.2vw, 42px)', fontWeight: 900, lineHeight: 1.4, letterSpacing: '0.01em', '--n': dLeadN, '--win': 8 }}>
+            <span style={{ display: 'block' }}>{dl1}</span>
+            <span style={{ display: 'block' }}>{dl2}</span>
+            <span style={{ display: 'block' }}>{dl3}</span>
           </h2>
           <p className="reveal" style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text-secondary)', fontWeight: 500, animationDelay: '0.12s' }}>
             むずかしい技術を、誰もが使える道具に。AI BPO・AIシステム開発・データベース最適化・AI教育の4つの領域で、地域の「できる」を増やしていきます。
@@ -30,8 +42,12 @@ function DetailHero() {
 
 function ServiceBlock({ b, flip }) {
   const { Badge } = window.ClasslessDesignSystem_225e16;
-  const { useReveal, BrandVisual, Eyebrow } = window;
+  const { useReveal, BrandVisual, Eyebrow, useScrollVar, makeSplit } = window;
   const ref = useReveal();
+  const titleRef = useScrollVar(0.5, 0.92, 0.5);
+  const s = makeSplit();
+  const bTitle = s.chars(b.title);
+  const bTitleN = s.count();
   return (
     <section id={b.id} ref={ref} style={{ background: flip ? 'var(--color-bg-subtle)' : 'var(--color-bg)', paddingTop: 'clamp(56px, 8vw, 112px)', paddingBottom: 'clamp(56px, 8vw, 112px)' }}>
       <div className="cl-container">
@@ -40,17 +56,8 @@ function ServiceBlock({ b, flip }) {
           {/* title rail */}
           <div style={{ order: flip ? 2 : 1 }}>
             <div className="reveal" style={{ fontFamily: 'var(--font-mono)', fontSize: 14, color: `var(--brand-${b.tone})`, letterSpacing: '0.1em' }}>({b.no})</div>
-            <div className="reveal" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, marginTop: 14, animationDelay: '0.06s' }}>
-              <h2 style={{ fontSize: 'clamp(26px, 3.4vw, 42px)', fontWeight: 900, lineHeight: 1.2 }}>{b.title}</h2>
-              <a href="#contact" aria-label="お問い合わせ" style={{
-                flex: 'none', width: 56, height: 56, borderRadius: '50%', border: '1px solid var(--color-border-strong)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-primary)', background: 'var(--color-bg)',
-                transition: 'all .25s var(--ease-out)',
-              }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = `var(--brand-${b.tone})`; e.currentTarget.style.borderColor = `var(--brand-${b.tone})`; e.currentTarget.style.color = '#fff'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-bg)'; e.currentTarget.style.borderColor = 'var(--color-border-strong)'; e.currentTarget.style.color = 'var(--text-primary)'; }}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7M7 7h10v10" /></svg>
-              </a>
+            <div className="reveal" style={{ marginTop: 14, animationDelay: '0.06s' }}>
+              <h2 ref={titleRef} className="split-host" style={{ fontSize: 'clamp(26px, 3.4vw, 42px)', fontWeight: 900, lineHeight: 1.2, '--n': bTitleN, '--win': 5 }}>{bTitle}</h2>
             </div>
             <div className="reveal" style={{ marginTop: 16, animationDelay: '0.1s' }}>
               <Badge tone={b.tone} variant="soft" size="sm">{b.tag}</Badge>

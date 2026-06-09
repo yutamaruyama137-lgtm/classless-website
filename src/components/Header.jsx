@@ -27,8 +27,8 @@ function Header({ links = [], cta, homeHref = '/', onAnchor }) {
     }}>
       <div className="cl-container" style={{ height: 74, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <a href={homeHref} onClick={handle(homeHref)} style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
-          <img src="/assets/mark-classless.png" alt="Classless" style={{ width: 34, height: 34 }} />
-          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 22, color: 'var(--text-primary)', letterSpacing: '0.01em' }}>Classless</span>
+          <img src="/assets/mark-classless.png" alt="Classless" style={{ width: 40, height: 40 }} />
+          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 27, color: 'var(--text-primary)', letterSpacing: '0.005em' }}>Classless</span>
         </a>
         <nav className="site-nav" style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
           {links.map((it) => (

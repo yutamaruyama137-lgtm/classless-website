@@ -25,7 +25,9 @@ function ColorField({ density = 'hero', style = {} }) {
   );
 }
 
-/* IntersectionObserver-driven reveal. Adds `in` when the element scrolls in. */
+/* IntersectionObserver-driven reveal. Toggles `in` as the element enters AND
+   leaves the viewport, so the entrance animation replays — and reverses out —
+   every time you scroll past it, including on the way back up. */
 function useReveal() {
   const ref = React.useRef(null);
   React.useEffect(() => {
@@ -33,14 +35,27 @@ function useReveal() {
     if (!el) return;
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        e.target.classList.toggle('in', e.isIntersecting);
       });
-    }, { threshold: 0.2, rootMargin: '0px 0px -26% 0px' });
+    }, { threshold: 0.15, rootMargin: '0px 0px -12% 0px' });
     el.querySelectorAll('.reveal, .draw-underline, .slide-l, .slide-r, .gather-host, .pop-in').forEach((n) => io.observe(n));
     if (el.classList.contains('reveal') || el.classList.contains('draw-underline')) io.observe(el);
     return () => io.disconnect();
   }, []);
   return ref;
+}
+
+/* Sitewide ambient motion: faint colored light streaks drift diagonally across
+   the screen at all times (a calm "流れ星 / ライン" layer). Fixed, behind the
+   header, never interactive; disabled for reduced-motion via CSS. */
+function AmbientFlow({ count = 6 }) {
+  return (
+    <div className="ambient-flow" aria-hidden="true">
+      {Array.from({ length: count }).map((_, i) => (
+        <span key={i} className={`afl afl-${i % 6}`} />
+      ))}
+    </div>
+  );
 }
 
 /* English eyebrow label (DS utility + optional tone). */
@@ -233,4 +248,34 @@ function gatherChars(text, opts = {}) {
   });
 }
 
-Object.assign(window, { ColorField, useReveal, Eyebrow, Section, BrandVisual, Arrow, initParallax, StarField, useScrollVar, gatherChars });
+/* Scroll-scrubbed per-character reveal (一文字ずつフェードイン).
+   Unlike the load-once hero, this is driven by --p (0→1, set by useScrollVar
+   on the host). Each char carries its index --i; the CSS turns (p, i, n) into a
+   per-char progress, so scrolling DOWN reveals char-by-char and scrolling back
+   UP plays the exact reverse. Usage:
+
+     const ref = useScrollVar(0.5, 0.9, 0.46);
+     const s = makeSplit();
+     const l1 = s.chars('見出し前半、');
+     const l2 = s.chars('後半。', 'green');     // 2nd arg = brand color
+     <h2 ref={ref} className="split-host" style={{ '--n': s.count(), '--win': 7 }}>
+       <span style={{ display:'block' }}>{l1}</span>
+       <span style={{ display:'block' }}>{l2}</span>
+     </h2>
+*/
+function makeSplit() {
+  let i = 0;
+  const chars = (text, color) =>
+    (String(text).match(/[A-Za-z0-9][A-Za-z0-9_.&'’-]*|[\s\S]/g) || []).map((ch, k) => {
+      const idx = i++;
+      return (
+        <span key={`${color || 'x'}-${idx}-${k}`} className="schar"
+          style={{ '--i': idx, ...(color ? { color: `var(--brand-${color})` } : {}) }}>
+          {ch === ' ' ? ' ' : ch}
+        </span>
+      );
+    });
+  return { chars, count: () => i };
+}
+
+Object.assign(window, { ColorField, useReveal, Eyebrow, Section, BrandVisual, Arrow, initParallax, StarField, useScrollVar, gatherChars, makeSplit, AmbientFlow });

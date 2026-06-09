@@ -24,16 +24,23 @@ import './components/Voices.jsx'
 import './components/ServicesDetail.jsx'
 import './components/Philosophy.jsx'
 import './components/CtaFooter.jsx'
+import './components/ContactPage.jsx'
 
 function getRoute() {
   const p = window.location.pathname.replace(/\/+$/, '') || '/'
   if (p === '/business') return 'business'
   if (p === '/philosophy') return 'philosophy'
+  if (p === '/contact') return 'contact'
   return 'home'
 }
 
 // Smooth-scroll to an in-page anchor (offset for the sticky header).
 function scrollToId(id) {
+  // The contact CTA now lives on its own page.
+  if (id === 'contact') {
+    if (window.location.pathname.replace(/\/+$/, '') !== '/contact') window.location.href = '/contact'
+    return
+  }
   if (id === 'top') {
     window.scrollTo({ top: 0, behavior: 'smooth' })
     return
@@ -48,11 +55,11 @@ function scrollToId(id) {
 function App() {
   const {
     Header, Hero, Mission, Services, Company, JoinCta,
-    ServicesDetail, Philosophy, ContactBand, Footer, Voices, ColorMerge,
+    ServicesDetail, Philosophy, ContactBand, ContactPage, Footer, Voices, ColorMerge,
   } = window
 
   const route = getRoute()
-  const cta = { label: 'お問い合わせ', href: '#contact' }
+  const cta = { label: 'お問い合わせ', href: '/contact' }
 
   if (route === 'business') {
     const links = [
@@ -90,6 +97,23 @@ function App() {
     )
   }
 
+  if (route === 'contact') {
+    const links = [
+      { label: '事業内容', href: '/business' },
+      { label: '経営理念', href: '/philosophy' },
+      { label: '会社情報', href: '/#company' },
+    ]
+    return (
+      <div data-screen-label="お問い合わせ">
+        <Header links={links} cta={cta} homeHref="/" onAnchor={scrollToId} />
+        <main>
+          <ContactPage />
+        </main>
+        <Footer />
+      </div>
+    )
+  }
+
   // home
   const links = [
     { label: '事業内容', href: '/business' },
@@ -115,13 +139,16 @@ function App() {
 
 createRoot(document.getElementById('root')).render(<App />)
 
-// Parallax + reveal safety net (mirrors the original inline bootstrap).
+// Parallax drift on [data-parallax] wrappers.
 if (window.initParallax) window.initParallax()
-setTimeout(() => {
-  document
-    .querySelectorAll('.reveal, .draw-underline, .slide-l, .slide-r, .gather-host, .pop-in')
-    .forEach((n) => n.classList.add('in'))
-}, 1200)
+
+// Sitewide ambient flow — mounted once on its own fixed host behind the app.
+if (window.AmbientFlow) {
+  const AF = window.AmbientFlow
+  const host = document.createElement('div')
+  document.body.appendChild(host)
+  createRoot(host).render(<AF />)
+}
 
 // If we arrived with a hash (e.g. navigated from another page to /#company),
 // scroll to it once the DOM is painted.

@@ -80,13 +80,29 @@
   .char { opacity: 0; animation: char-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
 }
 
+/* ---- Scroll-scrubbed per-character reveal (全タイトル共通・逆スクロールで逆再生) ----
+   The host sets --p (0→1) via useScrollVar and --n (char count) / --win
+   (how many chars cross-fade at once). Each .schar has --i (its index).
+   --cp is that char's own 0→1 progress; when --p decreases on up-scroll,
+   --cp decreases too, so the whole line animates in reverse. */
+.split-host .schar { display: inline-block; white-space: pre; }
+@media (prefers-reduced-motion: no-preference) {
+  .split-host .schar {
+    --cp: clamp(0, calc((var(--p, 1) * (var(--n, 1) - 1 + var(--win, 6)) - var(--i, 0)) / var(--win, 6)), 1);
+    opacity: var(--cp);
+    transform: translateY(calc((1 - var(--cp)) * 0.5em));
+    filter: blur(calc((1 - var(--cp)) * 5px));
+    will-change: opacity, transform, filter;
+  }
+}
+
 /* ---- Hero aurora: slow-drifting color wash behind the color field ---- */
 .hero-aurora {
   position: absolute;
   inset: -25%;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.4;
+  opacity: 0.5;
   background:
     radial-gradient(40% 50% at 24% 30%, var(--blue-200),   transparent 70%),
     radial-gradient(45% 50% at 76% 34%, var(--orange-200), transparent 70%),
@@ -94,18 +110,68 @@
     radial-gradient(42% 46% at 20% 76%, var(--red-200),    transparent 72%);
   filter: blur(64px);
 }
+/* second wash layer that slowly rotates + hue-shifts → the "ぽあぽあ" color
+   bleed that keeps the first look alive */
+.hero-aurora::after {
+  content: "";
+  position: absolute;
+  inset: -15%;
+  border-radius: 40%;
+  background:
+    radial-gradient(38% 44% at 64% 28%, var(--red-200),    transparent 66%),
+    radial-gradient(42% 48% at 30% 60%, var(--orange-200), transparent 68%),
+    radial-gradient(46% 50% at 72% 72%, var(--blue-200),   transparent 70%),
+    radial-gradient(40% 46% at 40% 22%, var(--green-200),  transparent 68%);
+  filter: blur(72px);
+  mix-blend-mode: multiply;
+}
 @keyframes aurora-shift {
   from { transform: translate3d(-3%, -2%, 0) scale(1);    }
   to   { transform: translate3d(4%, 3%, 0)   scale(1.12); }
 }
-/* gentle breathing glow on the first look, active from load */
+/* breathing glow + slow hue drift on the first look, active from load */
 @keyframes hero-glow {
-  0%, 100% { opacity: 0.34; filter: blur(64px) saturate(1);    }
-  50%      { opacity: 0.62; filter: blur(58px) saturate(1.18); }
+  0%   { opacity: 0.46; filter: blur(64px) saturate(1.05) hue-rotate(0deg);   }
+  50%  { opacity: 0.74; filter: blur(54px) saturate(1.3)  hue-rotate(26deg);  }
+  100% { opacity: 0.46; filter: blur(64px) saturate(1.05) hue-rotate(0deg);   }
+}
+@keyframes aurora-swirl {
+  from { transform: rotate(0deg)   scale(1.05); }
+  to   { transform: rotate(360deg) scale(1.05); }
 }
 @media (prefers-reduced-motion: no-preference) {
-  .hero-aurora { animation: aurora-shift 22s ease-in-out infinite alternate, hero-glow 7.5s ease-in-out infinite; }
+  .hero-aurora { animation: aurora-shift 22s ease-in-out infinite alternate, hero-glow 9s ease-in-out infinite; }
+  .hero-aurora::after { animation: aurora-swirl 60s linear infinite, hero-glow 11s ease-in-out infinite 1.5s; }
 }
+
+/* ---- Sitewide ambient flow: faint light streaks drifting across the page ---- */
+.ambient-flow { position: fixed; inset: 0; z-index: 5; pointer-events: none; overflow: hidden; }
+.afl {
+  position: absolute;
+  top: 0; left: 0;
+  width: clamp(140px, 22vw, 280px);
+  height: 2px;
+  border-radius: 2px;
+  opacity: 0;
+  filter: blur(0.4px);
+  will-change: transform, opacity;
+}
+@keyframes afl-move {
+  0%   { opacity: 0;    transform: translate(-18vw, 108vh) rotate(-26deg); }
+  10%  { opacity: 0.55; }
+  90%  { opacity: 0.55; }
+  100% { opacity: 0;    transform: translate(118vw, -18vh) rotate(-26deg); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .afl { animation: afl-move linear infinite; }
+  .afl-0 { top: 12%; animation-duration: 15s; animation-delay:  0s; background: linear-gradient(90deg, transparent, var(--brand-blue),   transparent); }
+  .afl-1 { top: 32%; animation-duration: 20s; animation-delay:  4s; background: linear-gradient(90deg, transparent, var(--brand-green),  transparent); }
+  .afl-2 { top: 52%; animation-duration: 17s; animation-delay:  9s; background: linear-gradient(90deg, transparent, var(--brand-orange), transparent); }
+  .afl-3 { top: 70%; animation-duration: 23s; animation-delay:  2s; background: linear-gradient(90deg, transparent, var(--brand-red),    transparent); }
+  .afl-4 { top: 84%; animation-duration: 19s; animation-delay: 12s; background: linear-gradient(90deg, transparent, var(--brand-blue),   transparent); }
+  .afl-5 { top: 22%; animation-duration: 26s; animation-delay:  6s; background: linear-gradient(90deg, transparent, var(--brand-green),  transparent); }
+}
+@media (prefers-reduced-motion: reduce) { .ambient-flow { display: none; } }
 
 /* ---- Scroll cue ---- */
 @keyframes nudge { 0%,100% { transform: translateY(0); opacity: 0.5; } 50% { transform: translateY(7px); opacity: 1; } }
