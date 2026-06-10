@@ -18,10 +18,10 @@ function Mission() {
           </h2>
           <div className="reveal" style={{ animationDelay: '0.22s' }}>
             <p style={{ fontSize: 16, lineHeight: 1.95, color: 'var(--text-secondary)', fontWeight: 500 }}>
-              都市と地方の差は、情報と技術へのアクセスの差です。私たちはその差を、AIで埋めていきます。
+              テクノロジーは、人をラクにするだけのものじゃない。AIで一人ひとりの「やってみたい」を解き放ち、毎日の仕事や暮らしを、もっと面白くしていく。
             </p>
             <p style={{ fontSize: 16, lineHeight: 1.95, color: 'var(--text-secondary)', fontWeight: 500, marginTop: 18 }}>
-              導入して終わりにしない。設計から実装、社内への定着までを伴走し、地域の一人ひとりが自分の力でAIを使いこなせる状態をつくります。
+              それが、Classless の存在意義です。
             </p>
             <a href="/philosophy" className="arrow-link" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 26, fontWeight: 700, fontSize: 15, color: 'var(--text-primary)' }}>
               経営理念を見る
