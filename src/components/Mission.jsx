@@ -29,7 +29,7 @@ function Mission() {
             </a>
             <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 30 }}>
               <span className="cl-spectrum-bar" style={{ width: 56, height: 5 }} />
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.06em' }}>東北・仙台発 / 全国の地域とともに</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.06em' }}>地域とともに / 全国へ</span>
             </div>
           </div>
         </div>

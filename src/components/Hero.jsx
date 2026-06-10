@@ -39,7 +39,7 @@ function Hero({ onNav }) {
 
       <div className="cl-container" style={{ position: 'relative', zIndex: 1, textAlign: 'center', paddingTop: 96, paddingBottom: 120 }}>
         <div className="reveal in" style={{ display: 'inline-flex', justifyContent: 'center', marginBottom: 30, animationDelay: '0.05s' }}>
-          <span className="cl-eyebrow" style={{ fontSize: 13 }}>Beyond Classroom</span>
+          <span className="cl-eyebrow" style={{ fontSize: 13 }}>Beyond Borders</span>
         </div>
 
         <h1 style={{ fontSize: 'clamp(38px, 6.6vw, 92px)', fontWeight: 900, lineHeight: 1.18, letterSpacing: '0.02em', margin: 0 }}>
@@ -55,7 +55,7 @@ function Hero({ onNav }) {
           color: 'var(--text-secondary)', fontWeight: 500, animationDelay: `${(tailDelay + 0.1).toFixed(2)}s`,
         }}>
           むずかしい技術を、誰もが使える道具に。<br />
-          合同会社Classless は、東北・仙台から地域の現場に伴走し、<br className="hide-sp" />
+          合同会社Classless は、地域の現場に伴走し、<br className="hide-sp" />
           生成AIを「あたりまえ」に変えていきます。
         </p>
 

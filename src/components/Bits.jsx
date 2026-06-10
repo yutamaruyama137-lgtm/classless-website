@@ -38,7 +38,7 @@ function useReveal() {
         e.target.classList.toggle('in', e.isIntersecting);
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -12% 0px' });
-    el.querySelectorAll('.reveal, .draw-underline, .slide-l, .slide-r, .gather-host, .pop-in').forEach((n) => io.observe(n));
+    el.querySelectorAll('.reveal, .draw-underline, .slide-l, .slide-r, .gather-host, .pop-in, .split-host').forEach((n) => io.observe(n));
     if (el.classList.contains('reveal') || el.classList.contains('draw-underline')) io.observe(el);
     return () => io.disconnect();
   }, []);

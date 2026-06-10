@@ -25,12 +25,16 @@ import './components/ServicesDetail.jsx'
 import './components/Philosophy.jsx'
 import './components/CtaFooter.jsx'
 import './components/ContactPage.jsx'
+import './components/LegalPages.jsx'
 
 function getRoute() {
   const p = window.location.pathname.replace(/\/+$/, '') || '/'
   if (p === '/business') return 'business'
   if (p === '/philosophy') return 'philosophy'
   if (p === '/contact') return 'contact'
+  if (p === '/privacy') return 'privacy'
+  if (p === '/terms') return 'terms'
+  if (p === '/tokushoho') return 'tokushoho'
   return 'home'
 }
 
@@ -108,6 +112,26 @@ function App() {
         <Header links={links} cta={cta} homeHref="/" onAnchor={scrollToId} />
         <main>
           <ContactPage />
+        </main>
+        <Footer />
+      </div>
+    )
+  }
+
+  if (route === 'privacy' || route === 'terms' || route === 'tokushoho') {
+    const { PrivacyPolicy, Terms, Tokushoho } = window
+    const Legal = route === 'privacy' ? PrivacyPolicy : route === 'terms' ? Terms : Tokushoho
+    const label = route === 'privacy' ? 'プライバシーポリシー' : route === 'terms' ? '利用規約' : '特定商取引法に基づく表記'
+    const links = [
+      { label: '事業内容', href: '/business' },
+      { label: '経営理念', href: '/philosophy' },
+      { label: '会社情報', href: '/#company' },
+    ]
+    return (
+      <div data-screen-label={label}>
+        <Header links={links} cta={cta} homeHref="/" onAnchor={scrollToId} />
+        <main>
+          <Legal />
         </main>
         <Footer />
       </div>

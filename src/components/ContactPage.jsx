@@ -92,7 +92,6 @@ function ContactPage() {
             <dl className="reveal" style={{ margin: '36px 0 0', animationDelay: '0.16s' }}>
               {[
                 ['Email', CONTACT_TO],
-                ['拠点', '宮城県仙台市（東北）'],
                 ['対応領域', 'AI BPO / システム開発 / DB最適化 / AI教育'],
               ].map(([k, v]) => (
                 <div key={k} style={{ padding: '14px 0', borderTop: '1px solid var(--color-border)' }}>

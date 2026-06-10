@@ -87,11 +87,14 @@
    --cp decreases too, so the whole line animates in reverse. */
 .split-host .schar { display: inline-block; white-space: pre; }
 @media (prefers-reduced-motion: no-preference) {
-  .split-host .schar {
-    --cp: clamp(0, calc((var(--p, 1) * (var(--n, 1) - 1 + var(--win, 6)) - var(--i, 0)) / var(--win, 6)), 1);
-    opacity: var(--cp);
-    transform: translateY(calc((1 - var(--cp)) * 0.5em));
-    filter: blur(calc((1 - var(--cp)) * 5px));
+  /* Trigger-based: hidden until the heading enters the viewport, then each
+     character fades in in sequence and STAYS fixed (no scroll-scrubbing).
+     useReveal toggles .in, so scrolling back up replays it on re-entry. */
+  .split-host:not(.in) .schar { opacity: 0; }
+  .split-host.in .schar {
+    opacity: 0;
+    animation: char-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--i, 0) * 0.03s);
     will-change: opacity, transform, filter;
   }
 }

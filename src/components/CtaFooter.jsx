@@ -28,9 +28,6 @@ function Company() {
                 </div>
               ))}
             </dl>
-            <p style={{ fontSize: 11, lineHeight: 1.7, color: 'var(--text-muted)', marginTop: 14, opacity: 0.8 }}>
-              所在地：東京都渋谷区円山町5番3号 MIEUX渋谷ビル8階（バーチャルオフィス／移転予定）
-            </p>
           </div>
         </div>
       </div>
@@ -120,7 +117,7 @@ function Footer({ onNav }) {
               <span style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 26, color: '#fff', letterSpacing: '0.01em' }}>Classless</span>
             </div>
             <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 13, lineHeight: 1.95, marginTop: 16, maxWidth: '26em' }}>
-              地方からAIで、人間の可能性を解放する。<br />合同会社Classless / 宮城県仙台市
+              地方からAIで、人間の可能性を解放する。<br />合同会社Classless
             </p>
           </div>
           {cols.map((c) => (
@@ -140,8 +137,12 @@ function Footer({ onNav }) {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>© 2026 Classless LLC.</span>
           <div style={{ display: 'flex', gap: 22 }}>
-            {['プライバシーポリシー', '利用規約', '特定商取引法'].map((l) => (
-              <a key={l} href="#" onClick={(e) => e.preventDefault()} style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12 }}>{l}</a>
+            {[
+              ['プライバシーポリシー', '/privacy'],
+              ['利用規約', '/terms'],
+              ['特定商取引法', '/tokushoho'],
+            ].map(([l, href]) => (
+              <a key={l} href={href} style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12 }}>{l}</a>
             ))}
           </div>
         </div>
