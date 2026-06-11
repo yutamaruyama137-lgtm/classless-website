@@ -6,7 +6,7 @@
 // 送信元ドメイン classless.jp を Resend で検証しておくこと（未検証だと送信不可）。
 // 依存パッケージは追加せず、Resend の REST API を fetch で直接叩く。
 
-const TO = 'contact@classless.jp'
+const TO = 'yuta.maruyama@classless.jp'
 const FROM = process.env.MAIL_FROM || 'Classless お問い合わせ <contact@classless.jp>'
 
 function esc(s) {
