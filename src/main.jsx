@@ -7,6 +7,7 @@ import './globals.js'
 // 2) Design-system + site styles (styles.css @imports the token files).
 import './ds/styles.css'
 import './styles/site.css'
+import './styles/responsive.css'
 
 // 3) Design-system component bundle (registers window.ClasslessDesignSystem_225e16).
 import './ds/_ds_bundle.js'
@@ -20,6 +21,12 @@ import './components/Hero.jsx'
 import './components/Mission.jsx'
 import './components/ColorMerge.jsx'
 import './components/Services.jsx'
+import './components/Background.jsx'
+import './components/RoleSplit.jsx'
+import './components/WhatWeDo.jsx'
+import './components/Pricing.jsx'
+import './components/Flow.jsx'
+import './components/Faq.jsx'
 import './components/Voices.jsx'
 import './components/ServicesDetail.jsx'
 import './components/Philosophy.jsx'
@@ -58,19 +65,24 @@ function scrollToId(id) {
 
 function App() {
   const {
-    Header, Hero, Mission, Services, Company, JoinCta,
-    ServicesDetail, Philosophy, ContactBand, ContactPage, Footer, Voices, ColorMerge,
+    Header, Hero, Mission, Company, JoinCta,
+    ServicesDetail, Philosophy, ContactBand, ContactPage, Footer, Voices,
+    Background, RoleSplit, WhatWeDo, Pricing, Flow, Faq,
   } = window
 
   const route = getRoute()
-  const cta = { label: 'お問い合わせ', href: '/contact' }
+  const cta = { label: '無料AX診断', href: '/contact' }
+
+  // Shared nav for sub-pages — links jump back to the home long-form sections.
+  const subLinks = [
+    { label: 'サービス内容', href: '/#whatwedo' },
+    { label: '料金', href: '/#pricing' },
+    { label: '事業内容', href: '/business' },
+    { label: '会社概要', href: '/#company' },
+  ]
 
   if (route === 'business') {
-    const links = [
-      { label: '事業内容', href: '/business', active: true },
-      { label: '経営理念', href: '/philosophy' },
-      { label: '会社情報', href: '/#company' },
-    ]
+    const links = subLinks.map((l) => (l.href === '/business' ? { ...l, active: true } : l))
     return (
       <div data-screen-label="事業内容">
         <Header links={links} cta={cta} homeHref="/" onAnchor={scrollToId} />
@@ -84,14 +96,9 @@ function App() {
   }
 
   if (route === 'philosophy') {
-    const links = [
-      { label: '事業内容', href: '/business' },
-      { label: '経営理念', href: '/philosophy', active: true },
-      { label: '会社情報', href: '/#company' },
-    ]
     return (
       <div data-screen-label="経営理念">
-        <Header links={links} cta={cta} homeHref="/" onAnchor={scrollToId} />
+        <Header links={subLinks} cta={cta} homeHref="/" onAnchor={scrollToId} />
         <main>
           <Philosophy />
           <ContactBand />
@@ -102,14 +109,9 @@ function App() {
   }
 
   if (route === 'contact') {
-    const links = [
-      { label: '事業内容', href: '/business' },
-      { label: '経営理念', href: '/philosophy' },
-      { label: '会社情報', href: '/#company' },
-    ]
     return (
       <div data-screen-label="お問い合わせ">
-        <Header links={links} cta={cta} homeHref="/" onAnchor={scrollToId} />
+        <Header links={subLinks} cta={cta} homeHref="/" onAnchor={scrollToId} />
         <main>
           <ContactPage />
         </main>
@@ -122,14 +124,9 @@ function App() {
     const { PrivacyPolicy, Terms, Tokushoho } = window
     const Legal = route === 'privacy' ? PrivacyPolicy : route === 'terms' ? Terms : Tokushoho
     const label = route === 'privacy' ? 'プライバシーポリシー' : route === 'terms' ? '利用規約' : '特定商取引法に基づく表記'
-    const links = [
-      { label: '事業内容', href: '/business' },
-      { label: '経営理念', href: '/philosophy' },
-      { label: '会社情報', href: '/#company' },
-    ]
     return (
       <div data-screen-label={label}>
-        <Header links={links} cta={cta} homeHref="/" onAnchor={scrollToId} />
+        <Header links={subLinks} cta={cta} homeHref="/" onAnchor={scrollToId} />
         <main>
           <Legal />
         </main>
@@ -138,11 +135,13 @@ function App() {
     )
   }
 
-  // home
+  // home — long-form, BPO-first landing (cloudbuddy-style flow)
   const links = [
-    { label: '事業内容', href: '/business' },
-    { label: '経営理念', href: '/philosophy' },
-    { label: '会社情報', href: '#company' },
+    { label: 'サービス内容', href: '#whatwedo' },
+    { label: '料金', href: '#pricing' },
+    { label: '導入事例', href: '#cases' },
+    { label: '導入の流れ', href: '#flow' },
+    { label: '会社概要', href: '#company' },
   ]
   return (
     <div data-screen-label="Classless コーポレートサイト">
@@ -150,9 +149,13 @@ function App() {
       <main>
         <Hero onNav={scrollToId} />
         <Mission />
-        <ColorMerge />
-        <Services />
+        <Background />
+        <RoleSplit />
+        <WhatWeDo />
         <Voices />
+        <Pricing onNav={scrollToId} />
+        <Flow onNav={scrollToId} />
+        <Faq />
         <Company />
         <JoinCta onNav={scrollToId} />
       </main>

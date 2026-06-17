@@ -22,12 +22,11 @@ function Hero({ onNav }) {
       );
     });
 
-  const line1 = [...chars('地方から'), ...chars('AI', 'blue'), ...chars('で、')];
-  const line2 = chars('人間の可能性を、');
-  // 下線は最終行の文字が出そろってから引く
-  const underlineDelay = `${(BASE + (n + 5) * STEP + 0.05).toFixed(2)}s`;
-  const line3 = chars('解放する。');
+  const line1 = chars('業務を巻き取り、仕組みから変える。');
+  const line2a = chars('BPO × DX', 'blue');
+  const line2b = chars('サービス。');
   const tailDelay = BASE + n * STEP; // 見出し完了の目安
+  const underlineDelay = `${(tailDelay + 0.2).toFixed(2)}s`;
 
   return (
     <section id="top" ref={ref} style={{
@@ -38,30 +37,48 @@ function Hero({ onNav }) {
       <ColorField density="hero" />
 
       <div className="cl-container" style={{ position: 'relative', zIndex: 1, textAlign: 'center', paddingTop: 96, paddingBottom: 120 }}>
-        <div className="reveal in" style={{ display: 'inline-flex', justifyContent: 'center', marginBottom: 30, animationDelay: '0.05s' }}>
-          <span className="cl-eyebrow" style={{ fontSize: 13 }}>Beyond Borders</span>
+        <div className="reveal in" style={{ display: 'inline-flex', justifyContent: 'center', marginBottom: 26, animationDelay: '0.05s' }}>
+          <span className="cl-eyebrow" style={{ fontSize: 13 }}>BPO × DX × AI</span>
         </div>
 
-        <h1 style={{ fontSize: 'clamp(38px, 6.6vw, 92px)', fontWeight: 900, lineHeight: 1.18, letterSpacing: '0.02em', margin: 0 }}>
+        <h1 style={{ fontSize: 'clamp(27px, 4vw, 50px)', fontWeight: 900, lineHeight: 1.32, letterSpacing: '0.02em', margin: 0 }}>
           <span style={{ display: 'block' }}>{line1}</span>
-          <span style={{ display: 'block' }}>{line2}</span>
           <span style={{ display: 'block' }}>
-            <span className="draw-underline in" style={{ '--underline-delay': underlineDelay }}>{line3}</span>
+            {line2a}{line2b}
           </span>
         </h1>
 
         <p className="reveal in" style={{
-          margin: '34px auto 0', maxWidth: '32em', fontSize: 'clamp(15px, 1.5vw, 19px)', lineHeight: 1.95,
-          color: 'var(--text-secondary)', fontWeight: 500, animationDelay: `${(tailDelay + 0.1).toFixed(2)}s`,
+          margin: '22px auto 0', maxWidth: '24em', fontSize: 'clamp(17px, 2vw, 25px)', fontWeight: 800,
+          lineHeight: 1.6, color: 'var(--text-primary)', animationDelay: `${(tailDelay + 0.06).toFixed(2)}s`,
         }}>
-          むずかしい技術を、誰もが使える道具に。<br />
-          合同会社Classless は、地域の現場に伴走し、<br className="hide-sp" />
-          生成AIを「あたりまえ」に変えていきます。
+          社員が<span className="draw-underline in" style={{ '--underline-delay': underlineDelay }}>「事業を伸ばす」</span>ことに集中できる組織へ。
         </p>
 
-        <div className="reveal in" style={{ display: 'flex', gap: 14, justifyContent: 'center', marginTop: 42, flexWrap: 'wrap', animationDelay: `${(tailDelay + 0.28).toFixed(2)}s` }}>
-          <Button size="lg" iconRight={<Arrow />} onClick={() => onNav('contact')}>無料で相談する</Button>
-          <Button size="lg" variant="secondary" tone="ink" onClick={() => onNav('services')}>事業内容を見る</Button>
+        <div className="reveal in" style={{ display: 'flex', gap: 10, justifyContent: 'center', marginTop: 26, flexWrap: 'wrap', animationDelay: `${(tailDelay + 0.18).toFixed(2)}s` }}>
+          {['初期費用0円', '最短2週間で稼働'].map((b) => (
+            <span key={b} style={{
+              display: 'inline-flex', alignItems: 'center', gap: 7, padding: '7px 15px', borderRadius: 999,
+              border: '1px solid var(--color-border)', background: 'var(--color-bg)',
+              fontFamily: 'var(--font-jp)', fontWeight: 700, fontSize: 13, color: 'var(--text-secondary)',
+            }}>
+              <span aria-hidden="true" style={{ width: 6, height: 6, borderRadius: 999, background: 'var(--brand-blue)' }} />
+              {b}
+            </span>
+          ))}
+        </div>
+
+        <p className="reveal in" style={{
+          margin: '28px auto 0', maxWidth: '34em', fontSize: 'clamp(15px, 1.5vw, 18px)', lineHeight: 1.95,
+          color: 'var(--text-secondary)', fontWeight: 500, animationDelay: `${(tailDelay + 0.28).toFixed(2)}s`,
+        }}>
+          経理・営業事務・採用・マーケまで。<br className="hide-sp" />
+          DXもBPOも、AIでまるっと。繰り返しの業務を巻き取り、自動化・定着まで伴走します。
+        </p>
+
+        <div className="reveal in" style={{ display: 'flex', gap: 14, justifyContent: 'center', marginTop: 40, flexWrap: 'wrap', animationDelay: `${(tailDelay + 0.42).toFixed(2)}s` }}>
+          <Button size="lg" iconRight={<Arrow />} onClick={() => onNav('contact')}>無料AX診断を予約する</Button>
+          <Button size="lg" variant="secondary" tone="ink" onClick={() => onNav('pricing')}>料金プランを見る</Button>
         </div>
       </div>
 

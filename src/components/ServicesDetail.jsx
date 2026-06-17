@@ -1,4 +1,5 @@
-/* Classless — 事業内容 detail page (LayerX-style scroll-through) */
+/* Classless — 事業内容 detail page
+   2サービス（AI BPO / AI開発）を、シンプルに「何を・どうやるか」が分かる構成で。 */
 
 function DetailHero() {
   const { ColorField, useReveal, Eyebrow, useScrollVar, makeSplit } = window;
@@ -9,9 +10,9 @@ function DetailHero() {
   const dTitleN = s1.count();
   const h2Ref = useScrollVar(0.5, 0.9, 0.46);
   const s2 = makeSplit();
-  const dl1 = s2.chars('Classless は、地方の');
-  const dl2 = s2.chars('あらゆる現場の課題解決に');
-  const dl3 = s2.chars('挑戦を続けています。');
+  const dl1 = s2.chars('地方の現場の業務を');
+  const dl2 = s2.chars('“まるごと”巻き取る、');
+  const dl3 = s2.chars('AI BPO。', 'blue');
   const dLeadN = s2.count();
   return (
     <section ref={ref} style={{ paddingTop: 'clamp(72px, 9vw, 128px)', paddingBottom: 'clamp(40px, 5vw, 72px)' }}>
@@ -32,7 +33,7 @@ function DetailHero() {
             <span style={{ display: 'block' }}>{dl3}</span>
           </h2>
           <p className="reveal" style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text-secondary)', fontWeight: 500, animationDelay: '0.12s' }}>
-            むずかしい技術を、誰もが使える道具に。AI BPO・AIシステム開発・データベース最適化・AI教育の4つの領域で、地域の「できる」を増やしていきます。
+            Classlessの事業は、2つ。まず基本の「AI BPO」で繰り返しの業務をまるごと巻き取り、現場を回す。さらに必要に応じて「AI開発」で、自動化と内製化をもっと深めていきます。
           </p>
         </div>
       </div>
@@ -40,40 +41,91 @@ function DetailHero() {
   );
 }
 
-function ServiceBlock({ b, flip }) {
+/* 1サービス = 1セクション。
+   左：番号・タグ・タイトル・サブ見出し・本文／右：イメージ。
+   下：そのサービスの内訳カード（提供形態・機能）をフル幅で。 */
+function ServiceSection({ s, flip }) {
   const { Badge } = window.ClasslessDesignSystem_225e16;
-  const { useReveal, BrandVisual, Eyebrow, useScrollVar, makeSplit } = window;
+  const { useReveal, BrandVisual, useScrollVar, makeSplit } = window;
   const ref = useReveal();
   const titleRef = useScrollVar(0.5, 0.92, 0.5);
-  const s = makeSplit();
-  const bTitle = s.chars(b.title);
-  const bTitleN = s.count();
+  const sp = makeSplit();
+  const title = sp.chars(s.title);
+  const titleN = sp.count();
   return (
-    <section id={b.id} ref={ref} style={{ background: flip ? 'var(--color-bg-subtle)' : 'transparent', paddingTop: 'clamp(56px, 8vw, 112px)', paddingBottom: 'clamp(56px, 8vw, 112px)' }}>
+    <section id={s.id} ref={ref} style={{ background: flip ? 'var(--color-bg-subtle)' : 'transparent', paddingTop: 'clamp(56px, 8vw, 112px)', paddingBottom: 'clamp(56px, 8vw, 112px)' }}>
       <div className="cl-container">
-        <div className="grid2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(32px, 5vw, 72px)', alignItems: 'start' }}>
-
-          {/* title rail */}
+        {/* intro: 説明 + イメージ */}
+        <div className="grid2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(32px, 5vw, 72px)', alignItems: 'center' }}>
+          {/* 説明 */}
           <div style={{ order: flip ? 2 : 1 }}>
-            <div className="reveal" style={{ fontFamily: 'var(--font-mono)', fontSize: 14, color: `var(--brand-${b.tone})`, letterSpacing: '0.1em' }}>({b.no})</div>
-            <div className="reveal" style={{ marginTop: 14, animationDelay: '0.06s' }}>
-              <h2 ref={titleRef} className="split-host" style={{ fontSize: 'clamp(26px, 3.4vw, 42px)', fontWeight: 900, lineHeight: 1.2, '--n': bTitleN, '--win': 5 }}>{bTitle}</h2>
+            <div className="reveal" style={{ fontFamily: 'var(--font-mono)', fontSize: 14, color: `var(--brand-${s.tone})`, letterSpacing: '0.1em' }}>({s.no})</div>
+            <div className="reveal" style={{ marginTop: 12, animationDelay: '0.04s' }}>
+              <Badge tone={s.tone} variant="soft" size="sm">{s.tag}</Badge>
             </div>
-            <div className="reveal" style={{ marginTop: 16, animationDelay: '0.1s' }}>
-              <Badge tone={b.tone} variant="soft" size="sm">{b.tag}</Badge>
-            </div>
-            <h3 className="reveal" style={{ fontSize: 'clamp(19px, 2vw, 26px)', fontWeight: 900, lineHeight: 1.55, marginTop: 28, maxWidth: '15em', animationDelay: '0.14s' }}>{b.subtitle}</h3>
+            <h2 ref={titleRef} className="split-host" style={{ fontSize: 'clamp(30px, 4.2vw, 56px)', fontWeight: 900, lineHeight: 1.1, marginTop: 16, color: `var(--brand-${s.tone})`, '--n': titleN, '--win': 5 }}>{title}</h2>
+            <h3 className="reveal" style={{ fontSize: 'clamp(19px, 2.2vw, 28px)', fontWeight: 900, lineHeight: 1.5, marginTop: 22, animationDelay: '0.1s' }}>{s.subtitle}</h3>
+            <p className="reveal" style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text-secondary)', marginTop: 20, animationDelay: '0.14s' }}>{s.body}</p>
           </div>
 
-          {/* image + copy + service items */}
+          {/* イメージ */}
           <div style={{ order: flip ? 1 : 2 }}>
             <div className={flip ? 'slide-l' : 'slide-r'}>
               <div className="parallax" data-parallax={flip ? 0.05 : 0.06}>
-                <BrandVisual tone={b.tone} image={b.image} ratio="16 / 10" label={`business / ${b.tag.toLowerCase()}`} className="svc-visual" />
+                <BrandVisual tone={s.tone} image={s.image} ratio="16 / 11" label={`business / ${s.label}`} className="svc-visual" />
               </div>
             </div>
-            <p className="reveal" style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text-secondary)', marginTop: 30 }}>{b.body}</p>
           </div>
+        </div>
+
+        {/* 内訳カード */}
+        <div className="reveal" style={{ marginTop: 'clamp(40px, 5vw, 64px)', animationDelay: '0.08s' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 'clamp(20px, 2.6vw, 30px)' }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.1em', color: 'var(--text-muted)', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{s.itemsLabelEn}</span>
+            <span style={{ fontSize: 'clamp(16px, 1.8vw, 20px)', fontWeight: 900 }}>{s.itemsLabel}</span>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, ${s.items.length <= 2 ? 360 : 260}px), 1fr))`, gap: 'clamp(16px, 2vw, 22px)' }}>
+            {s.items.map((it) => (
+              <div key={it.t} style={{
+                background: '#fff', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)',
+                boxShadow: 'var(--shadow-sm)', padding: 'clamp(22px, 2.6vw, 32px)', display: 'flex', flexDirection: 'column',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+                  <span aria-hidden="true" style={{ width: 30, height: 4, borderRadius: 'var(--radius-pill)', background: `var(--brand-${s.tone})` }} />
+                  <h4 style={{ fontSize: 'clamp(17px, 1.8vw, 21px)', fontWeight: 900, lineHeight: 1.4 }}>{it.t}</h4>
+                </div>
+                <p style={{ fontSize: 14.5, lineHeight: 1.9, color: 'var(--text-secondary)', flex: 1 }}>{it.d}</p>
+                {it.chips && (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 18 }}>
+                    {it.chips.map((c) => (
+                      <span key={c} style={{
+                        fontSize: 12.5, fontWeight: 700, color: 'var(--text-secondary)',
+                        padding: '6px 12px', borderRadius: 'var(--radius-pill)', border: '1px solid var(--color-border)', background: 'var(--color-bg-subtle)',
+                      }}>{c}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* 対応領域（AI BPOのみ） */}
+          {s.domains && (
+            <div style={{ marginTop: 'clamp(32px, 4vw, 48px)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 18 }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.1em', color: 'var(--text-muted)', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>Coverage</span>
+                <span style={{ fontSize: 'clamp(16px, 1.8vw, 20px)', fontWeight: 900 }}>バックオフィス全般を、まるごと。</span>
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+                {s.domains.map((d) => (
+                  <span key={d} style={{
+                    fontSize: 14, fontWeight: 800, color: 'var(--text-primary)',
+                    padding: '10px 18px', borderRadius: 'var(--radius-pill)', border: `1px solid var(--brand-${s.tone})`, background: '#fff',
+                  }}>{d}</span>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>
@@ -81,44 +133,36 @@ function ServiceBlock({ b, flip }) {
 }
 
 function ServicesDetail() {
-  const businesses = [
-    { no: '01', id: 'svc-01', tone: 'blue', tag: 'AI BPO', title: 'AI BPO', image: '/business/ai-bpo.png',
-      subtitle: '繰り返しの業務をAIに任せ、人はより価値ある仕事へ。',
-      body: 'ヒアリングから設計・実装・定着支援まで一気通貫で対応します。SNS運用・営業メール・データ処理など、あらゆる定型業務を自動化し、人にしかできない仕事に集中できる環境をつくります。',
+  const services = [
+    {
+      no: '01', id: 'svc-bpo', tone: 'blue', tag: 'AI BPO ［基本］', title: 'AI BPO', label: 'ai bpo',
+      image: '/business/ai-bpo.png',
+      subtitle: '繰り返しの業務を、まるごと巻き取る。',
+      body: 'ノンコア業務をそのまま渡すだけ。外部のAI担当として受け取り、まず人が巻き取って現場を止めず、裏でAIに置き換え、定着まで一気通貫で伴走します。「顧問」と「実働」の両輪で、御社のバックオフィスを回します。',
+      itemsLabelEn: 'How', itemsLabel: '2つの提供形態',
       items: [
-        { d: '2026.05.20', t: 'SNS運用代行にAIを導入し、投稿作成の工数を最大70%削減' },
-        { d: '2026.04.10', t: '営業メールの自動生成・送信フローを構築し、返信率が向上' },
-        { d: '2026.03.02', t: 'バックオフィスのデータ入力をAIエージェントで自動化' },
-      ] },
-    { no: '02', id: 'svc-02', tone: 'orange', tag: 'System Development', title: 'AIシステム開発', image: '/business/ai-system.png',
-      subtitle: '業種特化型のAIエージェントを、御社専用に。',
-      body: '既製ツールでは解決できない課題に対し、業務フローに合わせたオーダーメイドのAIシステムを設計・開発します。外部CAIO（AI統括人材）の派遣もセットで提供し、開発から運用までを伴走します。',
+        { t: 'AI BPO顧問', d: '外部のAI担当者として常駐せずに伴走。業務の棚卸し・設計、ツール選定、改善提案、社内への定着までを窓口ひとつで担います。', chips: ['業務設計', 'ツール選定', '改善提案', '定着伴走'] },
+        { t: 'AI BPO実働', d: '日々の定型業務を実際に代行。経理・営業事務・採用労務・マーケ・企画調査・情シスまで、手を動かす作業をまるごと巻き取ります。', chips: ['業務代行', '自動化構築', '運用・保守'] },
+      ],
+      domains: ['経理', '営業事務', '採用・労務', 'マーケティング', '企画・調査', 'AI導入・情シス'],
+    },
+    {
+      no: '02', id: 'svc-dev', tone: 'orange', tag: 'AI Development ［オプション］', title: 'AI開発', label: 'ai development',
+      image: '/business/ai-system.png',
+      subtitle: '自動化と内製化を、もっと深く。',
+      body: 'AI BPOで現場が回り始めたら、次は仕組みづくり。御社専用のAIシステム開発、AIが効くデータ基盤の整備、社内人材の育成までを組み合わせ、外注に依存しない“自走できるAI組織”へと進化させます。',
+      itemsLabelEn: 'Lineup', itemsLabel: '3つのメニュー',
       items: [
-        { d: '2026.05.08', t: '製造業向けの業務特化AIエージェントを共同開発' },
-        { d: '2026.04.18', t: '外部CAIO（AI統括人材）派遣プログラムの提供を開始' },
-        { d: '2026.03.15', t: '社内ナレッジ検索AIをオーダーメイドで構築' },
-      ] },
-    { no: '03', id: 'svc-03', tone: 'green', tag: 'Database Optimization', title: 'データベース最適化', image: '/business/database.png',
-      subtitle: 'AIが正しく機能する、データの土台をつくる。',
-      body: 'データの整理・構造化・最適化を行い、社内に散らばった情報資産を整備します。AIが本来の力を発揮できる基盤を構築し、導入効果を最大化します。',
-      items: [
-        { d: '2026.05.02', t: '散在する顧客データを統合し、AI活用の基盤を整備' },
-        { d: '2026.04.05', t: '社内ドキュメントの構造化・タグ付けを自動化' },
-        { d: '2026.02.28', t: 'データ品質を可視化するダッシュボードを提供' },
-      ] },
-    { no: '04', id: 'svc-04', tone: 'red', tag: 'AI Education', title: 'AI教育', image: '/business/ai-education.png',
-      subtitle: 'ツールを導入して終わりにしない。',
-      body: '社内でAIを使いこなせる人材を育てる研修・ワークショップを提供します。現場で即実践できるプログラム設計が強みで、組織にAI活用の文化を根づかせます。',
-      items: [
-        { d: '2026.05.15', t: '自治体向けのAI人材育成プログラムを開講' },
-        { d: '2026.04.22', t: '管理職向け「AIマネジメント研修」を提供開始' },
-        { d: '2026.03.10', t: '現場実践型ワークショップを全国で展開' },
-      ] },
+        { t: 'AIシステム開発', d: '既製ツールでは解決できない課題に、業務フローに合わせたオーダーメイドのAIエージェントを設計・開発。外部CAIO（AI統括人材）の派遣もセットで提供します。', chips: ['AIエージェント', 'オーダーメイド', '外部CAIO派遣'] },
+        { t: 'データベース最適化', d: '社内に散らばった情報資産を整理・構造化・最適化。AIが本来の力を発揮できる“データの土台”を整え、導入効果を最大化します。', chips: ['整理', '構造化', '最適化'] },
+        { t: 'AI教育', d: '1回1時間〜の講義＋ワークショップを、1人から。業種・職種に合わせてカリキュラムをカスタムし、研修後の定着フォローまで伴走します。', chips: ['1日から', '少人数OK', '定着フォロー'] },
+      ],
+    },
   ];
   return (
     <React.Fragment>
       <DetailHero />
-      {businesses.map((b, i) => <ServiceBlock key={b.id} b={b} flip={i % 2 === 1} />)}
+      {services.map((s, i) => <ServiceSection key={s.id} s={s} flip={i % 2 === 1} />)}
     </React.Fragment>
   );
 }

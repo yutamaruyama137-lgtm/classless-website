@@ -16,7 +16,7 @@ function ContactPage() {
   const ctTitleN = s.count();
 
   const [form, setForm] = React.useState({
-    name: '', company: '', email: '', tel: '', topic: 'AI BPO', message: '',
+    name: '', company: '', email: '', tel: '', topic: '無料AX診断のご予約', message: '',
   });
   const [status, setStatus] = React.useState('idle'); // idle | sending | sent | error
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
@@ -70,7 +70,7 @@ function ContactPage() {
   const onBlur = (e) => { e.target.style.borderColor = 'var(--color-border-strong)'; e.target.style.boxShadow = 'none'; };
   const Req = () => <span style={{ color: 'var(--brand-red)', marginLeft: 4 }}>*</span>;
 
-  const topics = ['AI BPO', 'AIシステム開発', 'データベース最適化', 'AI教育', '採用・その他'];
+  const topics = ['無料AX診断のご予約', 'AI BPO（業務代行）', 'AI開発（システム・DB最適化）', 'AI教育・研修', '料金・お見積り', 'その他'];
 
   return (
     <section id="contact" ref={ref} style={{ position: 'relative', overflow: 'hidden', background: 'transparent' }}>
@@ -85,14 +85,14 @@ function ContactPage() {
             <div className="reveal"><Eyebrow tone="blue">Contact</Eyebrow></div>
             <h1 ref={titleRef} className="split-host" style={{ fontSize: 'clamp(38px, 5.2vw, 68px)', fontWeight: 900, marginTop: 18, letterSpacing: '0.01em', lineHeight: 1.25, '--n': ctTitleN, '--win': 6 }}>{ctTitle}</h1>
             <p className="reveal" style={{ fontSize: 'clamp(15px, 1.5vw, 17px)', lineHeight: 1.95, color: 'var(--text-secondary)', fontWeight: 500, marginTop: 24, maxWidth: '26em', animationDelay: '0.1s' }}>
-              AI BPOのご相談から、システム開発・データベース最適化・人材育成まで。
-              地域の現場に伴走します。初回のご相談は無料です。お気軽にお問い合わせください。
+              AI BPOのご相談・無料AX診断のお申し込みはこちらから。
+              経理・営業事務・採用・マーケまで、ノンコア業務をまるごと巻き取ります。初回のご相談は無料です。
             </p>
 
             <dl className="reveal" style={{ margin: '36px 0 0', animationDelay: '0.16s' }}>
               {[
                 ['Email', CONTACT_TO],
-                ['対応領域', 'AI BPO / システム開発 / DB最適化 / AI教育'],
+                ['対応領域', 'AI BPO / AI開発 / DB最適化 / AI教育'],
               ].map(([k, v]) => (
                 <div key={k} style={{ padding: '14px 0', borderTop: '1px solid var(--color-border)' }}>
                   <dt style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>{k}</dt>
@@ -150,7 +150,7 @@ function ContactPage() {
                     <textarea style={{ ...field, minHeight: 130, resize: 'vertical', lineHeight: 1.7 }} value={form.message} onChange={set('message')} onFocus={onFocus} onBlur={onBlur} placeholder="ご相談内容をご記入ください" />
                   </div>
                   <div style={{ marginTop: 6 }}>
-                    <Button size="lg" type="submit" iconRight={<Arrow />} onClick={onSubmit} style={{ width: '100%', opacity: valid && status !== 'sending' ? 1 : 0.55 }}>
+                    <Button size="lg" type="submit" iconRight={<Arrow />} style={{ width: '100%', opacity: valid && status !== 'sending' ? 1 : 0.55 }}>
                       {status === 'sending' ? '送信中…' : '送信する'}
                     </Button>
                     {status === 'error' && (

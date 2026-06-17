@@ -3,7 +3,7 @@
 const LEGAL_INFO = {
   company: '合同会社Classless',
   rep: '丸山侑太',
-  address: '東京都渋谷区円山町5番3号 MIEUX渋谷ビル8階',
+  address: '東京都渋谷区円山町5番3号 MIEUX渋谷ビル5階',
   tel: '080-3633-6094',
   email: 'contact@classless.jp',
 };

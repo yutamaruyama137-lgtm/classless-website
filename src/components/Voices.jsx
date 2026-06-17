@@ -30,7 +30,7 @@ function Voices() {
   };
 
   return (
-    <section id="voices" ref={ref} style={{ background: 'var(--color-bg)', paddingTop: 'var(--section-y)', paddingBottom: 'var(--section-y)' }}>
+    <section id="voices" ref={ref} style={{ background: 'var(--color-bg-subtle)', paddingTop: 'var(--section-y)', paddingBottom: 'var(--section-y)' }}>
       <div className="cl-container">
         <div className="reveal"><Eyebrow>Voices</Eyebrow></div>
         <h2 className="reveal" style={{ fontSize: 'clamp(27px, 3.5vw, 46px)', fontWeight: 900, marginTop: 18, letterSpacing: '0.01em', lineHeight: 1.32, animationDelay: '0.08s' }}>
@@ -40,14 +40,14 @@ function Voices() {
           導入事例や活用のヒントを、Classless の note に公開しています。
         </p>
 
-        <div className="cards-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, marginTop: 'clamp(40px, 5vw, 64px)' }}>
+        <div className="cards-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: 24, marginTop: 'clamp(40px, 5vw, 64px)' }}>
           {items.map((v, i) => {
             const tone = tones[i % tones.length];
             return (
               <a key={v.link || i} href={v.link} target="_blank" rel="noopener noreferrer"
                 className="reveal voice-card" style={{
                   display: 'flex', flexDirection: 'column', background: '#fff',
-                  border: '1px solid var(--color-border)', borderRadius: 'var(--radius-2xl)', overflow: 'hidden',
+                  border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', overflow: 'hidden',
                   boxShadow: 'var(--shadow-sm)', color: 'var(--text-primary)', animationDelay: `${0.08 * i}s`,
                   transition: 'transform .3s var(--ease-out), box-shadow .3s var(--ease-out)',
                 }}

@@ -9,10 +9,13 @@ function Company() {
   const cTitleN = s.count();
   const rows = [
     ['会社名', '合同会社Classless'],
+    ['設立', '2025年10月1日'],
+    ['代表者', '丸山 侑太'],
+    ['所在地', '東京都渋谷区円山町5-3 MIEUX渋谷ビル 5階'],
     ['事業内容', 'AI BPO / AIシステム開発 / データベース最適化 / AI教育'],
   ];
   return (
-    <section id="company" ref={ref} style={{ background: 'var(--color-bg-subtle)', paddingTop: 'var(--section-y)', paddingBottom: 'var(--section-y)' }}>
+    <section id="company" ref={ref} style={{ background: '#fff', paddingTop: 'var(--section-y)', paddingBottom: 'var(--section-y)' }}>
       <div className="cl-container">
         <div className="grid2" style={{ display: 'grid', gridTemplateColumns: '0.8fr 1.2fr', gap: 'clamp(32px, 5vw, 80px)', alignItems: 'start' }}>
           <div>
@@ -57,11 +60,11 @@ function JoinCta({ onNav }) {
           <span style={{ display: 'block' }}>{jl2}</span>
         </h2>
         <p className="reveal" style={{ color: 'rgba(255,255,255,0.74)', fontSize: 17, lineHeight: 1.95, maxWidth: '40em', margin: '24px auto 0', fontWeight: 500, animationDelay: '0.22s' }}>
-          AI BPOのご相談から、システム開発・人材育成まで。<br className="hide-sp" />まずはお気軽にお問い合わせください。初回のご相談は無料です。
+          AI BPOのご相談・無料AX診断から、システム開発・人材育成まで。<br className="hide-sp" />まずはお気軽にお問い合わせください。初回のご相談は無料です。
         </p>
         <div className="reveal" style={{ display: 'flex', gap: 14, justifyContent: 'center', marginTop: 40, flexWrap: 'wrap', animationDelay: '0.3s' }}>
-          <Button size="lg" iconRight={<Arrow />} onClick={() => onNav && onNav('contact')}>無料で相談する</Button>
-          <a href="/business"><Button size="lg" variant="secondary" tone="ink" style={{ background: 'transparent', color: '#fff', borderColor: 'rgba(255,255,255,0.4)' }}>事業内容を見る</Button></a>
+          <Button size="lg" iconRight={<Arrow />} onClick={() => onNav && onNav('contact')}>無料AX診断を予約する</Button>
+          <Button size="lg" variant="secondary" tone="ink" onClick={() => onNav && onNav('pricing')} style={{ background: 'transparent', color: '#fff', borderColor: 'rgba(255,255,255,0.4)' }}>料金を見る</Button>
         </div>
       </div>
     </section>
@@ -73,7 +76,7 @@ function ContactBand() {
   const { useReveal, Arrow } = window;
   const ref = useReveal();
   return (
-    <section id="contact" ref={ref} style={{ background: 'transparent', borderTop: '1px solid var(--color-border)' }}>
+    <section id="contact-band" ref={ref} style={{ background: 'transparent', borderTop: '1px solid var(--color-border)' }}>
       <div className="cl-container" style={{ paddingTop: 'clamp(64px, 8vw, 120px)', paddingBottom: 'clamp(64px, 8vw, 120px)' }}>
         <div className="grid2" style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 32, alignItems: 'center' }}>
           <div className="reveal">
@@ -81,7 +84,7 @@ function ContactBand() {
             <p style={{ fontSize: 16, color: 'var(--text-secondary)', fontWeight: 600, marginTop: 10 }}>AI活用のご相談・お見積りはこちらから。</p>
           </div>
           <a href="/contact" className="reveal" style={{ animationDelay: '0.1s' }}>
-            <Button size="lg" iconRight={<Arrow />}>お問い合わせ</Button>
+            <Button size="lg" iconRight={<Arrow />}>無料AX診断・お問い合わせ</Button>
           </a>
         </div>
       </div>
@@ -91,11 +94,11 @@ function ContactBand() {
 
 function Footer({ onNav }) {
   const cols = [
-    { h: '事業内容', items: [
-      { l: 'AI BPO', href: '/business#svc-01' },
-      { l: 'AIシステム開発', href: '/business#svc-02' },
-      { l: 'データベース最適化', href: '/business#svc-03' },
-      { l: 'AI教育', href: '/business#svc-04' },
+    { h: 'サービス', items: [
+      { l: 'サービス内容', href: '/#whatwedo' },
+      { l: '料金', href: '/#pricing' },
+      { l: '導入事例', href: '/#cases' },
+      { l: '導入の流れ', href: '/#flow' },
     ] },
     { h: '会社情報', items: [
       { l: '経営理念', href: '/philosophy' },
@@ -103,8 +106,8 @@ function Footer({ onNav }) {
       { l: '会社概要', href: '/#company' },
     ] },
     { h: 'お問い合わせ', items: [
+      { l: '無料AX診断', href: '/contact' },
       { l: 'お問い合わせフォーム', href: '/contact' },
-      { l: '無料相談', href: '/contact' },
     ] },
   ];
   return (
