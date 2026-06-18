@@ -59,25 +59,44 @@ function ArticleCard({ a, size = 'md' }) {
   );
 }
 
-/* In-article CTA — a single, soft invitation. Kept low-key on purpose:
-   the blog's job is useful information first, not a sales pitch. */
+/* End-of-article CTA — the single place where Classless promotion AND a sense
+   of pricing are bundled together. The body stays information-first; brand and
+   price talk are consolidated here at the end on purpose. */
 function ArticleCta() {
   const { Button } = window.ClasslessDesignSystem_225e16;
   const { Arrow } = window;
+  const price = [
+    ['初期費用', '0円'],
+    ['実働パッケージ', '月¥66,000〜（月20h）'],
+    ['実働単価', '¥3,000/h 固定'],
+    ['AI顧問', '月¥50,000〜'],
+  ];
   return (
     <div className="reveal" style={{
-      margin: 'clamp(28px,3.4vw,44px) 0 8px', padding: 'clamp(22px,2.6vw,30px)',
-      borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-subtle)',
-      border: '1px solid var(--color-border)',
-      display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap',
+      margin: 'clamp(32px,4vw,52px) 0 8px', padding: 'clamp(26px,3vw,40px)',
+      borderRadius: 'var(--radius-xl, 20px)', background: 'var(--neutral-900)',
+      position: 'relative', overflow: 'hidden',
     }}>
-      <div style={{ minWidth: 220, flex: 1 }}>
-        <p style={{ fontWeight: 800, fontSize: 16, lineHeight: 1.6, margin: '0 0 4px', color: 'var(--text-primary)' }}>自社で試すイメージが湧いたら</p>
-        <p style={{ fontSize: 13.5, lineHeight: 1.8, color: 'var(--text-secondary)', margin: 0 }}>
-          Classlessでは、AI活用の無料相談・無料体験を受け付けています。「まず何から始めるか」を一緒に整理できます。
-        </p>
+      <span className="cl-spectrum-bar" style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 5 }} />
+      <div style={{ fontFamily: 'var(--font-eyebrow)', fontWeight: 700, fontSize: 12, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--brand-blue)' }}>About Classless</div>
+      <p style={{ color: '#fff', fontSize: 'clamp(18px,2.2vw,24px)', fontWeight: 900, lineHeight: 1.5, margin: '10px 0 8px' }}>御社専属の「外部AI部署」を、小さくはじめませんか？</p>
+      <p style={{ color: 'rgba(255,255,255,0.74)', fontSize: 14, lineHeight: 1.9, margin: '0 0 20px', maxWidth: '40em' }}>
+        Classlessは東北・仙台発、地域・中小企業に伴走するAI活用パートナーです。AI BPO・AIシステム開発・データ活用・AI教育まで一気通貫で支援します。初期費用0円・実働は時給固定で、必要な分だけスモールスタートできます。
+      </p>
+      {/* 金額感 */}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 22 }}>
+        {price.map(([k, v]) => (
+          <div key={k} style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 'var(--radius-pill)', padding: '6px 14px', display: 'flex', alignItems: 'baseline', gap: 8 }}>
+            <span style={{ fontSize: 11.5, color: 'rgba(255,255,255,0.6)', fontWeight: 600 }}>{k}</span>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13.5, fontWeight: 800, color: '#fff' }}>{v}</span>
+          </div>
+        ))}
       </div>
-      <a href="/contact" style={{ flexShrink: 0 }}><Button variant="secondary" tone="ink" iconRight={<Arrow />}>無料で相談してみる</Button></a>
+      <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
+        <a href="/contact"><Button size="lg" iconRight={<Arrow />}>無料AI診断・相談はこちら</Button></a>
+        <a href="/#pricing" style={{ color: 'rgba(255,255,255,0.7)', fontSize: 13.5, fontWeight: 700 }}>料金の詳細を見る →</a>
+      </div>
+      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12, lineHeight: 1.7, margin: '16px 0 0' }}>※金額は目安です。まずは無料相談・無料体験から、何から始めるかを一緒に整理します。</p>
     </div>
   );
 }
