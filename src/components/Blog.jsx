@@ -37,6 +37,7 @@ function useBlogNarrow() {
 function ArticleCard({ a, size = 'md' }) {
   const { BrandVisual } = window;
   const big = size === 'lg';
+  const img = window.pickBlogImage ? window.pickBlogImage(a.category, a.slug) : null;
   return (
     <a href={`/blog/${a.slug}`} className="reveal blog-card" style={{
       display: 'flex', flexDirection: 'column', background: '#fff',
@@ -46,7 +47,7 @@ function ArticleCard({ a, size = 'md' }) {
     }}
       onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = 'var(--shadow-md)'; }}
       onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'var(--shadow-sm)'; }}>
-      <BrandVisual tone={toneOf(a)} label={a.category} ratio="16 / 9" radius="0" tilt={false} />
+      <BrandVisual tone={toneOf(a)} label={a.category} image={img} ratio="16 / 9" radius="0" tilt={false} />
       <div style={{ padding: big ? 'clamp(18px,2vw,24px)' : '16px 18px', display: 'flex', flexDirection: 'column', gap: 9, flex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 700, color: 'var(--text-muted)' }}>{a.date}</span>
@@ -58,29 +59,31 @@ function ArticleCard({ a, size = 'md' }) {
   );
 }
 
-/* In-article CTA band — 「無料AI診断にどうぞ」. */
+/* In-article CTA — a single, soft invitation. Kept low-key on purpose:
+   the blog's job is useful information first, not a sales pitch. */
 function ArticleCta() {
   const { Button } = window.ClasslessDesignSystem_225e16;
   const { Arrow } = window;
   return (
     <div className="reveal" style={{
-      margin: 'clamp(28px,3.4vw,44px) 0', padding: 'clamp(26px,3vw,40px)',
-      borderRadius: 'var(--radius-xl, 20px)', background: 'var(--neutral-900)',
-      position: 'relative', overflow: 'hidden', textAlign: 'center',
+      margin: 'clamp(28px,3.4vw,44px) 0 8px', padding: 'clamp(22px,2.6vw,30px)',
+      borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-subtle)',
+      border: '1px solid var(--color-border)',
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap',
     }}>
-      <span className="cl-spectrum-bar" style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 5 }} />
-      <div style={{ fontFamily: 'var(--font-eyebrow)', fontWeight: 700, fontSize: 12.5, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--brand-blue)' }}>Free AI Assessment</div>
-      <p style={{ color: '#fff', fontSize: 'clamp(18px,2.2vw,24px)', fontWeight: 900, lineHeight: 1.5, margin: '12px 0 6px' }}>御社の業務、どこからAI化できる？</p>
-      <p style={{ color: 'rgba(255,255,255,0.72)', fontSize: 14.5, lineHeight: 1.85, maxWidth: '34em', margin: '0 auto 22px' }}>
-        現状の業務を棚卸しし、AIで自動化できるポイントを無料で診断します。まずはお気軽に「無料AI診断にどうぞ」。
-      </p>
-      <a href="/contact"><Button size="lg" iconRight={<Arrow />}>無料AI診断にどうぞ</Button></a>
+      <div style={{ minWidth: 220, flex: 1 }}>
+        <p style={{ fontWeight: 800, fontSize: 16, lineHeight: 1.6, margin: '0 0 4px', color: 'var(--text-primary)' }}>自社で試すイメージが湧いたら</p>
+        <p style={{ fontSize: 13.5, lineHeight: 1.8, color: 'var(--text-secondary)', margin: 0 }}>
+          Classlessでは、AI活用の無料相談・無料体験を受け付けています。「まず何から始めるか」を一緒に整理できます。
+        </p>
+      </div>
+      <a href="/contact" style={{ flexShrink: 0 }}><Button variant="secondary" tone="ink" iconRight={<Arrow />}>無料で相談してみる</Button></a>
     </div>
   );
 }
 
 /* ---- article body block renderer -------------------------------------- */
-function Block({ b }) {
+function Block({ b, a, idx }) {
   const { BrandVisual } = window;
   switch (b.t) {
     case 'lead':
@@ -91,13 +94,15 @@ function Block({ b }) {
       return <h3 style={{ fontSize: 'clamp(17px,2vw,21px)', fontWeight: 800, lineHeight: 1.5, margin: 'clamp(24px,2.6vw,32px) 0 12px', color: 'var(--text-primary)' }}>{b.text}</h3>;
     case 'p':
       return <p style={{ fontSize: 15.5, lineHeight: 2.0, color: 'var(--text-secondary)', margin: '0 0 18px' }}>{fmt(b.text)}</p>;
-    case 'img':
+    case 'img': {
+      const url = b.image || (window.pickBlogImage && a ? window.pickBlogImage(a.category, `${a.slug}-${idx}`) : null);
       return (
         <figure className="reveal" style={{ margin: 'clamp(24px,2.8vw,36px) 0' }}>
-          <BrandVisual tone={b.tone || 'blue'} label={b.label} ratio="16 / 9" />
+          <BrandVisual tone={b.tone || (a && a.tone) || 'blue'} label={b.label} image={url} ratio="16 / 9" />
           {b.caption && <figcaption style={{ fontSize: 12.5, color: 'var(--text-muted)', textAlign: 'center', marginTop: 10, fontWeight: 600 }}>{b.caption}</figcaption>}
         </figure>
       );
+    }
     case 'ul':
       return <ul style={{ margin: '0 0 20px', paddingLeft: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 11 }}>
         {b.items.map((it, i) => <li key={i} style={{ position: 'relative', paddingLeft: 24, fontSize: 15.5, lineHeight: 1.85, color: 'var(--text-secondary)' }}>
@@ -182,14 +187,14 @@ function BlogArticle({ slug, onAnchor }) {
             </div>
 
             <div className="reveal" style={{ marginBottom: 'clamp(24px,3vw,36px)' }}>
-              <BrandVisual tone={toneOf(a)} label={a.category} ratio="16 / 9" />
+              <BrandVisual tone={toneOf(a)} label={a.category} image={window.pickBlogImage ? window.pickBlogImage(a.category, a.slug) : null} ratio="16 / 9" />
             </div>
 
             {/* mobile TOC (top) */}
             {narrow && <TocBox toc={toc} />}
 
             <div className="blog-body">
-              {blocks.map((b, i) => <Block key={i} b={b} />)}
+              {blocks.map((b, i) => <Block key={i} b={b} a={a} idx={i} />)}
             </div>
 
             {/* related */}
@@ -207,7 +212,6 @@ function BlogArticle({ slug, onAnchor }) {
           {!narrow && (
             <aside style={{ position: 'sticky', top: 90, display: 'flex', flexDirection: 'column', gap: 24 }}>
               <TocBox toc={toc} />
-              <SidebarCta />
             </aside>
           )}
         </div>
@@ -242,10 +246,10 @@ function TocBox({ toc }) {
 function SidebarCta() {
   const { Button } = window.ClasslessDesignSystem_225e16;
   return (
-    <div style={{ background: 'var(--neutral-900)', borderRadius: 'var(--radius-lg)', padding: 'clamp(20px,2.2vw,26px)', textAlign: 'center' }}>
-      <p style={{ color: '#fff', fontWeight: 900, fontSize: 16, lineHeight: 1.5, margin: '0 0 6px' }}>無料AI診断にどうぞ</p>
-      <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 12.5, lineHeight: 1.8, margin: '0 0 16px' }}>御社の業務をAIでどこまで効率化できるか、無料で診断します。</p>
-      <a href="/contact"><Button fullWidth size="sm">相談してみる</Button></a>
+    <div style={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', padding: 'clamp(20px,2.2vw,26px)' }}>
+      <p style={{ fontWeight: 800, fontSize: 14.5, lineHeight: 1.6, margin: '0 0 6px', color: 'var(--text-primary)' }}>Classlessについて</p>
+      <p style={{ color: 'var(--text-secondary)', fontSize: 12.5, lineHeight: 1.85, margin: '0 0 16px' }}>東北・仙台発、地域・中小企業に伴走するAI活用パートナー。無料相談も受け付けています。</p>
+      <a href="/contact"><Button fullWidth size="sm" variant="secondary" tone="ink">無料で相談してみる</Button></a>
     </div>
   );
 }
