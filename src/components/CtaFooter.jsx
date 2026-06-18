@@ -97,7 +97,7 @@ function Footer({ onNav }) {
     { h: 'サービス', items: [
       { l: 'サービス内容', href: '/#whatwedo' },
       { l: '料金', href: '/#pricing' },
-      { l: '導入事例', href: '/#cases' },
+      { l: 'ブログ', href: '/blog' },
       { l: '導入の流れ', href: '/#flow' },
     ] },
     { h: '会社情報', items: [

@@ -19,11 +19,23 @@ function Pricing() {
     {
       tag: 'AIパートナー', tone: 'blue', price: '¥50,000', unit: '/月',
       body: '月次の壁打ち・AI活用の相談窓口。「困ったら聞ける」を常設。',
+      items: [
+        '月1回の月次ミーティング（ネクストアクション策定）',
+        'チャットでの相談 無制限',
+        '貴社業務に合わせたAI活用提案',
+        'AI利用ガイドラインの策定',
+      ],
       feature: null,
     },
     {
       tag: '外部CAIO', tone: 'orange', price: '¥150,000', unit: '/月',
       body: 'AI戦略を統括する経営の右腕。実働を 〔¥3,000/h〕 固定で利用できる特典付き。',
+      itemsHead: 'AIパートナーの全機能を含む',
+      items: [
+        '社内向けAI講習会（月1〜2回）',
+        'AI導入セットアップの伴走支援',
+        '実働を ¥3,000/h 固定で利用できる特典',
+      ],
       feature: '実働 ¥3,000/h 固定',
       recommended: true,
     },
@@ -110,8 +122,23 @@ function Pricing() {
                 <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: 16, color: 'var(--text-muted)' }}>{r.unit}</span>
               </div>
               <p style={{ fontSize: 15, lineHeight: 1.9, color: 'var(--text-secondary)', marginTop: 18 }}>{r.body}</p>
+              {r.items && (
+                <ul style={{ listStyle: 'none', margin: 0, marginTop: 20, padding: 18, borderRadius: 'var(--radius-md, 12px)', background: `var(--${r.tone}-50)`, display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  {r.itemsHead && (
+                    <li style={{ fontFamily: 'var(--font-jp)', fontWeight: 800, fontSize: 13, color: `var(--${r.tone}-700)`, marginBottom: 2 }}>
+                      {r.itemsHead}
+                    </li>
+                  )}
+                  {r.items.map((it) => (
+                    <li key={it} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                      <Check tone={r.tone} />
+                      <span style={{ fontFamily: 'var(--font-jp)', fontWeight: 600, fontSize: 13.5, lineHeight: 1.65, color: 'var(--text-secondary)' }}>{it}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
               {r.feature && (
-                <div style={{ marginTop: 18, padding: '10px 14px', borderRadius: 'var(--radius-md, 12px)', background: 'var(--orange-50)', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ marginTop: 16, padding: '10px 14px', borderRadius: 'var(--radius-md, 12px)', background: 'var(--orange-50)', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
                   <Dot tone={r.tone} />
                   <span style={{ fontFamily: 'var(--font-jp)', fontWeight: 700, fontSize: 13.5, color: 'var(--orange-700)' }}>{r.feature}</span>
                 </div>
@@ -212,6 +239,15 @@ function Dot({ tone = 'blue' }) {
   return (
     <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
       <circle cx="5" cy="5" r="5" fill={`var(--brand-${tone})`} />
+    </svg>
+  );
+}
+
+/* Brand-colored checkmark used in the retainer feature lists. */
+function Check({ tone = 'blue' }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style={{ flexShrink: 0, marginTop: 2 }}>
+      <path d="M3.5 8.5l3 3 6-7" fill="none" stroke={`var(--brand-${tone})`} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

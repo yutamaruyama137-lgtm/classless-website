@@ -12,6 +12,9 @@ import './styles/responsive.css'
 // 3) Design-system component bundle (registers window.ClasslessDesignSystem_225e16).
 import './ds/_ds_bundle.js'
 
+// 3.5) Blog registry — eager-globs src/blog/articles/*.js onto window.BLOG_ARTICLES.
+import './blog/registry.js'
+
 // 4) Site components — each registers itself on window via Object.assign.
 //    Order matters: these load AFTER the DS bundle so the site's own
 //    Header/Hero/Services win over the DS marketing-kit namesakes.
@@ -33,6 +36,7 @@ import './components/Philosophy.jsx'
 import './components/CtaFooter.jsx'
 import './components/ContactPage.jsx'
 import './components/LegalPages.jsx'
+import './components/Blog.jsx'
 
 function getRoute() {
   const p = window.location.pathname.replace(/\/+$/, '') || '/'
@@ -42,7 +46,16 @@ function getRoute() {
   if (p === '/privacy') return 'privacy'
   if (p === '/terms') return 'terms'
   if (p === '/tokushoho') return 'tokushoho'
+  if (p === '/blog') return 'blog'
+  if (p.startsWith('/blog/')) return 'article'
   return 'home'
+}
+
+// Slug for /blog/<slug> routes.
+function getSlug() {
+  const p = window.location.pathname.replace(/\/+$/, '')
+  const m = p.match(/^\/blog\/(.+)$/)
+  return m ? decodeURIComponent(m[1]) : null
 }
 
 // Smooth-scroll to an in-page anchor (offset for the sticky header).
@@ -73,19 +86,28 @@ function App() {
   const route = getRoute()
   const cta = { label: '無料AX診断', href: '/contact' }
 
-  // Shared nav for sub-pages — links jump back to the home long-form sections.
-  const subLinks = [
-    { label: 'サービス内容', href: '/#whatwedo' },
-    { label: '料金', href: '/#pricing' },
-    { label: '事業内容', href: '/business' },
-    { label: '会社概要', href: '/#company' },
+  // ── Single source of truth for the header nav ──────────────────────────
+  // Same labels + order on EVERY page; only the href prefix differs so that
+  // in-page anchors work on home and navigate-then-scroll from sub-pages.
+  // `id` marks the route a link is "active" on.
+  const NAV = [
+    { label: 'サービス内容', anchor: 'whatwedo' },
+    { label: '料金', anchor: 'pricing' },
+    { label: 'ブログ', path: '/blog', id: 'blog' },
+    { label: '導入の流れ', anchor: 'flow' },
+    { label: '会社概要', anchor: 'company' },
   ]
+  const onHome = route === 'home'
+  const navLinks = NAV.map((n) => {
+    if (n.path) return { label: n.label, href: n.path, active: route === n.id || (n.id === 'blog' && route === 'article') }
+    return { label: n.label, href: onHome ? `#${n.anchor}` : `/#${n.anchor}` }
+  })
+  const homeHref = onHome ? '#top' : '/'
 
   if (route === 'business') {
-    const links = subLinks.map((l) => (l.href === '/business' ? { ...l, active: true } : l))
     return (
       <div data-screen-label="事業内容">
-        <Header links={links} cta={cta} homeHref="/" onAnchor={scrollToId} />
+        <Header links={navLinks} cta={cta} homeHref={homeHref} onAnchor={scrollToId} />
         <main>
           <ServicesDetail />
           <ContactBand />
@@ -98,7 +120,7 @@ function App() {
   if (route === 'philosophy') {
     return (
       <div data-screen-label="経営理念">
-        <Header links={subLinks} cta={cta} homeHref="/" onAnchor={scrollToId} />
+        <Header links={navLinks} cta={cta} homeHref={homeHref} onAnchor={scrollToId} />
         <main>
           <Philosophy />
           <ContactBand />
@@ -111,9 +133,36 @@ function App() {
   if (route === 'contact') {
     return (
       <div data-screen-label="お問い合わせ">
-        <Header links={subLinks} cta={cta} homeHref="/" onAnchor={scrollToId} />
+        <Header links={navLinks} cta={cta} homeHref={homeHref} onAnchor={scrollToId} />
         <main>
           <ContactPage />
+        </main>
+        <Footer />
+      </div>
+    )
+  }
+
+  if (route === 'blog') {
+    const { BlogIndex } = window
+    return (
+      <div data-screen-label="ブログ">
+        <Header links={navLinks} cta={cta} homeHref={homeHref} onAnchor={scrollToId} />
+        <main>
+          <BlogIndex />
+          <ContactBand />
+        </main>
+        <Footer />
+      </div>
+    )
+  }
+
+  if (route === 'article') {
+    const { BlogArticle } = window
+    return (
+      <div data-screen-label="記事">
+        <Header links={navLinks} cta={cta} homeHref={homeHref} onAnchor={scrollToId} />
+        <main>
+          <BlogArticle slug={getSlug()} onAnchor={scrollToId} />
         </main>
         <Footer />
       </div>
@@ -126,7 +175,7 @@ function App() {
     const label = route === 'privacy' ? 'プライバシーポリシー' : route === 'terms' ? '利用規約' : '特定商取引法に基づく表記'
     return (
       <div data-screen-label={label}>
-        <Header links={subLinks} cta={cta} homeHref="/" onAnchor={scrollToId} />
+        <Header links={navLinks} cta={cta} homeHref={homeHref} onAnchor={scrollToId} />
         <main>
           <Legal />
         </main>
@@ -136,16 +185,9 @@ function App() {
   }
 
   // home — long-form, BPO-first landing (cloudbuddy-style flow)
-  const links = [
-    { label: 'サービス内容', href: '#whatwedo' },
-    { label: '料金', href: '#pricing' },
-    { label: '導入事例', href: '#cases' },
-    { label: '導入の流れ', href: '#flow' },
-    { label: '会社概要', href: '#company' },
-  ]
   return (
     <div data-screen-label="Classless コーポレートサイト">
-      <Header links={links} cta={cta} homeHref="#top" onAnchor={scrollToId} />
+      <Header links={navLinks} cta={cta} homeHref={homeHref} onAnchor={scrollToId} />
       <main>
         <Hero onNav={scrollToId} />
         <Mission />
