@@ -67,7 +67,11 @@ export const article = {
     ] },
 
     { t: 'h2', text: 'まとめ' },
-    { t: 'p', text: 'カスタマーサポートのAI化は「チャットボットを入れる」ことではなく、「AIと人の役割分担を設計し、継続的に改善する仕組みをつくる」ことです。まずは自社の問い合わせ件数・チャネル・社内体制を整理し、自社運用かBPO活用かを判断したうえでサービスを選定することをおすすめします。' },
+    { t: 'p', text: 'カスタマーサポートのAI化は「チャットボットを入れる」ことではなく、「AIと人の役割分担を設計し、継続的に改善する仕組みをつくる」ことです。まずは自社の問い合わせ件数・チャネル・社内体制を整理し、自社運用かBPO活用かを判断したうえでサービスを選定することをおすすめします。AI BPOサービス全般の比較は[AI BPO会社おすすめ比較](/blog/ai-bpo-comparison)もあわせてご覧ください。' },
+    { t: 'refs', title: '参考リンク', items: [
+      { label: 'Zendesk｜AIカスタマーサポート完全ガイド', href: 'https://www.zendesk.co.jp/blog/ai/ai-customer-support/' },
+      { label: 'PKSHA Technology｜PKSHA ChatAgent公式', href: 'https://pksha.com/products/chatbot/' },
+    ] },
     { t: 'cta' },
   ],
 }

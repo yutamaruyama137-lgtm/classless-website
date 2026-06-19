@@ -61,7 +61,12 @@ export const article = {
     ] },
 
     { t: 'h2', text: 'まとめ｜ツール選定より「FAQ整備」が先' },
-    { t: 'p', text: 'AIチャットボットは、導入するだけでは機能しません。**回答品質はFAQの整備度に直結する**ため、ツール選定と並行してFAQの棚卸しを進めることが成功の前提条件です。まず自社の問い合わせ件数・カテゴリを整理し、自動化できる割合を試算してから、用途に合ったツールを選ぶ順序を守りましょう。' },
+    { t: 'p', text: 'AIチャットボットは、導入するだけでは機能しません。**回答品質はFAQの整備度に直結する**ため、ツール選定と並行してFAQの棚卸しを進めることが成功の前提条件です。まず自社の問い合わせ件数・カテゴリを整理し、自動化できる割合を試算してから、用途に合ったツールを選ぶ順序を守りましょう。CSの対応工数を外部に委託する選択肢については、[カスタマーサポート向けAI BPOの比較記事](/blog/customer-support-ai-bpo)も参考にしてください。' },
+    { t: 'refs', title: '参考リンク', items: [
+      { label: 'KARAKURI chatbot 公式サイト', href: 'https://karakuri.ai/service/cs/chatbot' },
+      { label: 'Helpfeel 公式サイト', href: 'https://www.helpfeel.com/' },
+      { label: 'チャネルトーク 公式サイト', href: 'https://channel.io/' },
+    ] },
     { t: 'cta' },
   ],
 }

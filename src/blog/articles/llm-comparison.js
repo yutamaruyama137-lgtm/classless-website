@@ -73,7 +73,12 @@ export const article = {
     ] },
 
     { t: 'h2', text: 'まとめ｜正解は「最強のLLM」ではなく「用途に合った選択」' },
-    { t: 'p', text: 'ChatGPT・Claude・Geminiはそれぞれ異なる強みを持ちます。「どれが一番か」という問いより、「自社のどの業務に何を使うか」という問いを立てるほうが実務的です。まずは失敗コストが低い業務（議事録の要約・定型メールの下書きなど）から1つのLLMを試し、効果を確認してから範囲を広げる段階的アプローチをとることで、導入リスクを最小化できます。' },
+    { t: 'p', text: 'ChatGPT・Claude・Geminiはそれぞれ異なる強みを持ちます。「どれが一番か」という問いより、「自社のどの業務に何を使うか」という問いを立てるほうが実務的です。まずは失敗コストが低い業務（議事録の要約・定型メールの下書きなど）から1つのLLMを試し、効果を確認してから範囲を広げる段階的アプローチをとることで、導入リスクを最小化できます。各LLMの最新状況については [OpenAI公式モデル一覧](https://platform.openai.com/docs/models) などの公式ドキュメントを定期的に確認することをおすすめします。また、LLMを活用した最新動向については [2026年のAIトレンド予測](/blog/ai-trends-2026) も参考にしてください。' },
+    { t: 'refs', title: '参考リンク', items: [
+      { label: 'OpenAI Models — 公式モデル一覧', href: 'https://platform.openai.com/docs/models' },
+      { label: 'Anthropic Claude — 公式ドキュメント', href: 'https://docs.anthropic.com/ja/docs/about-claude/models/overview' },
+      { label: 'Google Gemini API — 公式ドキュメント', href: 'https://ai.google.dev/gemini-api/docs/models' },
+    ] },
     { t: 'cta' },
   ],
 }

@@ -5,14 +5,26 @@
 
 /* ---- shared helpers ---------------------------------------------------- */
 
-// Minimal inline formatter: **bold** → <strong>. Returns an array of nodes.
+// Inline formatter: **bold** and [label](href) links. External links (http…)
+// open in a new tab; internal links (/… or #…) navigate in place.
+function isExternal(href) { return /^https?:/i.test(href); }
 function fmt(text) {
   const out = [];
-  const re = /\*\*([^*]+)\*\*/g;
+  const re = /\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+)\*\*/g;
   let last = 0, m, k = 0;
   while ((m = re.exec(text)) !== null) {
     if (m.index > last) out.push(text.slice(last, m.index));
-    out.push(<strong key={k++} style={{ fontWeight: 800, color: 'var(--text-primary)' }}>{m[1]}</strong>);
+    if (m[1] !== undefined) {
+      const href = m[2], ext = isExternal(href);
+      out.push(
+        <a key={k++} href={href} {...(ext ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+           style={{ color: 'var(--brand-blue)', fontWeight: 700, textDecoration: 'underline', textUnderlineOffset: 2 }}>
+          {m[1]}{ext ? ' ↗' : ''}
+        </a>
+      );
+    } else {
+      out.push(<strong key={k++} style={{ fontWeight: 800, color: 'var(--text-primary)' }}>{m[3]}</strong>);
+    }
     last = re.lastIndex;
   }
   if (last < text.length) out.push(text.slice(last));
@@ -146,6 +158,30 @@ function Block({ b, a, idx }) {
         <div className="reveal" style={{ margin: '0 0 24px', padding: '18px 20px', borderRadius: 'var(--radius-md,12px)', background: `var(--${b.tone || 'blue'}-50)`, borderLeft: `4px solid var(--brand-${b.tone || 'blue'})` }}>
           {b.title && <div style={{ fontWeight: 800, fontSize: 14.5, color: `var(--${b.tone || 'blue'}-700)`, marginBottom: 6 }}>{b.title}</div>}
           <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.85, color: 'var(--text-secondary)' }}>{fmt(b.text)}</p>
+        </div>
+      );
+    case 'refs':
+      return (
+        <div className="reveal" style={{ margin: 'clamp(28px,3vw,40px) 0 0', padding: 'clamp(18px,2vw,24px)', borderRadius: 'var(--radius-lg)', background: 'var(--color-bg-subtle)', border: '1px solid var(--color-border)' }}>
+          <div style={{ fontWeight: 900, fontSize: 14, marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span style={{ width: 4, height: 16, background: 'var(--brand-blue)', borderRadius: 2 }} />{b.title || '参考・関連リンク'}
+          </div>
+          <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 9 }}>
+            {b.items.map((it, i) => {
+              const ext = isExternal(it.href);
+              return (
+                <li key={i} style={{ display: 'flex', gap: 8, alignItems: 'baseline', fontSize: 13.5, lineHeight: 1.7 }}>
+                  <span style={{ color: 'var(--brand-blue)', flexShrink: 0 }}>{ext ? '🔗' : '→'}</span>
+                  <a href={it.href} {...(ext ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                     style={{ color: 'var(--text-secondary)', fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: 2 }}
+                     onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--brand-blue)')}
+                     onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}>
+                    {it.label}{ext ? ' ↗' : ''}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       );
     case 'cta':

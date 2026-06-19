@@ -60,7 +60,12 @@ export const article = {
     ] },
 
     { t: 'h2', text: 'まとめ｜周辺業務を削減し、顧客との対話時間を増やす' },
-    { t: 'p', text: '営業AIツールの本質的な価値は、**商談以外の事務作業を削減することで、本来すべき顧客との対話時間を増やせる**点にあります。議事録作成・メール下書きなど、最も時間を取られている1業務から試し始め、効果を確認してから拡張するアプローチが現実的です。どのフェーズから着手すべきか判断に迷う場合は、業務の棚卸しから始めることをおすすめします。' },
+    { t: 'p', text: '営業AIツールの本質的な価値は、**商談以外の事務作業を削減することで、本来すべき顧客との対話時間を増やせる**点にあります。議事録作成・メール下書きなど、最も時間を取られている1業務から試し始め、効果を確認してから拡張するアプローチが現実的です。会議・商談の議事録AI全般について詳しく知りたい場合は、[AI議事録ツール比較](/blog/meeting-minutes-ai)もあわせてご覧ください。' },
+    { t: 'refs', title: '参考リンク', items: [
+      { label: 'Notta 公式サイト', href: 'https://www.notta.ai/' },
+      { label: 'Mazrica Sales 公式サイト', href: 'https://mazrica.com/product/' },
+      { label: 'Salesforce Einstein AI 公式サイト（日本語）', href: 'https://www.salesforce.com/jp/products/einstein/overview/' },
+    ] },
     { t: 'cta' },
   ],
 }

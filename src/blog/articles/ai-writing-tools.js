@@ -67,7 +67,11 @@ export const article = {
     { t: 'p', text: 'また、プロンプトを使い捨てにせず**テンプレートとして蓄積する**ことで、同じ用途に使うたびにアウトプット品質が安定していきます。「役割を与える（あなたはBtoBマーケターです）」「出力形式を指定する（箇条書き5点で）」「例を見せる（この例に合わせて）」の3つを組み合わせると再現性が高まります。' },
 
     { t: 'h2', text: 'まとめ' },
-    { t: 'p', text: 'ライティングAIは「全部できる1本」を探すより、自社の主要な文書種別に合わせて1〜2本に絞り込むのが習熟の近道です。SEO記事ならPerplexityまたはChatGPT、長文文書ならClaude、社内文書ならNotion AIが多くの場合の出発点になります。ツール選定に迷う場合は、現在の文章作成業務の棚卸しから始めると判断しやすくなります。' },
+    { t: 'p', text: 'ライティングAIは「全部できる1本」を探すより、自社の主要な文書種別に合わせて1〜2本に絞り込むのが習熟の近道です。SEO記事ならPerplexityまたはChatGPT、長文文書ならClaude、社内文書ならNotion AIが多くの場合の出発点になります。ChatGPTを選んだ場合の具体的な使い方は[ChatGPTビジネス活用ガイド](/blog/chatgpt-business-guide)で詳しく解説しています。' },
+    { t: 'refs', title: '参考リンク', items: [
+      { label: 'Perplexity AI 公式サイト', href: 'https://www.perplexity.ai' },
+      { label: 'Anthropic Claude 公式サイト', href: 'https://www.anthropic.com/claude' },
+    ] },
     { t: 'cta' },
   ],
 }

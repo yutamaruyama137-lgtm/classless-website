@@ -86,7 +86,11 @@ export const article = {
     ] },
 
     { t: 'h2', text: 'まとめ' },
-    { t: 'p', text: '2026年のAIツール市場は機能・価格帯ともに選択肢が豊富です。重要なのは「流行しているか」ではなく「自部門のどの課題を解決するか」です。本記事で紹介したツールを参考に、まず1部門・1ツールで試してみてください。導入後の定着に不安がある場合は、外部のAI活用支援サービスを活用する選択肢もあります。' },
+    { t: 'p', text: '2026年のAIツール市場は機能・価格帯ともに選択肢が豊富です。重要なのは「流行しているか」ではなく「自部門のどの課題を解決するか」です。本記事で紹介したツールを参考に、まず1部門・1ツールで試してみてください。導入のロードマップを体系的に組み立てたい場合は[AI導入の進め方と手順](/blog/ai-implementation-steps)が参考になります。導入後の定着に不安がある場合は、外部のAI活用支援サービスを活用する選択肢もあります。' },
+    { t: 'refs', title: '参考リンク', items: [
+      { label: 'GitHub Copilot｜公式サイト', href: 'https://github.com/features/copilot' },
+      { label: 'Salesforce Einstein｜AI機能概要（Salesforce Japan）', href: 'https://www.salesforce.com/jp/products/einstein/overview/' },
+    ] },
     { t: 'cta' },
   ],
 }

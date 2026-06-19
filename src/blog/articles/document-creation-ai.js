@@ -65,7 +65,11 @@ export const article = {
     ] },
 
     { t: 'h2', text: 'まとめ' },
-    { t: 'p', text: '資料作成AIは、構成・デザイン・文章の叩き台を高速に生成できる段階に達しています。まずGammaや Microsoft Copilotを試して、次の提案書作成でどのくらい時間を削減できるか計測してみることをおすすめします。ツールの組み合わせ方が自社業務に定着すれば、資料作成の生産性は大きく変わります。' },
+    { t: 'p', text: '資料作成AIは、構成・デザイン・文章の叩き台を高速に生成できる段階に達しています。まずGammaやMicrosoft Copilotを試して、次の提案書作成でどのくらい時間を削減できるか計測してみることをおすすめします。ツールの組み合わせ方が自社業務に定着すれば、資料作成の生産性は大きく変わります。文章の下書き生成ツールについては[AI文章作成ツール比較](/blog/ai-writing-tools)もあわせて参照してください。' },
+    { t: 'refs', title: '参考リンク', items: [
+      { label: 'Gamma｜公式サイト', href: 'https://gamma.app/' },
+      { label: 'Microsoft 365 Copilot｜公式概要ページ', href: 'https://www.microsoft.com/ja-jp/microsoft-365/copilot/microsoft-365-copilot' },
+    ] },
     { t: 'cta' },
   ],
 }

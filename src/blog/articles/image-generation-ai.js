@@ -72,7 +72,11 @@ export const article = {
     { t: 'callout', title: '規約の解釈に迷ったら', text: '利用規約の解釈に迷う場合は、各ツールの公式サポートへ直接問い合わせるのが確実です。特に企業での継続利用では、規約変更のタイミングで再確認するフローを設けておくと安心です。' },
 
     { t: 'h2', text: 'まとめ' },
-    { t: 'p', text: '画像生成AIは「まず1本を2週間使い倒す」ほうが複数ツールを浅く試すより早く習熟できます。商業的安全性を最優先するならAdobe Firefly、品質重視ならMidjourney、手軽さ重視ならDALL-E 3が選ばれることが多いです。自社の用途と運用体制に合わせて選んでみてください。' },
+    { t: 'p', text: '画像生成AIは「まず1本を2週間使い倒す」ほうが複数ツールを浅く試すより早く習熟できます。商業的安全性を最優先するならAdobe Firefly、品質重視ならMidjourney、手軽さ重視ならDALL-E 3が選ばれることが多いです。自社の用途と運用体制に合わせて選んでみてください。画像だけでなくテキスト生成も業務に取り入れたい場合は、[文章作成・ライティングAI比較](/blog/ai-writing-tools)も参考にしてください。' },
+    { t: 'refs', title: '参考リンク', items: [
+      { label: 'Adobe Firefly 公式サイト', href: 'https://www.adobe.com/jp/products/firefly.html' },
+      { label: 'Midjourney 公式サイト', href: 'https://www.midjourney.com' },
+    ] },
     { t: 'cta' },
   ],
 }
