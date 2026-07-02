@@ -155,7 +155,7 @@ function WhatWeDo() {
 
         {/* CTA */}
         <div className="reveal" style={{ display: 'flex', justifyContent: 'center', marginTop: 'clamp(52px, 6vw, 84px)' }}>
-          <a href="/business"><Button variant="secondary" tone="ink" size="lg" iconRight={<Arrow />}>事業内容をくわしく見る</Button></a>
+          <a href="/business"><Button variant="secondary" tone="ink" size="lg" iconRight={<Arrow />}>対応業務・事例をくわしく見る</Button></a>
         </div>
       </div>
     </section>

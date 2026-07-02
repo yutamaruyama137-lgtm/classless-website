@@ -1,10 +1,9 @@
-/* Width-based responsive layer — added in the 2026.06 BPO redesign.
+/* Width-based responsive layer — added in the 2026.06 BPO redesign,
+   updated in the 2026.07 two-business redesign (mobile hamburger menu).
    The original site shipped no width breakpoints, so the multi-column
    grids (.grid2 / .svc-row / .foot-grid) stayed multi-column on phones.
    These rules collapse them; !important is required because the layout
-   columns are set via inline styles on those elements. New sections built
-   in the redesign collapse on their own (auto-fit / JS matchMedia) and are
-   unaffected. */
+   columns are set via inline styles on those elements. */
 
 /* Tablet and below — stack the two-column rows. */
 @media (max-width: 920px) {
@@ -12,12 +11,21 @@
   .svc-row { grid-template-columns: 1fr !important; }
 }
 
-/* Phone — tighten the footer to two columns and drop the inline header
-   text links (the CTA button, which wraps a <button>, stays visible). */
+/* Phone — drop the inline header links / dropdown, show the hamburger.
+   The nav CTA button stays visible next to the burger. */
 @media (max-width: 760px) {
   .foot-grid { grid-template-columns: 1fr 1fr !important; gap: 28px !important; }
-  .site-nav { gap: 16px !important; }
+  .site-nav { gap: 12px !important; }
   .site-nav > a:not(:has(button)) { display: none !important; }
+  .site-nav > .nav-drop { display: none !important; }
+  .nav-burger { display: inline-flex !important; }
+}
+
+/* Utility: elements (typically <br> or decorative visuals) hidden on phone.
+   Referenced across components since the 2026.06 redesign but previously
+   undefined — defined here so mobile line-breaks behave as intended. */
+@media (max-width: 760px) {
+  .hide-sp { display: none !important; }
 }
 
 /* Small phone — single-column footer. */

@@ -12,7 +12,7 @@ function Company() {
     ['設立', '2025年10月1日'],
     ['代表者', '丸山 侑太'],
     ['所在地', '東京都渋谷区円山町5-3 MIEUX渋谷ビル 5階'],
-    ['事業内容', 'AI BPO / AIシステム開発 / データベース最適化 / AI教育'],
+    ['事業内容', 'BPO×DX事業「アクセル」（AI BPO / AIシステム開発 / データベース最適化 / AI教育）／ 営業代行事業「リートス」'],
   ];
   return (
     <section id="company" ref={ref} style={{ background: '#fff', paddingTop: 'var(--section-y)', paddingBottom: 'var(--section-y)' }}>
@@ -81,10 +81,10 @@ function ContactBand() {
         <div className="grid2" style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 32, alignItems: 'center' }}>
           <div className="reveal">
             <div style={{ fontFamily: 'var(--font-eyebrow)', fontWeight: 700, fontSize: 'clamp(34px, 5vw, 64px)', letterSpacing: '0.01em', color: 'var(--text-primary)' }}>Contact</div>
-            <p style={{ fontSize: 16, color: 'var(--text-secondary)', fontWeight: 600, marginTop: 10 }}>AI活用のご相談・お見積りはこちらから。</p>
+            <p style={{ fontSize: 16, color: 'var(--text-secondary)', fontWeight: 600, marginTop: 10 }}>AI活用・営業のご相談、お見積りはこちらから。</p>
           </div>
           <a href="/contact" className="reveal" style={{ animationDelay: '0.1s' }}>
-            <Button size="lg" iconRight={<Arrow />}>無料AX診断・お問い合わせ</Button>
+            <Button size="lg" iconRight={<Arrow />}>無料相談・お問い合わせ</Button>
           </a>
         </div>
       </div>
@@ -94,19 +94,19 @@ function ContactBand() {
 
 function Footer({ onNav }) {
   const cols = [
-    { h: 'サービス', items: [
-      { l: 'サービス内容', href: '/#whatwedo' },
-      { l: '料金', href: '/#pricing' },
-      { l: 'ブログ', href: '/blog' },
-      { l: '導入の流れ', href: '/#flow' },
+    { h: '事業内容', items: [
+      { l: 'アクセル事業（AI×BPO）', href: '/axel' },
+      { l: 'リートス事業（営業代行）', href: '/leadtoss' },
+      { l: 'アクセルの料金', href: '/axel#pricing' },
+      { l: '対応業務・事例', href: '/business' },
     ] },
     { h: '会社情報', items: [
-      { l: '経営理念', href: '/philosophy' },
-      { l: '事業内容', href: '/business' },
-      { l: '会社概要', href: '/#company' },
+      { l: '私たちについて', href: '/philosophy' },
+      { l: '会社概要', href: '/philosophy#company' },
+      { l: 'ニュース', href: '/blog' },
     ] },
     { h: 'お問い合わせ', items: [
-      { l: '無料AX診断', href: '/contact' },
+      { l: '無料相談', href: '/contact' },
       { l: 'お問い合わせフォーム', href: '/contact' },
     ] },
   ];
@@ -120,8 +120,13 @@ function Footer({ onNav }) {
               <span style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 26, color: '#fff', letterSpacing: '0.01em' }}>Classless</span>
             </div>
             <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 13, lineHeight: 1.95, marginTop: 16, maxWidth: '26em' }}>
-              地方からAIで、人間の可能性を解放する。<br />合同会社Classless
+              AIで、人間を面白くする。<br />合同会社Classless
             </p>
+            <div style={{ display: 'flex', gap: 14, marginTop: 22, alignItems: 'center' }}>
+              <a href="/axel"><img src="/assets/logo-axel-white.png" alt="アクセル" style={{ height: 22, width: 'auto', opacity: 0.85 }} /></a>
+              <span style={{ width: 1, height: 18, background: 'rgba(255,255,255,0.2)' }} />
+              <a href="/leadtoss"><img src="/assets/logo-leadtoss-white.png" alt="リートス" style={{ height: 26, width: 'auto', opacity: 0.85 }} /></a>
+            </div>
           </div>
           {cols.map((c) => (
             <div key={c.h}>

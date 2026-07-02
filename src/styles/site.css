@@ -177,6 +177,87 @@
 }
 @media (prefers-reduced-motion: reduce) { .ambient-flow { display: none; } }
 
+/* ============================================================
+   2026.07 二事業体制リデザイン — トップページ(LayerX型)用
+   ============================================================ */
+
+/* ---- ヘッダー: 事業内容ドロップダウン ---- */
+.nav-drop__menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translate(-50%, 6px);
+  min-width: 300px;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg, 16px);
+  box-shadow: var(--shadow-lg);
+  padding: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.22s var(--ease-out, ease), transform 0.22s var(--ease-out, ease), visibility 0.22s;
+}
+/* ホバーの橋渡し(メニューとの隙間で消えないように) */
+.nav-drop::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: -20px;
+  right: -20px;
+  height: 16px;
+}
+.nav-drop:hover .nav-drop__menu,
+.nav-drop:focus-within .nav-drop__menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+.nav-drop__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  transition: background 0.18s;
+}
+.nav-drop__item:hover { background: var(--color-bg-subtle); }
+
+/* ---- 平面ジオメトリック装飾: ゆっくり上下に漂う ---- */
+@keyframes geo-drift { 0%, 100% { translate: 0 0; } 50% { translate: 0 -14px; } }
+@media (prefers-reduced-motion: no-preference) {
+  .geo-float { animation: geo-drift 7s ease-in-out infinite; }
+}
+
+/* ---- サークルアロー(丸枠矢印): ホバーで塗りつぶし+矢印スライド ---- */
+.circle-link__ring { transition: background 0.25s var(--ease-out, ease), border-color 0.25s var(--ease-out, ease), color 0.25s; }
+.circle-link__ring svg { transition: transform 0.25s var(--ease-out, ease); }
+.circle-link:hover .circle-link__ring,
+.biz-row:hover .biz-row__arrow {
+  background: var(--text-primary);
+  border-color: var(--text-primary);
+  color: #fff;
+}
+.circle-link:hover .circle-link__ring svg,
+.biz-row:hover .biz-row__arrow svg { transform: translateX(3px); }
+#join .circle-link:hover .circle-link__ring { background: #fff; border-color: #fff; color: var(--neutral-900); }
+
+/* ---- 事業カード行 ---- */
+.biz-row { transition: box-shadow 0.3s var(--ease-out, ease), transform 0.3s var(--ease-out, ease); }
+.biz-row:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); color: var(--text-primary); }
+@media (max-width: 920px) {
+  .biz-row { grid-template-columns: 1fr !important; }
+  .biz-row__logo { width: 100% !important; max-width: 260px; }
+  .biz-row__arrow { display: none !important; }
+}
+
+/* ---- ニュース行 ---- */
+.news-row:hover .news-row__title { color: var(--blue-700); }
+.news-row .news-row__title { transition: color 0.2s; }
+@media (max-width: 640px) {
+  .news-row { grid-template-columns: auto 1fr !important; }
+  .news-row .news-row__title { grid-column: 1 / -1; }
+}
+
 /* ---- Scroll cue ---- */
 @keyframes nudge { 0%,100% { transform: translateY(0); opacity: 0.5; } 50% { transform: translateY(7px); opacity: 1; } }
 .scroll-cue svg { animation: nudge 1.8s ease-in-out infinite; }
