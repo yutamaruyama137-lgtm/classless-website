@@ -256,7 +256,7 @@ function TopNews() {
 }
 
 /* ================================================================
-   Join — ダークバンド + 写真モザイク(現状プレースホルダー)。
+   Join — ダークバンド。実写真が支給されたら写真モザイクをここに追加する。
    ================================================================ */
 function TopJoin() {
   const { Button } = window.ClasslessDesignSystem_225e16;
@@ -267,17 +267,6 @@ function TopJoin() {
   const j1 = s.chars('AIで、人間を');
   const j2 = s.chars('面白くする仲間へ。');
   const jN = s.count();
-
-  // 写真モザイク: 実写真が届くまでのプレースホルダー。label = 欲しい写真の指示。
-  const tiles = [
-    { label: '作業風景(PCに向かう手元)', span: 2 },
-    { label: '打ち合わせの様子' },
-    { label: 'オフィス・作業スペース' },
-    { label: '代表・メンバーの横顔' },
-    { label: 'ホワイトボードで議論', span: 2 },
-    { label: '地方の街並み・風景' },
-    { label: 'クライアントとの商談' },
-  ];
 
   return (
     <section id="join" ref={ref} style={{ background: 'var(--neutral-900)', position: 'relative', overflow: 'hidden' }}>
@@ -302,26 +291,6 @@ function TopJoin() {
           </div>
         </div>
 
-        {/* 写真モザイク(プレースホルダー) */}
-        <div style={{
-          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gridAutoRows: 'clamp(120px, 14vw, 190px)',
-          gap: 12, marginTop: 'clamp(48px, 6vw, 80px)',
-        }}>
-          {tiles.map((t, i) => (
-            <div key={t.label} className="ph-tile reveal" style={{
-              gridColumn: t.span ? `span ${t.span}` : undefined,
-              borderRadius: 'var(--radius-md, 12px)', border: '1px dashed rgba(255,255,255,0.28)',
-              background: 'linear-gradient(150deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))',
-              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 10,
-              animationDelay: `${(i % 4) * 0.06}s`,
-            }}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-2.5h5L16 7"/><circle cx="12" cy="13" r="3.4"/></svg>
-              <span style={{ fontFamily: 'var(--font-jp)', fontSize: 11.5, fontWeight: 600, color: 'rgba(255,255,255,0.55)', textAlign: 'center', padding: '0 10px', lineHeight: 1.6 }}>
-                PHOTO<br />{t.label}
-              </span>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );
