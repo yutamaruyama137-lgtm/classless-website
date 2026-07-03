@@ -236,6 +236,51 @@ function useScrollVar(centerBias = 0.5, startFrac = 0.82, endFrac = 0.5) {
 /* 日本語テキストを「文節っぽい」チャンクに分割する。1文字ずつ inline-block
    にすると折り返しがどの文字間でも起こる（句読点の行頭落ち・語中折れ）ため、
    チャンクごと .sseg/.gseg(nowrap) で包み、折り返しはチャンク境界のみにする。 */
+/* BudouXが語中で誤分割する複合語（例: お問い|合わせ, 受け取り方|法）。
+   境界がこれらの語をまたぐ場合はチャンクを連結する。 */
+const __NO_BREAK_WORDS = [
+  '問い合わせ', '打ち合わせ', '書き起こし', '折り返し', '巻き取り', '絞り込み',
+  '見積もり', '見積り', '申し込み', '立ち上げ', '引き継ぎ', '受け取り', '読み取り',
+  '取り組み', '仕組み', '方法',
+];
+function __mergeMisSplits(segs) {
+  const out = [];
+  for (const s of segs) {
+    const prev = out.length ? out[out.length - 1] : null;
+    if (prev != null && !/\s$/.test(prev) && !/^\s/.test(s)) {
+      const tail = prev.slice(-6);
+      const joint = tail + s.slice(0, 6);
+      const straddles = __NO_BREAK_WORDS.some((w) => {
+        const idx = joint.indexOf(w);
+        return idx !== -1 && idx < tail.length && idx + w.length > tail.length;
+      });
+      // 「5つの|フィルタ」のような、短い連体修飾「〜の」直後の折り返しも防ぐ
+      const shortNo = prev.length <= 4 && /の$/.test(prev);
+      if (straddles || shortNo) { out[out.length - 1] += s; continue; }
+    }
+    out.push(s);
+  }
+  return out;
+}
+
+/* 長すぎる文節（例:「業界・役職・地域・企業規模・アクティブ度の」）は
+   nowrapのまま行幅を超えてしまうので、「・」の直後で分割し直す。 */
+function __splitLongSegments(segs) {
+  const out = [];
+  for (const s of segs) {
+    if (s.length > 10 && s.indexOf('・') > 0) {
+      const parts = s.split('・');
+      for (let i = 0; i < parts.length; i++) {
+        const p = i < parts.length - 1 ? parts[i] + '・' : parts[i];
+        if (p) out.push(p);
+      }
+    } else {
+      out.push(s);
+    }
+  }
+  return out;
+}
+
 function phraseSegments(text) {
   // BudouX（Chromeのword-break:auto-phraseと同じモデル）で文節に分割。
   // 空白は折り返し可能な独立セグメントとして保持する。
@@ -245,7 +290,45 @@ function phraseSegments(text) {
     if (/^\s+$/.test(part)) { out.push(part); continue; }
     out.push(...__budouxJa.parse(part));
   }
-  return out;
+  return __splitLongSegments(__mergeMisSplits(out));
+}
+
+/* 素の日本語テキスト（見出し演出を使わない p / li / 説明span など）の折り返しを
+   文節単位にする。BudouX+連結辞書で分割した各文節を nowrap の span(.jseg) で
+   包むので、折り返しは文節境界でのみ起こる（見出しの .sseg と同じ仕組み）。
+   ゼロ幅スペース方式と違い「〜」等の後ろでの意図しない折り返しも防げる。
+   初回レンダー後に main.jsx から呼ぶ（このサイトはページ遷移=フルロード）。 */
+function applyPhraseWrap(root = document) {
+  const JA_RE = /[ぁ-ヿ㐀-鿿]/;
+  root.querySelectorAll('p, li, dd, dt, td, th, figcaption, blockquote, .ja-wrap').forEach((el) => {
+    if (el.dataset.jaWrapped) return;
+    if (el.closest('.split-host, .gather-host, pre, code')) return;
+    if (el.querySelector('.schar, .gchar, .sseg, .gseg, .jseg')) return;
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+      acceptNode: (n) => (n.parentElement && n.parentElement.closest('code, pre, style, script'))
+        ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT,
+    });
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    let touched = false;
+    nodes.forEach((n) => {
+      const v = n.nodeValue;
+      if (!v || v.length < 6 || !JA_RE.test(v)) return;
+      const frag = document.createDocumentFragment();
+      phraseSegments(v).forEach((seg) => {
+        // 空白と、分割してもなお長すぎる文節は素のテキスト（通常折り返し）に
+        // フォールバックして、nowrapによるはみ出しを防ぐ
+        if (/^\s+$/.test(seg) || seg.length > 16) { frag.appendChild(document.createTextNode(seg)); return; }
+        const sp = document.createElement('span');
+        sp.className = 'jseg';
+        sp.textContent = seg;
+        frag.appendChild(sp);
+      });
+      n.parentNode.replaceChild(frag, n);
+      touched = true;
+    });
+    if (touched) el.dataset.jaWrapped = '1';
+  });
 }
 
 /* Wrap text so each character flies in from a scattered position when the
@@ -310,4 +393,4 @@ function makeSplit() {
   return { chars, count: () => i };
 }
 
-Object.assign(window, { ColorField, useReveal, Eyebrow, Section, BrandVisual, Arrow, initParallax, StarField, useScrollVar, gatherChars, makeSplit, AmbientFlow });
+Object.assign(window, { ColorField, useReveal, Eyebrow, Section, BrandVisual, Arrow, initParallax, StarField, useScrollVar, gatherChars, makeSplit, AmbientFlow, applyPhraseWrap });

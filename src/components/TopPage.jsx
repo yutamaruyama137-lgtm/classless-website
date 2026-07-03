@@ -198,7 +198,7 @@ function TopBusiness() {
               <span>
                 <span style={{ display: 'block', fontFamily: 'var(--font-mono)', fontSize: 11.5, letterSpacing: '0.12em', color: 'var(--text-muted)' }}>{b.en}</span>
                 <span style={{ display: 'block', fontSize: 'clamp(20px, 2.4vw, 27px)', fontWeight: 900, marginTop: 6 }}>{b.name}</span>
-                <span className="biz-row__desc" style={{ display: 'block', fontSize: 14.5, lineHeight: 1.9, color: 'var(--text-secondary)', fontWeight: 500, marginTop: 10, maxWidth: '38em' }}>{b.desc}</span>
+                <span className="biz-row__desc ja-wrap" style={{ display: 'block', fontSize: 14.5, lineHeight: 1.9, color: 'var(--text-secondary)', fontWeight: 500, marginTop: 10, maxWidth: '38em' }}>{b.desc}</span>
               </span>
               <span className="circle-link__ring biz-row__arrow" style={{
                 width: 52, height: 52, borderRadius: '50%', border: '1px solid var(--color-border-strong)',

@@ -208,6 +208,11 @@ createRoot(document.getElementById('root')).render(<App />)
 // Parallax drift on [data-parallax] wrappers.
 if (window.initParallax) window.initParallax()
 
+// 素の日本語テキストの折り返しを文節単位に（Bits.jsxのapplyPhraseWrap）。
+// createRootのcommit直後と、遅延描画分の保険で2回呼ぶ（処理は冪等）。
+setTimeout(() => window.applyPhraseWrap && window.applyPhraseWrap(), 0)
+setTimeout(() => window.applyPhraseWrap && window.applyPhraseWrap(), 600)
+
 // If we arrived with a hash (e.g. navigated from another page to /#business),
 // scroll to it once the DOM is painted.
 if (window.location.hash) {
