@@ -1,4 +1,6 @@
 /* Classless corporate site — shared bits (color field, reveal, eyebrow, visuals) */
+import { loadDefaultJapaneseParser } from 'budoux';
+const __budouxJa = loadDefaultJapaneseParser();
 
 /* The signature animated overlapping-color field. Renders behind hero/CTA. */
 function ColorField({ density = 'hero', style = {} }) {
@@ -25,9 +27,9 @@ function ColorField({ density = 'hero', style = {} }) {
   );
 }
 
-/* IntersectionObserver-driven reveal. Toggles `in` as the element enters AND
-   leaves the viewport, so the entrance animation replays — and reverses out —
-   every time you scroll past it, including on the way back up. */
+/* IntersectionObserver-driven reveal. Adds `in` the first time the element
+   enters the viewport and never removes it — replaying (and hiding text) on
+   every re-entry made the page flicker while scrolling back up. */
 function useReveal() {
   const ref = React.useRef(null);
   React.useEffect(() => {
@@ -35,7 +37,7 @@ function useReveal() {
     if (!el) return;
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
-        e.target.classList.toggle('in', e.isIntersecting);
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -12% 0px' });
     el.querySelectorAll('.reveal, .draw-underline, .slide-l, .slide-r, .gather-host, .pop-in, .split-host').forEach((n) => io.observe(n));
@@ -231,24 +233,46 @@ function useScrollVar(centerBias = 0.5, startFrac = 0.82, endFrac = 0.5) {
   return ref;
 }
 
+/* 日本語テキストを「文節っぽい」チャンクに分割する。1文字ずつ inline-block
+   にすると折り返しがどの文字間でも起こる（句読点の行頭落ち・語中折れ）ため、
+   チャンクごと .sseg/.gseg(nowrap) で包み、折り返しはチャンク境界のみにする。 */
+function phraseSegments(text) {
+  // BudouX（Chromeのword-break:auto-phraseと同じモデル）で文節に分割。
+  // 空白は折り返し可能な独立セグメントとして保持する。
+  const out = [];
+  for (const part of String(text).split(/(\s+)/)) {
+    if (!part) continue;
+    if (/^\s+$/.test(part)) { out.push(part); continue; }
+    out.push(...__budouxJa.parse(part));
+  }
+  return out;
+}
+
 /* Wrap text so each character flies in from a scattered position when the
    host (.gather-host) scrolls into view (文字が集まる). */
 function gatherChars(text, opts = {}) {
   const spread = opts.spread || 60;
   const step = opts.step != null ? opts.step : 0.025;
   const base = opts.base || 0;
-  return Array.from(text).map((ch, k) => {
-    const ang = (k * 137.5) % 360;          // golden-angle scatter (deterministic)
-    const dist = spread * (0.5 + ((k * 53) % 7) / 7);
-    const dx = Math.cos(ang * Math.PI / 180) * dist;
-    const dy = Math.sin(ang * Math.PI / 180) * dist;
-    const rot = (((k * 37) % 24) - 12);
-    return (
-      <span key={k} className="gchar" style={{
-        '--dx': `${dx.toFixed(1)}px`, '--dy': `${dy.toFixed(1)}px`, '--gr': `${rot}deg`,
-        '--gd': `${(base + k * step).toFixed(3)}s`,
-      }}>{ch === ' ' ? ' ' : ch}</span>
-    );
+  let k = 0;
+  return phraseSegments(text).map((seg, s) => {
+    if (/^\s+$/.test(seg)) { k += seg.length; return ' '; } // 素の空白 = 折り返し可能
+    const at = k;
+    const inner = Array.from(seg).map((ch) => {
+      const idx = k++;
+      const ang = (idx * 137.5) % 360;      // golden-angle scatter (deterministic)
+      const dist = spread * (0.5 + ((idx * 53) % 7) / 7);
+      const dx = Math.cos(ang * Math.PI / 180) * dist;
+      const dy = Math.sin(ang * Math.PI / 180) * dist;
+      const rot = (((idx * 37) % 24) - 12);
+      return (
+        <span key={idx} className="gchar" style={{
+          '--dx': `${dx.toFixed(1)}px`, '--dy': `${dy.toFixed(1)}px`, '--gr': `${rot}deg`,
+          '--gd': `${(base + idx * step).toFixed(3)}s`,
+        }}>{ch}</span>
+      );
+    });
+    return <span key={`g-${at}`} className="gseg">{inner}</span>;
   });
 }
 
@@ -269,16 +293,20 @@ function gatherChars(text, opts = {}) {
 */
 function makeSplit() {
   let i = 0;
-  const chars = (text, color) =>
-    (String(text).match(/[A-Za-z0-9][A-Za-z0-9_.&'’-]*|[\s\S]/g) || []).map((ch, k) => {
+  const chars = (text, color) => phraseSegments(text).map((seg, s) => {
+    if (/^\s+$/.test(seg)) { i += seg.length; return ' '; } // 素の空白 = 折り返し可能
+    const at = i; // グローバル文字位置 → chars()を複数回呼んでもkeyが一意
+    const inner = (seg.match(/[A-Za-z0-9][A-Za-z0-9_.&'’-]*|[\s\S]/g) || []).map((ch, k) => {
       const idx = i++;
       return (
-        <span key={`${color || 'x'}-${idx}-${k}`} className="schar"
+        <span key={`${idx}-${k}`} className="schar"
           style={{ '--i': idx, ...(color ? { color: `var(--brand-${color})` } : {}) }}>
-          {ch === ' ' ? ' ' : ch}
+          {ch}
         </span>
       );
     });
+    return <span key={`s-${at}`} className="sseg">{inner}</span>;
+  });
   return { chars, count: () => i };
 }
 

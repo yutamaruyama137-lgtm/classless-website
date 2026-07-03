@@ -86,10 +86,17 @@
    --cp is that char's own 0→1 progress; when --p decreases on up-scroll,
    --cp decreases too, so the whole line animates in reverse. */
 .split-host .schar { display: inline-block; white-space: pre; }
+/* 折り返しは文節チャンク（.sseg/.gseg）単位でのみ。1文字spanのままだと
+   どの文字間でも折り返せてしまい、句読点の行頭落ちや語中折れが起きる。 */
+.sseg, .gseg { display: inline-block; white-space: nowrap; }
+/* アニメーションしない素のテキストも文節単位で折り返す（Chrome系のみ・段階的
+   強化）。「スピー/ド」のような語中折れを防ぐ。行頭の句読点は strict で禁止。
+   word-break は継承されるので body に置けば span 含む全テキストに効く。 */
+body { line-break: strict; word-break: auto-phrase; }
 @media (prefers-reduced-motion: no-preference) {
   /* Trigger-based: hidden until the heading enters the viewport, then each
      character fades in in sequence and STAYS fixed (no scroll-scrubbing).
-     useReveal toggles .in, so scrolling back up replays it on re-entry. */
+     useReveal adds .in once — no replay when scrolling back up. */
   .split-host:not(.in) .schar { opacity: 0; }
   .split-host.in .schar {
     opacity: 0;

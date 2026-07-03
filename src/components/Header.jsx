@@ -43,9 +43,8 @@ function Header({ links = [], cta, homeHref = '/', onAnchor }) {
       transition: 'background .35s var(--ease-out), border-color .35s var(--ease-out)',
     }}>
       <div className="cl-container" style={{ height: 74, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <a href={homeHref} onClick={handle(homeHref)} style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
-          <img src="/assets/mark-classless.png" alt="Classless" style={{ width: 40, height: 40 }} />
-          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 27, color: 'var(--text-primary)', letterSpacing: '0.005em' }}>Classless</span>
+        <a href={homeHref} onClick={handle(homeHref)} style={{ display: 'flex', alignItems: 'center' }}>
+          <img src="/assets/logo-classless-horizontal.png" alt="Classless — BEYOND BORDERS" style={{ height: 44, width: 'auto', display: 'block' }} />
         </a>
 
         <nav className="site-nav" style={{ display: 'flex', alignItems: 'center', gap: 30 }}>

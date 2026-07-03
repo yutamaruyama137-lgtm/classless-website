@@ -115,10 +115,7 @@ function Footer({ onNav }) {
       <div className="cl-container" style={{ paddingTop: 64, paddingBottom: 40 }}>
         <div className="foot-grid" style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr', gap: 40 }}>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <img src="/assets/mark-classless.png" alt="" style={{ width: 40, height: 40 }} />
-              <span style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 26, color: '#fff', letterSpacing: '0.01em' }}>Classless</span>
-            </div>
+            <img src="/assets/logo-classless-horizontal-white.png" alt="Classless — BEYOND BORDERS" style={{ height: 46, width: 'auto', display: 'block' }} />
             <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 13, lineHeight: 1.95, marginTop: 16, maxWidth: '26em' }}>
               AIで、人間を面白くする。<br />合同会社Classless
             </p>
