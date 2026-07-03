@@ -73,7 +73,7 @@ function TopHero() {
     }}>
       <GeoDecor variant="hero" />
       <div className="cl-container" style={{ position: 'relative', zIndex: 1, paddingTop: 40, paddingBottom: 120 }}>
-        <h1 style={{ fontSize: 'clamp(44px, 8vw, 104px)', fontWeight: 900, lineHeight: 1.28, letterSpacing: '0.015em', margin: 0 }}>
+        <h1 style={{ fontSize: 'clamp(44px, 8vw, 104px)', fontWeight: 700, lineHeight: 1.28, letterSpacing: '0.015em', margin: 0 }}>
           <span style={{ display: 'block' }}>{l1}</span>
           <span style={{ display: 'block' }}>{l2}</span>
         </h1>
