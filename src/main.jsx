@@ -86,7 +86,7 @@ function App() {
   const {
     Header, Company, ServicesDetail, Philosophy, ContactBand, ContactPage, Footer, Voices,
     Background, RoleSplit, WhatWeDo, Pricing, Flow, Faq,
-    TopHero, TopStatement, TopBusiness, TopNews, TopJoin,
+    TopHero, LogoTicker, TopStatement, TopBusiness, TopNews, TopJoin,
     AxelHero, LeadtossPage,
   } = window
 
@@ -194,6 +194,7 @@ function App() {
   return shell('Classless コーポレートサイト', (
     <React.Fragment>
       <TopHero />
+      <LogoTicker />
       <TopStatement />
       <TopBusiness />
       <TopNews />
@@ -201,6 +202,20 @@ function App() {
       <ContactBand />
     </React.Fragment>
   ))
+}
+
+// 文字入りアニメーションはWebフォント読込完了後に開始する（html.fonts-in）。
+// 読込途中に開始するとアニメーション中にフォントが差し替わってちらつくため。
+// 回線が遅い場合でも最大900msで開始する（フォールバック）。
+{
+  let started = false
+  const startTextAnimations = () => {
+    if (started) return
+    started = true
+    document.documentElement.classList.add('fonts-in')
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(startTextAnimations)
+  setTimeout(startTextAnimations, 900)
 }
 
 createRoot(document.getElementById('root')).render(<App />)

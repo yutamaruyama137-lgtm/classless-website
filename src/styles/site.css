@@ -70,14 +70,19 @@
   .draw-underline.in::after { animation: draw-line 0.9s var(--underline-delay, 0.55s) cubic-bezier(0.22, 1, 0.36, 1) forwards; }
 }
 
-/* ---- Per-character hero entrance (LayerX-style 一文字フェードイン) ---- */
+/* ---- Per-character hero entrance (LayerX-style 一文字フェードイン) ----
+   blurフィルターは文字が「にじみ→シャープ」と瞬いて見える（ちかちかの原因）
+   ため使わず、opacity+transformのみの滑らかな立ち上がりにする。 */
 @keyframes char-in {
-  from { opacity: 0; transform: translateY(0.5em); filter: blur(6px); }
-  to   { opacity: 1; transform: translateY(0);     filter: blur(0); }
+  from { opacity: 0; transform: translateY(0.35em); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .char { display: inline-block; white-space: pre; }
 @media (prefers-reduced-motion: no-preference) {
-  .char { opacity: 0; animation: char-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  /* Webフォント読込完了(html.fonts-in, main.jsxが付与)までアニメーションを
+     保留し、演出中にフォントが差し替わってちらつくのを防ぐ */
+  .char { opacity: 0; }
+  html.fonts-in .char { animation: char-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
 }
 
 /* ---- Scroll-scrubbed per-character reveal (全タイトル共通・逆スクロールで逆再生) ----
@@ -100,12 +105,12 @@ body { line-break: strict; word-break: auto-phrase; }
   /* Trigger-based: hidden until the heading enters the viewport, then each
      character fades in in sequence and STAYS fixed (no scroll-scrubbing).
      useReveal adds .in once — no replay when scrolling back up. */
-  .split-host:not(.in) .schar { opacity: 0; }
-  .split-host.in .schar {
-    opacity: 0;
-    animation: char-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  .split-host .schar { opacity: 0; }
+  /* will-changeは文字数分のGPUレイヤーを作りチラつきの原因になるため付けない。
+     フォント読込完了(fonts-in)まで開始を保留するのはヒーローと同じ理由。 */
+  html.fonts-in .split-host.in .schar {
+    animation: char-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
     animation-delay: calc(var(--i, 0) * 0.03s);
-    will-change: opacity, transform, filter;
   }
 }
 
@@ -306,14 +311,14 @@ body { line-break: strict; word-break: auto-phrase; }
 
 /* ---- 文字が集まる: chars fly in from scattered positions on reveal ---- */
 .gchar { display: inline-block; white-space: pre; }
-@keyframes gather { to { opacity: 1; transform: translate(0, 0) rotate(0); filter: blur(0); } }
+@keyframes gather { to { opacity: 1; transform: translate(0, 0) rotate(0); } }
 @media (prefers-reduced-motion: no-preference) {
+  /* 文字ごとのblurはちらつきの原因になるため使わない（char-inと同じ理由） */
   .gather-host .gchar {
     opacity: 0;
     transform: translate(var(--dx, 0), var(--dy, 0)) rotate(var(--gr, 0deg));
-    filter: blur(4px);
   }
-  .gather-host.in .gchar { animation: gather 0.85s cubic-bezier(0.2, 0.75, 0.25, 1) forwards; animation-delay: var(--gd, 0s); }
+  html.fonts-in .gather-host.in .gchar { animation: gather 0.85s cubic-bezier(0.2, 0.75, 0.25, 1) forwards; animation-delay: var(--gd, 0s); }
 }
 
 /* ---- 色が組み合わさる: orbs converge to center as --p goes 0→1 ---- */
@@ -340,4 +345,146 @@ body { line-break: strict; word-break: auto-phrase; }
 @media (prefers-reduced-motion: reduce) {
   .merge-orb { transform: translate(-50%, -50%) translate(var(--ox, 0px), var(--oy, 0px)); }
   .merge-mark { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+/* ---- ヒーローの光の演出(ファーストビュー) ----
+   ブランドブルー系の大きなぼかし光が3つ、ゆっくり漂い明滅する。
+   hero-sheenは画面を斜めに横切る淡い光のスイープ(周期あり)。
+   すべて背景装飾なのでpointer-events:none・reduced-motionでは静止。 */
+.hero-lights { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.hero-lights .hl {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(64px);
+  will-change: transform, opacity;
+}
+.hl-1 {
+  width: clamp(380px, 44vw, 640px); height: clamp(380px, 44vw, 640px);
+  left: -10%; top: -16%;
+  background: radial-gradient(circle, rgba(55, 171, 217, 0.34), transparent 66%);
+  animation: hl-drift-1 17s ease-in-out infinite alternate;
+}
+.hl-2 {
+  width: clamp(420px, 50vw, 720px); height: clamp(420px, 50vw, 720px);
+  right: -14%; bottom: -34%;
+  background: radial-gradient(circle, rgba(43, 80, 240, 0.22), transparent 66%);
+  animation: hl-drift-2 23s ease-in-out infinite alternate;
+}
+.hl-3 {
+  width: clamp(280px, 32vw, 460px); height: clamp(280px, 32vw, 460px);
+  right: 16%; top: -14%;
+  background: radial-gradient(circle, rgba(240, 54, 124, 0.13), transparent 66%);
+  animation: hl-drift-3 20s ease-in-out infinite alternate;
+}
+@keyframes hl-drift-1 {
+  from { transform: translate(0, 0) scale(1); opacity: 0.7; }
+  50%  { opacity: 1; }
+  to   { transform: translate(9vw, 7vh) scale(1.18); opacity: 0.75; }
+}
+@keyframes hl-drift-2 {
+  from { transform: translate(0, 0) scale(1.1); opacity: 0.9; }
+  50%  { opacity: 0.6; }
+  to   { transform: translate(-8vw, -9vh) scale(0.95); opacity: 1; }
+}
+@keyframes hl-drift-3 {
+  from { transform: translate(0, 0) scale(0.95); opacity: 0.55; }
+  50%  { opacity: 0.95; }
+  to   { transform: translate(-11vw, 10vh) scale(1.22); opacity: 0.6; }
+}
+.hero-sheen {
+  position: absolute; inset: -20% -60%;
+  background: linear-gradient(105deg,
+    transparent 42%,
+    rgba(55, 171, 217, 0.07) 47%,
+    rgba(120, 190, 255, 0.13) 50%,
+    rgba(55, 171, 217, 0.07) 53%,
+    transparent 58%);
+  transform: translateX(-55%);
+  animation: hero-sheen-sweep 9s cubic-bezier(0.4, 0, 0.3, 1) infinite;
+}
+@keyframes hero-sheen-sweep {
+  0%   { transform: translateX(-55%); }
+  55%  { transform: translateX(55%); }
+  100% { transform: translateX(55%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-lights .hl, .hero-sheen { animation: none; }
+  .hero-sheen { display: none; }
+}
+
+/* ---- LayerX FV風カットイン(デモ) ----
+   skewX(-18deg)の平行四辺形パネルが右上から左下へ斜めに流れ、
+   途中で不透明化して写真/色面が現れる。写真パネルは外側がskew窓、
+   内側のimgを逆skew+拡大して四隅の欠けを防ぎ、ゆっくりパンさせる。 */
+.hero-cutin { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.cutin-panel {
+  position: absolute;
+  opacity: 0;
+  transform: translate(30vw, -26vh) skewX(-18deg);
+  animation: cutin-move var(--dur, 18s) linear infinite;
+  animation-delay: var(--delay, 0s);
+  will-change: transform, opacity;
+}
+.cutin-photo { overflow: hidden; }
+.cutin-photo img {
+  position: absolute; inset: -24%;
+  width: 148%; height: 148%;
+  object-fit: cover;
+  opacity: 0.92;
+  transform: skewX(18deg) scale(1.06);
+  animation: cutin-pan 13s ease-in-out infinite alternate;
+}
+.cp-1 { width: clamp(280px, 30vw, 470px); height: clamp(170px, 18vw, 280px); top: 4%;   right: -4%; --dur: 19s; --delay: 0s; }
+.cp-2 { width: clamp(120px, 12vw, 190px); height: clamp(44px, 4.6vw, 70px);  top: 36%;  right: 12%; --dur: 16s; --delay: 3.2s; background: var(--blue-500); --po: 0.75; }
+.cp-3 { width: clamp(210px, 21vw, 330px); height: clamp(130px, 13vw, 200px); bottom: 8%; right: 6%; --dur: 21s; --delay: 8.5s; }
+.cp-4 { width: clamp(150px, 15vw, 240px); height: clamp(56px, 5.6vw, 88px);  top: 14%;  right: 30%; --dur: 17s; --delay: 5.5s; background: var(--blue-100); }
+.cp-5 { width: clamp(120px, 12vw, 200px); height: clamp(46px, 4.8vw, 74px);  bottom: 26%; right: 26%; --dur: 20s; --delay: 11s; background: var(--neutral-100); }
+@keyframes cutin-move {
+  0%   { transform: translate(30vw, -26vh) skewX(-18deg); opacity: 0; }
+  12%  { opacity: var(--po, 1); }
+  78%  { opacity: var(--po, 1); }
+  100% { transform: translate(-14vw, 20vh) skewX(-18deg); opacity: 0; }
+}
+@keyframes cutin-pan {
+  from { transform: skewX(18deg) translate(-2.5%, -2%) scale(1.08); }
+  to   { transform: skewX(18deg) translate(2.5%, 2%) scale(1.08); }
+}
+@media (max-width: 760px) {
+  .cp-4, .cp-5 { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cutin-panel { animation: none; opacity: var(--po, 1); transform: translate(0, 0) skewX(-18deg); }
+  .cutin-photo img { animation: none; }
+}
+
+/* ---- ロゴティッカー(パートナーロゴの無限ループ帯) ----
+   トラック内に同一のロゴ列を2つ並べ、JS(rAF・LogoTicker内)がoffsetを
+   進めて1列分でラップする。ドラッグで手動スクロールでき、離すと慣性で
+   自動速度に戻る。ロゴは白背景PNGのため帯の背景は必ず#fffにすること。 */
+.ticker { overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.ticker.dragging { cursor: grabbing; }
+.ticker__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+.ticker__row { display: flex; align-items: center; flex-shrink: 0; }
+.ticker__row img {
+  display: block;
+  width: auto;
+  /* --lh: ロゴごとの基準高さ(px値・LogoTickerのdataで指定) */
+  height: calc(var(--lh, 40) * 1px);
+  margin-right: clamp(48px, 6.5vw, 104px);
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+@media (max-width: 760px) {
+  .ticker__row img { height: calc(var(--lh, 40) * 0.76px); }
 }

@@ -39,8 +39,8 @@
         "message": "Raw px value — use a design-system spacing token via var()."
       },
       {
-        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Zen Kaku Gothic New|Jost|Space Mono))/i]",
-        "message": "Font not provided by the design system. Available: Zen Kaku Gothic New, Jost, Space Mono."
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Noto Sans JP))/i]",
+        "message": "Font not provided by the design system. Available: Noto Sans JP."
       },
       {
         "selector": "JSXOpeningElement[name.name='Alert'] > JSXAttribute > JSXIdentifier[name!=/^(?:children|title|tone|icon|onClose|style|key|ref|className|style|children)$/]",
@@ -514,9 +514,7 @@
       "--transition-base": "other"
     },
     "fontFamilies": [
-      "Jost",
-      "Space Mono",
-      "Zen Kaku Gothic New"
+      "Noto Sans JP"
     ]
   }
 }

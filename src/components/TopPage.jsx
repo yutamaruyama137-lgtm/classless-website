@@ -48,6 +48,25 @@ function CircleLink({ href, children, dark = false, style = {} }) {
   );
 }
 
+/* ---- LayerX FV風カットイン(デモ) ----
+   平行四辺形パネルが斜めに流れ込み、一部のパネルの中に写真が現れる。
+   写真は実写真が支給されるまでUnsplashの仮写真。差し替えは下のsrcのみ。 */
+function HeroCutin() {
+  return (
+    <div className="hero-cutin" aria-hidden="true">
+      <span className="cutin-panel cutin-photo cp-1">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1100&auto=format&fit=crop" alt="" loading="eager" />
+      </span>
+      <span className="cutin-panel cp-2" />
+      <span className="cutin-panel cutin-photo cp-3">
+        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1100&auto=format&fit=crop" alt="" loading="eager" />
+      </span>
+      <span className="cutin-panel cp-4" />
+      <span className="cutin-panel cp-5" />
+    </div>
+  );
+}
+
 /* ================================================================
    Hero — Mission を大きく静かに。
    ================================================================ */
@@ -71,7 +90,13 @@ function TopHero() {
       position: 'relative', minHeight: '92svh', display: 'flex', alignItems: 'center',
       background: 'var(--color-bg)', overflow: 'hidden',
     }}>
-      <GeoDecor variant="hero" />
+      <div className="hero-lights" aria-hidden="true">
+        <span className="hl hl-1" />
+        <span className="hl hl-2" />
+        <span className="hl hl-3" />
+        <span className="hero-sheen" />
+      </div>
+      <HeroCutin />
       <div className="cl-container" style={{ position: 'relative', zIndex: 1, paddingTop: 40, paddingBottom: 120 }}>
         <h1 style={{ fontSize: 'clamp(44px, 8vw, 104px)', fontWeight: 700, lineHeight: 1.28, letterSpacing: '0.015em', margin: 0 }}>
           <span style={{ display: 'block' }}>{l1}</span>
@@ -84,12 +109,118 @@ function TopHero() {
           Making Humans Interesting with AI.
         </p>
       </div>
-      <div className="scroll-cue" aria-hidden="true" style={{
-        position: 'absolute', bottom: 28, left: '50%', transform: 'translateX(-50%)',
-        color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
-      }}>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em' }}>SCROLL</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M6 13l6 6 6-6" /></svg>
+    </section>
+  );
+}
+
+/* ================================================================
+   Logo Ticker — パートナー/取引先ロゴの無限ループ帯。
+   Hero と Vision(Our Vision) の間に置く。ロゴ画像は白背景PNG
+   (public/assets/logos/ — 生成は scripts/process-logos.mjs)。
+   ================================================================ */
+function LogoTicker() {
+  const { useReveal } = window;
+  const { useRef, useEffect } = React;
+  const ref = useReveal();
+  const tickerRef = useRef(null);
+
+  // 自動スクロール + ドラッグ操作(慣性つき)。CSSアニメではなくrAFで
+  // オフセットを進め、ドラッグ中はポインタ移動量を直接反映、離したら
+  // ドラッグ速度が指数減衰して自動速度に「弾力的に」戻る。
+  useEffect(() => {
+    const el = tickerRef.current;
+    if (!el) return;
+    const track = el.firstElementChild;
+    const row = track.firstElementChild;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const BASE = 45;           // 自動スクロール速度(px/s)
+    let offset = 0, rowW = 0, vel = 0;
+    let dragging = false, lastX = 0, lastT = 0;
+    let raf, prev = null;
+
+    const measure = () => { rowW = row.getBoundingClientRect().width; };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(row);
+
+    const apply = () => {
+      if (rowW > 0) offset = ((offset % rowW) + rowW) % rowW;
+      track.style.transform = `translate3d(${-offset}px, 0, 0)`;
+    };
+    const step = (t) => {
+      if (prev == null) prev = t;
+      const dt = Math.min((t - prev) / 1000, 0.05);
+      prev = t;
+      if (!dragging) {
+        vel *= Math.exp(-dt * 2.4);            // 慣性の減衰
+        if (Math.abs(vel) < 2) vel = 0;
+        offset += ((reduced ? 0 : BASE) + vel) * dt;
+        apply();
+      }
+      raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+
+    const onDown = (e) => {
+      dragging = true; lastX = e.clientX; lastT = performance.now(); vel = 0;
+      el.classList.add('dragging');
+      el.setPointerCapture(e.pointerId);
+    };
+    const onMove = (e) => {
+      if (!dragging) return;
+      const now = performance.now();
+      const dx = e.clientX - lastX;
+      offset -= dx;
+      vel = Math.max(-2600, Math.min(2600, -dx / (Math.max(now - lastT, 1) / 1000)));
+      lastX = e.clientX; lastT = now;
+      apply();
+    };
+    const onUp = () => { dragging = false; el.classList.remove('dragging'); };
+    el.addEventListener('pointerdown', onDown);
+    el.addEventListener('pointermove', onMove);
+    el.addEventListener('pointerup', onUp);
+    el.addEventListener('pointercancel', onUp);
+    return () => {
+      cancelAnimationFrame(raf); ro.disconnect();
+      el.removeEventListener('pointerdown', onDown);
+      el.removeEventListener('pointermove', onMove);
+      el.removeEventListener('pointerup', onUp);
+      el.removeEventListener('pointercancel', onUp);
+    };
+  }, []);
+
+  // h: デスクトップ基準の表示高さ(px)。縦横比がバラバラなので
+  //    ロゴごとに視覚的な重さが揃うよう個別指定する。
+  const logos = [
+    { src: '/assets/logos/logo-restep.png', alt: 'RESTEP', h: 52 },
+    { src: '/assets/logos/logo-viora.png', alt: 'VIORA', h: 82 },
+    { src: '/assets/logos/logo-synplanning.png', alt: 'Synplanning', h: 72 },
+    { src: '/assets/logos/logo-oiler.png', alt: '株式会社日本オイラービルサービス', h: 25 },
+    { src: '/assets/logos/logo-jmhs.png', alt: '日本健康医療学会', h: 82 },
+    { src: '/assets/logos/logo-enepal.png', alt: 'enepal', h: 54 },
+    { src: '/assets/logos/logo-uwec.png', alt: 'University of Wisconsin-Eau Claire', h: 48 },
+    { src: '/assets/logos/logo-earth-energy.png', alt: 'アースエナジー', h: 44 },
+  ];
+
+  // 同じ列を2つ並べてシームレスにループさせる(2列目は読み上げ・タブ対象外)
+  const row = (hidden) => (
+    <div className="ticker__row" aria-hidden={hidden || undefined}>
+      {logos.map((l) => (
+        <img key={l.src} src={l.src} alt={hidden ? '' : l.alt} loading="lazy" draggable={false} style={{ '--lh': l.h }} />
+      ))}
+    </div>
+  );
+
+  return (
+    <section id="partners" ref={ref} style={{ background: '#fff', paddingTop: 'clamp(40px, 5vw, 64px)', paddingBottom: 'clamp(44px, 5.5vw, 72px)', overflow: 'hidden' }}>
+      <div className="reveal" style={{ textAlign: 'center', marginBottom: 'clamp(26px, 3.5vw, 40px)' }}>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.14em', color: 'var(--text-muted)' }}>PARTNERS</span>
+      </div>
+      <div ref={tickerRef} className="ticker reveal" style={{ animationDelay: '0.12s' }}>
+        <div className="ticker__track">
+          {row(false)}
+          {row(true)}
+        </div>
       </div>
     </section>
   );
@@ -296,4 +427,4 @@ function TopJoin() {
   );
 }
 
-Object.assign(window, { TopHero, TopStatement, TopBusiness, TopNews, TopJoin, CircleLink, GeoDecor });
+Object.assign(window, { TopHero, LogoTicker, TopStatement, TopBusiness, TopNews, TopJoin, CircleLink, GeoDecor });

@@ -1,17 +1,17 @@
 /* ============================================================
    Classless — Typography Tokens
-   JP brand face: セザンヌ (Cézanne) — shipped substitute is
-   Zen Kaku Gothic New. Latin display/eyebrows use Jost
-   (geometric, echoes the thin "Classless" wordmark and goes
-   heavy for energetic headlines).
+   2026-08: 実企業サイト調査(LayerX/freee/Cybozu)に基づき
+   Noto Sans JP + ヒラギノ系フォールバックへ全面変更。
+   display/eyebrow/mono も同じファミリーに統一し、ラベルは
+   letter-spacing とウェイトで差を付ける(LayerX方式)。
    ============================================================ */
 
 :root {
   /* ---- Families ---- */
-  --font-jp: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN',
-             'Noto Sans JP', 'Yu Gothic', sans-serif;
-  --font-display: 'Jost', 'Zen Kaku Gothic New', sans-serif;
-  --font-mono: 'Space Mono', 'SFMono-Regular', ui-monospace, monospace;
+  --font-jp: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans',
+             'Yu Gothic', 'Meiryo', sans-serif;
+  --font-display: var(--font-jp);
+  --font-mono: var(--font-jp);
 
   /* Default body family is the JP face (the product is Japanese-first) */
   --font-sans: var(--font-jp);
