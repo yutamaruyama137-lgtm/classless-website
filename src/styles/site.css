@@ -110,8 +110,33 @@ body { line-break: strict; word-break: auto-phrase; }
      フォント読込完了(fonts-in)まで開始を保留するのはヒーローと同じ理由。 */
   html.fonts-in .split-host.in .schar {
     animation: char-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
-    animation-delay: calc(var(--i, 0) * 0.03s);
+    /* 長い見出しでも最後の文字が0.9s以内に出始めるよう遅延をキャップ。
+       上限なしだと高速スクロール後に「まだ出ていない文字」が残り続ける */
+    animation-delay: min(calc(var(--i, 0) * 0.03s), 0.9s);
   }
+}
+
+/* ---- Fast-scroll fallback ----
+   高速スクロールで一気に通過・到達した要素は、useReveal(Bits.jsx)が .in と
+   同時に .in-fast を付ける。文字ごとのスタガーは描画が追いつかず点滅して
+   見えるため、ホスト全体の短い一括フェードに差し替える。 */
+@keyframes fast-fade { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: no-preference) {
+  .reveal.in.in-fast,
+  .slide-l.in.in-fast,
+  .slide-r.in.in-fast,
+  .pop-in.in.in-fast,
+  .split-host.in.in-fast,
+  .gather-host.in.in-fast {
+    animation: fast-fade 0.4s ease-out both;
+  }
+  .split-host.in.in-fast .schar,
+  .gather-host.in.in-fast .gchar {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .draw-underline.in.in-fast::after { animation-delay: 0.1s; }
 }
 
 /* ---- Hero aurora: slow-drifting color wash behind the color field ---- */

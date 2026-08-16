@@ -27,6 +27,19 @@ function ColorField({ density = 'hero', style = {} }) {
   );
 }
 
+/* スクロール速度(px/秒)の共有トラッカー。高速スクロール時にリビール演出を
+   一括フェードへ切り替える判定に使う。160ms以上更新がなければ0を返す。 */
+function __initScrollSpeed() {
+  if (window.__clScrollV) return;
+  let lastY = window.scrollY, lastT = performance.now(), v = 0;
+  window.addEventListener('scroll', () => {
+    const t = performance.now(), y = window.scrollY, dt = t - lastT;
+    if (dt > 0) v = Math.abs(y - lastY) / dt * 1000;
+    lastY = y; lastT = t;
+  }, { passive: true });
+  window.__clScrollV = () => (performance.now() - lastT > 160 ? 0 : v);
+}
+
 /* IntersectionObserver-driven reveal. Adds `in` the first time the element
    enters the viewport and never removes it — replaying (and hiding text) on
    every re-entry made the page flicker while scrolling back up. */
@@ -35,9 +48,19 @@ function useReveal() {
   React.useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    __initScrollSpeed();
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        if (!e.isIntersecting) return;
+        // 高速スクロールで到達した要素、または発火時点で既に画面上部まで
+        // 進んでいた要素は、文字ごとのスタガーが「点滅」に見えるため
+        // .in-fast を併せて付け、CSS側で短い一括フェードに切り替える。
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        const fast = (window.__clScrollV && window.__clScrollV() > 2600)
+          || e.boundingClientRect.top < vh * 0.35;
+        if (fast) e.target.classList.add('in-fast');
+        e.target.classList.add('in');
+        io.unobserve(e.target);
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -12% 0px' });
     el.querySelectorAll('.reveal, .draw-underline, .slide-l, .slide-r, .gather-host, .pop-in, .split-host').forEach((n) => io.observe(n));
