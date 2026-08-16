@@ -349,7 +349,8 @@ body { line-break: strict; word-break: auto-phrase; }
     opacity: 0;
     transform: translate(var(--dx, 0), var(--dy, 0)) rotate(var(--gr, 0deg));
   }
-  html.fonts-in .gather-host.in .gchar { animation: gather 0.85s cubic-bezier(0.2, 0.75, 0.25, 1) forwards; animation-delay: var(--gd, 0s); }
+  /* 遅延は0.9sでキャップ（長文でも最後の文字が出遅れて残らないように） */
+  html.fonts-in .gather-host.in .gchar { animation: gather 0.85s cubic-bezier(0.2, 0.75, 0.25, 1) both; animation-delay: min(var(--gd, 0s), 0.9s); }
 }
 
 /* ---- 色が組み合わさる: orbs converge to center as --p goes 0→1 ---- */

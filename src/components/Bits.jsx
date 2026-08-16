@@ -37,7 +37,9 @@ function __initScrollSpeed() {
     if (dt > 0) v = Math.abs(y - lastY) / dt * 1000;
     lastY = y; lastT = t;
   }, { passive: true });
-  window.__clScrollV = () => (performance.now() - lastT > 160 ? 0 : v);
+  // IntersectionObserverのコールバックはスクロールより遅れて届くため、
+  // 判定猶予は250ms（短すぎると高速フリング中でも0を返してしまう）
+  window.__clScrollV = () => (performance.now() - lastT > 250 ? 0 : v);
 }
 
 /* IntersectionObserver-driven reveal. Adds `in` the first time the element
@@ -51,13 +53,23 @@ function useReveal() {
     __initScrollSpeed();
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
-        if (!e.isIntersecting) return;
+        // 高速フリングやリロードのスクロール位置復元で、既に画面より上へ
+        // 通過してしまった要素は演出なしで即表示する。放置すると上へ
+        // 戻るまで白抜けのまま残り、戻った瞬間にチカッと出てしまう。
+        if (!e.isIntersecting) {
+          if (e.boundingClientRect.bottom < 0) {
+            e.target.classList.add('in-fast');
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+          return;
+        }
         // 高速スクロールで到達した要素、または発火時点で既に画面上部まで
         // 進んでいた要素は、文字ごとのスタガーが「点滅」に見えるため
         // .in-fast を併せて付け、CSS側で短い一括フェードに切り替える。
         const vh = window.innerHeight || document.documentElement.clientHeight;
-        const fast = (window.__clScrollV && window.__clScrollV() > 2600)
-          || e.boundingClientRect.top < vh * 0.35;
+        const fast = (window.__clScrollV && window.__clScrollV() > 1800)
+          || e.boundingClientRect.top < vh * 0.45;
         if (fast) e.target.classList.add('in-fast');
         e.target.classList.add('in');
         io.unobserve(e.target);
