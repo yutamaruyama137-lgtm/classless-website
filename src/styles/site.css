@@ -46,7 +46,9 @@
 }
 @media (prefers-reduced-motion: no-preference) {
   .reveal:not(.in) { opacity: 0; transform: translateY(22px); }
-  .reveal.in { animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+  /* fill-mode は both 必須。forwards だとインラインの animation-delay 中に
+     素の状態（不透明）が一瞬見えてから消える「点滅」が起きる。 */
+  .reveal.in { animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
 }
 
 /* ---- Spectrum underline that draws itself ---- */
@@ -67,7 +69,7 @@
 }
 @media (prefers-reduced-motion: no-preference) {
   .draw-underline:not(.in)::after { transform: scaleX(0); }
-  .draw-underline.in::after { animation: draw-line 0.9s var(--underline-delay, 0.55s) cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+  .draw-underline.in::after { animation: draw-line 0.9s var(--underline-delay, 0.55s) cubic-bezier(0.22, 1, 0.36, 1) both; }
 }
 
 /* ---- Per-character hero entrance (LayerX-style 一文字フェードイン) ----
@@ -129,6 +131,10 @@ body { line-break: strict; word-break: auto-phrase; }
   .split-host.in.in-fast,
   .gather-host.in.in-fast {
     animation: fast-fade 0.4s ease-out both;
+    /* 小さいテキストやカードはインラインstyleでスタガー用の
+       animationDelayを持つ。インラインはCSSより強いため、!importantで
+       打ち消さないと高速スクロール時も遅延が残り順番に点滅して見える。 */
+    animation-delay: 0s !important;
   }
   .split-host.in.in-fast .schar,
   .gather-host.in.in-fast .gchar {
@@ -312,8 +318,8 @@ body { line-break: strict; word-break: auto-phrase; }
 @media (prefers-reduced-motion: no-preference) {
   .slide-l:not(.in) { opacity: 0; transform: translateX(-46px); }
   .slide-r:not(.in) { opacity: 0; transform: translateX(46px); }
-  .slide-l.in { animation: slide-from-l 1s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-  .slide-r.in { animation: slide-from-r 1s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+  .slide-l.in { animation: slide-from-l 1s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .slide-r.in { animation: slide-from-r 1s cubic-bezier(0.22, 1, 0.36, 1) both; }
 }
 
 /* ---- Scroll parallax: JS sets --py on [data-parallax] wrappers ---- */
@@ -331,7 +337,7 @@ body { line-break: strict; word-break: auto-phrase; }
 @keyframes pop-in { to { opacity: 1; transform: perspective(900px) rotateX(0) translateY(0); } }
 @media (prefers-reduced-motion: no-preference) {
   .pop-in:not(.in) { opacity: 0; transform: perspective(900px) rotateX(11deg) translateY(34px); }
-  .pop-in.in { animation: pop-in 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+  .pop-in.in { animation: pop-in 0.95s cubic-bezier(0.22, 1, 0.36, 1) both; }
 }
 
 /* ---- 文字が集まる: chars fly in from scattered positions on reveal ---- */
