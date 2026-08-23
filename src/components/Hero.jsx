@@ -56,7 +56,7 @@ function Hero({ onNav }) {
         </p>
 
         <div className="reveal in" style={{ display: 'flex', gap: 10, justifyContent: 'center', marginTop: 26, flexWrap: 'wrap', animationDelay: `${(tailDelay + 0.18).toFixed(2)}s` }}>
-          {['初期費用0円', '最短2週間で稼働'].map((b) => (
+          {['業務単位で相談', '開始時期は確認後にご案内'].map((b) => (
             <span key={b} style={{
               display: 'inline-flex', alignItems: 'center', gap: 7, padding: '7px 15px', borderRadius: 999,
               border: '1px solid var(--color-border)', background: 'var(--color-bg)',

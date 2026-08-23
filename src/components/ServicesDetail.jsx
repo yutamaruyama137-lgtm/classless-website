@@ -1,8 +1,10 @@
+import './WorkflowShowcase.jsx';
+
 /* Classless — 事業内容 detail page
    2サービス（AI BPO / AI開発）を、シンプルに「何を・どうやるか」が分かる構成で。 */
 
 function DetailHero() {
-  const { ColorField, useReveal, Eyebrow, useScrollVar, makeSplit } = window;
+  const { useReveal, Eyebrow, useScrollVar, makeSplit, DeliveryChain } = window;
   const ref = useReveal();
   const h1Ref = useScrollVar(0.5, 0.92, 0.5);
   const s1 = makeSplit();
@@ -10,9 +12,9 @@ function DetailHero() {
   const dTitleN = s1.count();
   const h2Ref = useScrollVar(0.5, 0.9, 0.46);
   const s2 = makeSplit();
-  const dl1 = s2.chars('地方の現場の業務を');
-  const dl2 = s2.chars('“まるごと”巻き取る、');
-  const dl3 = s2.chars('AI BPO。', 'blue');
+  const dl1 = s2.chars('日々の業務を整理し、');
+  const dl2 = s2.chars('実務と仕組みの両方で');
+  const dl3 = s2.chars('支えます。', 'blue');
   const dLeadN = s2.count();
   return (
     <section ref={ref} style={{ paddingTop: 'clamp(72px, 9vw, 128px)', paddingBottom: 'clamp(40px, 5vw, 72px)' }}>
@@ -20,10 +22,12 @@ function DetailHero() {
         <div className="reveal"><Eyebrow>Business</Eyebrow></div>
         <h1 ref={h1Ref} className="split-host" style={{ fontSize: 'clamp(40px, 6vw, 84px)', fontWeight: 900, marginTop: 18, letterSpacing: '0.02em', '--n': dTitleN, '--win': 4 }}>{dTitle}</h1>
 
-        {/* animated color band (the overlapping-color signature) */}
-        <div className="reveal" style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-2xl)', height: 'clamp(200px, 28vw, 360px)', marginTop: 'clamp(36px, 5vw, 64px)', background: 'var(--color-bg-subtle)', boxShadow: 'var(--shadow-sm)', border: '1px solid var(--color-border)', animationDelay: '0.12s' }}>
-          <ColorField density="hero" />
-          <span className="cl-spectrum-bar" style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 6, borderRadius: 0 }} />
+        <div className="reveal business-delivery-hero" style={{ animationDelay: '0.12s' }}>
+          <div className="business-delivery-hero__head">
+            <span>HOW WE WORK</span>
+            <p>業務ごとに、入口・処理・確認・出口を定義します。</p>
+          </div>
+          <DeliveryChain compact />
         </div>
 
         <div className="grid2" style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: 'clamp(28px, 5vw, 80px)', alignItems: 'end', marginTop: 'clamp(40px, 5vw, 72px)' }}>
@@ -33,11 +37,39 @@ function DetailHero() {
             <span style={{ display: 'block' }}>{dl3}</span>
           </h2>
           <p className="reveal" style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text-secondary)', fontWeight: 500, animationDelay: '0.12s' }}>
-            Classlessの事業は、2つ。まず基本の「AI BPO」で繰り返しの業務をまるごと巻き取り、現場を回す。さらに必要に応じて「AI開発」で、自動化と内製化をもっと深めていきます。
+            まずはAI BPOで、現在の資料や依頼を受け取り、日々の実務を動かします。その過程で繰り返し作業と判断箇所を分け、必要な部分だけを自動化・システム化します。
           </p>
         </div>
       </div>
     </section>
+  );
+}
+
+function ServiceArtifactVisual({ kind }) {
+  if (kind === 'bpo') {
+    return (
+      <div className="service-artifact service-artifact--bpo" aria-label="業務運用で用意する成果物の例">
+        <div className="service-artifact__bar"><span>OPERATION DESK</span><i /><i /></div>
+        <div className="artifact-inbox">
+          <span>今週の受領</span><strong>資料・依頼を受付</strong><small>形式がそろっていなくても整理から対応</small>
+        </div>
+        <div className="artifact-list">
+          {['入力・転記する項目', '差異を確認する項目', '担当者へ返す例外'].map((item, i) => <div key={item}><span>{i + 1}</span><p>{item}</p><b>{i === 2 ? '要確認' : '進行中'}</b></div>)}
+        </div>
+        <div className="artifact-output"><span>OUTPUT</span><p>成果物</p><p>確認ログ</p><p>運用手順</p></div>
+      </div>
+    );
+  }
+  return (
+    <div className="service-artifact service-artifact--dev" aria-label="業務システムの設計例">
+      <div className="service-artifact__bar"><span>SYSTEM BLUEPRINT</span><i /><i /></div>
+      <div className="blueprint-layers">
+        <div><span>INPUT</span><strong>既存の帳票・システム</strong><p>データの置き場所と更新方法を確認</p></div>
+        <div><span>LOGIC</span><strong>処理・ルール・承認</strong><p>自動処理と人の判断を切り分け</p></div>
+        <div><span>OUTPUT</span><strong>更新・保存・通知</strong><p>実行結果と履歴が残る形で接続</p></div>
+      </div>
+      <p className="blueprint-note">既存環境に合わせて、小さな単位から接続します。</p>
+    </div>
   );
 }
 
@@ -46,7 +78,7 @@ function DetailHero() {
    下：そのサービスの内訳カード（提供形態・機能）をフル幅で。 */
 function ServiceSection({ s, flip }) {
   const { Badge } = window.ClasslessDesignSystem_225e16;
-  const { useReveal, BrandVisual, useScrollVar, makeSplit } = window;
+  const { useReveal, useScrollVar, makeSplit } = window;
   const ref = useReveal();
   const titleRef = useScrollVar(0.5, 0.92, 0.5);
   const sp = makeSplit();
@@ -72,7 +104,7 @@ function ServiceSection({ s, flip }) {
           <div style={{ order: flip ? 1 : 2 }}>
             <div className={flip ? 'slide-l' : 'slide-r'}>
               <div className="parallax" data-parallax={flip ? 0.05 : 0.06}>
-                <BrandVisual tone={s.tone} image={s.image} ratio="16 / 11" label={`business / ${s.label}`} className="svc-visual" />
+                <ServiceArtifactVisual kind={s.visual} />
               </div>
             </div>
           </div>
@@ -114,7 +146,7 @@ function ServiceSection({ s, flip }) {
             <div style={{ marginTop: 'clamp(32px, 4vw, 48px)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 18 }}>
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.1em', color: 'var(--text-muted)', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>Coverage</span>
-                <span style={{ fontSize: 'clamp(16px, 1.8vw, 20px)', fontWeight: 900 }}>バックオフィス全般を、まるごと。</span>
+                <span style={{ fontSize: 'clamp(16px, 1.8vw, 20px)', fontWeight: 900 }}>対象業務を、業務単位で。</span>
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
                 {s.domains.map((d) => (
@@ -136,26 +168,26 @@ function ServicesDetail() {
   const services = [
     {
       no: '01', id: 'svc-bpo', tone: 'blue', tag: 'AI BPO ［基本］', title: 'AI BPO', label: 'ai bpo',
-      image: '/business/ai-bpo.png',
-      subtitle: '繰り返しの業務を、まるごと巻き取る。',
-      body: 'ノンコア業務をそのまま渡すだけ。外部のAI担当として受け取り、まず人が巻き取って現場を止めず、裏でAIに置き換え、定着まで一気通貫で伴走します。「顧問」と「実働」の両輪で、御社のバックオフィスを回します。',
+      visual: 'bpo',
+      subtitle: '資料を受け取り、日々の実務を動かす。',
+      body: '現在使っている帳票や依頼を受け取り、入力・整理・照合・下書きなどの作業を担当します。判断が必要な箇所は確認リストにまとめ、お客様の承認後に成果物と作業履歴を納品します。運用の中で見つかった繰り返し作業は、合意した範囲から自動化します。',
       itemsLabelEn: 'How', itemsLabel: '2つの提供形態',
       items: [
-        { t: 'AI BPO顧問', d: '外部のAI担当者として常駐せずに伴走。業務の棚卸し・設計、ツール選定、改善提案、社内への定着までを窓口ひとつで担います。', chips: ['業務設計', 'ツール選定', '改善提案', '定着伴走'] },
-        { t: 'AI BPO実働', d: '日々の定型業務を実際に代行。経理・営業事務・採用労務・マーケ・企画調査・情シスまで、手を動かす作業をまるごと巻き取ります。', chips: ['業務代行', '自動化構築', '運用・保守'] },
+        { t: '業務設計・改善', d: '担当者へのヒアリングと既存資料から、入力・処理・確認・納品の流れを整理します。責任範囲と例外時の戻し先を決め、運用手順に落とします。', chips: ['業務棚卸し', '責任範囲', '確認ルール', '手順書'] },
+        { t: '実務代行・運用', d: '決めた手順に沿って定型作業を行い、判断が必要な箇所だけをお客様へ返します。実行結果と修正履歴を残し、次回の運用へ反映します。', chips: ['入力・整理', '照合', '下書き', '運用改善'] },
       ],
       domains: ['経理', '営業事務', '採用・労務', 'マーケティング', '企画・調査', 'AI導入・情シス'],
     },
     {
       no: '02', id: 'svc-dev', tone: 'orange', tag: 'AI Development ［オプション］', title: 'AI開発', label: 'ai development',
-      image: '/business/ai-system.png',
-      subtitle: '自動化と内製化を、もっと深く。',
-      body: 'AI BPOで現場が回り始めたら、次は仕組みづくり。御社専用のAIシステム開発、AIが効くデータ基盤の整備、社内人材の育成までを組み合わせ、外注に依存しない“自走できるAI組織”へと進化させます。',
+      visual: 'dev',
+      subtitle: '繰り返し作業を、運用できる仕組みに変える。',
+      body: '現行業務で使うデータと判断条件を整理し、既存ツールの連携、自動化ワークフロー、必要に応じた専用システムを設計します。小さく試し、担当者が結果を確認できる状態で運用を始めます。',
       itemsLabelEn: 'Lineup', itemsLabel: '3つのメニュー',
       items: [
-        { t: 'AIシステム開発', d: '既製ツールでは解決できない課題に、業務フローに合わせたオーダーメイドのAIエージェントを設計・開発。外部CAIO（AI統括人材）の派遣もセットで提供します。', chips: ['AIエージェント', 'オーダーメイド', '外部CAIO派遣'] },
-        { t: 'データベース最適化', d: '社内に散らばった情報資産を整理・構造化・最適化。AIが本来の力を発揮できる“データの土台”を整え、導入効果を最大化します。', chips: ['整理', '構造化', '最適化'] },
-        { t: 'AI教育', d: '1回1時間〜の講義＋ワークショップを、1人から。業種・職種に合わせてカリキュラムをカスタムし、研修後の定着フォローまで伴走します。', chips: ['1日から', '少人数OK', '定着フォロー'] },
+        { t: '業務システム・自動化', d: 'フォーム、表計算、チャット、基幹システムなどをつなぎ、受領から更新・通知までの流れを構築します。例外時は人へ戻す設計にします。', chips: ['ワークフロー', '既存ツール連携', '承認分岐'] },
+        { t: 'データ整備', d: '表記ゆれ、重複、保管場所、更新権限を整理し、処理に使えるデータへ整えます。移行前後の件数や差分も確認します。', chips: ['データ整理', '項目定義', '更新ルール'] },
+        { t: '運用研修', d: '実際の業務を題材に、操作方法だけでなく確認手順と例外時の対応を共有します。研修後に見つかった改善点は手順へ反映します。', chips: ['実務ベース', '確認手順', '定着支援'] },
       ],
     },
   ];

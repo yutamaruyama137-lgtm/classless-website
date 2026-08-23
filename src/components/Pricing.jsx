@@ -1,6 +1,6 @@
 /* Classless corporate site — 料金 (two-tier pricing: retainer + working packages) */
 function Pricing() {
-  const { Badge, Button } = window.ClasslessDesignSystem_225e16;
+  const { Badge } = window.ClasslessDesignSystem_225e16;
   const { useReveal, Eyebrow, Arrow, useScrollVar, makeSplit } = window;
   const ref = useReveal();
   const titleRef = useScrollVar(0.5, 0.9, 0.46);
@@ -192,9 +192,7 @@ function Pricing() {
                 ))}
               </dl>
               <div style={{ marginTop: 24 }}>
-                <a href="/contact" style={{ display: 'block' }}>
-                  <Button fullWidth variant={p.popular ? 'primary' : 'secondary'} tone={p.popular ? 'blue' : 'ink'} iconRight={<Arrow />}>無料AX診断を予約する</Button>
-                </a>
+                <a href="/contact" className={`cl-action-link cl-action-link--md cl-action-link--full ${p.popular ? 'cl-action-link--primary' : 'cl-action-link--secondary'}`}>無料AX診断を予約する <Arrow /></a>
               </div>
             </div>
           ))}

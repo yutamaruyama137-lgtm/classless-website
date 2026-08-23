@@ -1,6 +1,6 @@
 /* Classless corporate site — 導入の流れ (5-step onboarding timeline) */
 function Flow() {
-  const { Badge, Button } = window.ClasslessDesignSystem_225e16;
+  const { Badge } = window.ClasslessDesignSystem_225e16;
   const { useReveal, Eyebrow, Arrow, useScrollVar, makeSplit } = window;
   const ref = useReveal();
   const titleRef = useScrollVar(0.5, 0.9, 0.46);
@@ -13,10 +13,10 @@ function Flow() {
 
   const steps = [
     { no: '1', tone: 'blue', title: '無料AX診断のご予約', free: true, body: '業務効率化のためのAI導入を検討されたら、まずはご相談ください。' },
-    { no: '2', tone: 'green', title: 'ヒアリング', body: '独自の手法で社内のAI活用度をヒアリング・スコアリング。' },
-    { no: '3', tone: 'orange', title: 'プランのご提案', body: '100以上のツールから最適な構成と導入方法をレポートでご提示。' },
-    { no: '4', tone: 'red', title: '実装デモのご共有', body: 'インタラクティブなデモで、完成イメージを明確化します。' },
-    { no: '5', tone: 'blue', title: '契約・利用開始', body: '導入から運用まで、専任の担当者が継続的にサポート。', chips: ['NDA締結', '最小権限アクセス', 'ガイドライン策定支援'] },
+    { no: '2', tone: 'green', title: '業務ヒアリング', body: '受け取る資料、現在の手順、確認者、納品物、例外時の対応を確認します。' },
+    { no: '3', tone: 'orange', title: '対象範囲のご提案', body: '利用中のツールと業務範囲を踏まえ、実務で担当する範囲と自動化する範囲をご提示します。' },
+    { no: '4', tone: 'red', title: '手順・試行結果の確認', body: '小さな業務単位で試行し、処理結果と人が確認する箇所を一緒に確かめます。' },
+    { no: '5', tone: 'blue', title: '契約・運用開始', body: '合意した手順で業務を開始し、成果物と確認履歴を残しながら見直します。', chips: ['NDA締結', '最小権限アクセス', '運用手順の共有'] },
   ];
 
   const card = {
@@ -38,7 +38,7 @@ function Flow() {
           </h2>
           <div className="reveal" style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 24, animationDelay: '0.16s' }}>
             <Badge tone="blue" variant="soft" size="md">初回相談 無料</Badge>
-            <Badge tone="green" variant="soft" size="md">最短2週間で稼働</Badge>
+            <Badge tone="green" variant="soft" size="md">開始時期は対象業務の確認後にご案内</Badge>
           </div>
         </div>
 
@@ -85,16 +85,14 @@ function Flow() {
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, textAlign: 'center',
         }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 800, fontSize: 'clamp(38px, 6vw, 64px)', letterSpacing: '-0.01em', lineHeight: 1, color: 'var(--brand-blue)' }}>最短2週間</span>
-            <span style={{ fontSize: 'clamp(16px, 2vw, 20px)', fontWeight: 700, color: 'var(--text-primary)' }}>ご相談から業務稼働開始まで。</span>
+            <span style={{ fontFamily: 'var(--font-jp)', fontWeight: 900, fontSize: 'clamp(28px, 4vw, 46px)', letterSpacing: '0.01em', lineHeight: 1.3, color: 'var(--brand-blue)' }}>開始時期をご案内</span>
+            <span style={{ fontSize: 'clamp(16px, 2vw, 20px)', fontWeight: 700, color: 'var(--text-primary)' }}>対象業務と連携先を確認したうえで決めます。</span>
           </div>
-          <a href="/contact" style={{ marginTop: 12 }}>
-            <Button size="lg" iconRight={<Arrow />}>無料AX診断を予約する</Button>
-          </a>
+          <a href="/contact" className="cl-action-link cl-action-link--primary cl-action-link--lg" style={{ marginTop: 12 }}>無料AX診断を予約する <Arrow /></a>
         </div>
 
         <p className="reveal" style={{ fontSize: 12.5, lineHeight: 1.8, color: 'var(--text-muted)', marginTop: 'clamp(28px, 3vw, 40px)', textAlign: 'center' }}>
-          ※業務の複雑さや範囲により前後する場合があります。
+          ※開始までの期間は、業務範囲・資料の状態・連携先・確認体制によって異なります。
         </p>
       </div>
     </section>

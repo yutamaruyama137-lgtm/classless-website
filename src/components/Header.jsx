@@ -78,7 +78,7 @@ function Header({ links = [], cta, homeHref = '/', onAnchor }) {
           ))}
           {cta && (
             cta.href && cta.href.charAt(0) !== '#'
-              ? <a href={cta.href}><Button size="sm">{cta.label}</Button></a>
+              ? <a href={cta.href} className="cl-action-link cl-action-link--primary cl-action-link--sm">{cta.label}</a>
               : <Button size="sm" onClick={() => onAnchor && onAnchor((cta.href || '#contact').slice(1))}>{cta.label}</Button>
           )}
           {/* モバイル: ハンバーガー */}
@@ -114,9 +114,7 @@ function Header({ links = [], cta, homeHref = '/', onAnchor }) {
             ))}
           </div>
           {cta && (
-            <a href={cta.href || '/contact'} onClick={handle(cta.href || '/contact')} style={{ display: 'block', marginTop: 26 }}>
-              <Button fullWidth size="lg">{cta.label}</Button>
-            </a>
+            <a href={cta.href || '/contact'} onClick={handle(cta.href || '/contact')} className="cl-action-link cl-action-link--primary cl-action-link--lg cl-action-link--full" style={{ marginTop: 26 }}>{cta.label}</a>
           )}
         </div>
       )}

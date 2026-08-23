@@ -1,5 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
+import { applySeo } from './seo.js'
 
 // 1) Global React must exist before the DS bundle / components load.
 import './globals.js'
@@ -54,7 +55,8 @@ function getRoute() {
   if (p === '/tokushoho') return 'tokushoho'
   if (p === '/blog') return 'blog'
   if (p.startsWith('/blog/')) return 'article'
-  return 'home'
+  if (p === '/') return 'home'
+  return 'notFound'
 }
 
 // Slug for /blog/<slug> routes.
@@ -91,6 +93,10 @@ function App() {
   } = window
 
   const route = getRoute()
+  const article = route === 'article'
+    ? (window.BLOG_ARTICLES || []).find((item) => item.slug === getSlug())
+    : null
+  applySeo(route, article)
   const cta = { label: '無料相談', href: '/contact' }
 
   // ── Single source of truth for the header nav ──────────────────────────
@@ -188,6 +194,22 @@ function App() {
     const Legal = route === 'privacy' ? PrivacyPolicy : route === 'terms' ? Terms : Tokushoho
     const label = route === 'privacy' ? 'プライバシーポリシー' : route === 'terms' ? '利用規約' : '特定商取引法に基づく表記'
     return shell(label, <Legal />)
+  }
+
+  if (route === 'notFound') {
+    return shell('ページが見つかりません', (
+      <section style={{ padding: 'clamp(120px,16vw,190px) 0 var(--section-y)', background: '#fff' }}>
+        <div className="cl-container" style={{ maxWidth: 760, textAlign: 'center' }}>
+          <p style={{ fontFamily: 'var(--font-mono)', color: 'var(--brand-blue)', fontWeight: 800, letterSpacing: '.12em' }}>404 / NOT FOUND</p>
+          <h1 style={{ marginTop: 14, fontSize: 'clamp(28px,4vw,48px)', fontWeight: 900 }}>ページが見つかりません</h1>
+          <p style={{ margin: '18px auto 28px', color: 'var(--text-secondary)', lineHeight: 1.9 }}>URLが変更されたか、ページが削除された可能性があります。<br />トップページまたは業務改善ナレッジからお探しください。</p>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap' }}>
+            <a href="/" style={{ padding: '12px 22px', borderRadius: 999, background: 'var(--brand-blue)', color: '#fff', fontWeight: 800 }}>トップページへ</a>
+            <a href="/blog" style={{ padding: '12px 22px', borderRadius: 999, border: '1px solid var(--color-border)', color: 'var(--text-primary)', fontWeight: 800 }}>業務改善ナレッジへ</a>
+          </div>
+        </div>
+      </section>
+    ))
   }
 
   // ── home: LayerX型コーポレートトップ ──

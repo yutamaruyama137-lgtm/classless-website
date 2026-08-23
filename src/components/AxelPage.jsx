@@ -1,15 +1,16 @@
+import './WorkflowShowcase.jsx';
+
 /* Classless — アクセル事業ページのヒーロー。
    既存のBPO×DXセクション群(Background/RoleSplit/WhatWeDo/Voices/Pricing/Flow/Faq)を
    このヒーローの下に再利用する。ブランド色はロゴアイコンの 青→ピンク グラデ。 */
 
 function AxelHero({ onNav }) {
-  const { Button } = window.ClasslessDesignSystem_225e16;
   const { useReveal, Arrow } = window;
   const ref = useReveal();
 
   const AXEL_GRAD = 'linear-gradient(90deg, #2b50f0, #f0367c)';
 
-  const badges = ['時間単価制 ¥3,000/h〜', '初期費用 0円', '最短2週間で稼働'];
+  const badges = ['業務単位で相談', '人の確認工程を設計', '運用後も見直し'];
 
   return (
     <section id="axel-hero" ref={ref} style={{
@@ -31,10 +32,10 @@ function AxelHero({ onNav }) {
             </div>
             <img src="/assets/logo-axel.png" alt="アクセル" className="reveal" style={{ width: 'clamp(210px, 26vw, 320px)', marginTop: 26, animationDelay: '0.06s' }} />
             <h1 className="reveal" style={{ fontSize: 'clamp(27px, 3.6vw, 48px)', fontWeight: 900, lineHeight: 1.4, letterSpacing: '0.015em', marginTop: 26, animationDelay: '0.12s' }}>
-              AI×BPOで、<br />事業成長を<span style={{ backgroundImage: AXEL_GRAD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>加速</span>させる。
+              任せたい業務を整理し、<br /><span style={{ backgroundImage: AXEL_GRAD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>実際に回る仕組み</span>にする。
             </h1>
             <p className="reveal" style={{ fontSize: 'clamp(15px, 1.6vw, 17.5px)', lineHeight: 2, color: 'var(--text-secondary)', fontWeight: 500, marginTop: 22, maxWidth: '32em', animationDelay: '0.2s' }}>
-              アクセルは、企業のオペレーションとスピードを加速させる時間単価制のAI×BPOサービス。経理・営業事務・採用・マーケまで業務をまるごと巻き取り、AIによる自動化・定着までを一気通貫で伴走します。
+              アクセルは、経理・営業事務・採用・マーケティングなどの業務を、設計と実務の両面から支えるAI×BPOサービスです。いま使っている資料や手順を起点に、入力・処理・確認・納品の流れを整えます。
             </p>
             <div className="reveal" style={{ display: 'flex', gap: 10, marginTop: 26, flexWrap: 'wrap', animationDelay: '0.28s' }}>
               {badges.map((b) => (
@@ -49,16 +50,25 @@ function AxelHero({ onNav }) {
               ))}
             </div>
             <div className="reveal" style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap', animationDelay: '0.36s' }}>
-              <a href="/contact"><Button size="lg" iconRight={<Arrow />}>無料AX診断を予約する</Button></a>
-              <Button size="lg" variant="secondary" tone="ink" onClick={() => onNav && onNav('pricing')}>料金プランを見る</Button>
+              <a href="/contact" className="cl-action-link cl-action-link--primary cl-action-link--lg">対象業務を相談する <Arrow /></a>
+              <a href="#whatwedo" className="cl-action-link cl-action-link--secondary cl-action-link--lg" onClick={(event) => { if (onNav) { event.preventDefault(); onNav('whatwedo'); } }}>業務例を見る</a>
             </div>
           </div>
 
-          {/* ロゴアイコンを主役に据えたビジュアル */}
-          <div className="reveal hide-sp" style={{ display: 'flex', justifyContent: 'center', animationDelay: '0.2s' }}>
-            <div style={{ position: 'relative', width: 'clamp(220px, 24vw, 330px)' }}>
-              <div aria-hidden="true" style={{ position: 'absolute', inset: '-14%', borderRadius: '50%', background: 'radial-gradient(circle, rgba(43,80,240,0.10), transparent 65%)' }} />
-              <img src="/assets/icon-axel.png" alt="" style={{ position: 'relative', width: '100%', filter: 'drop-shadow(0 24px 48px rgba(43,80,240,0.22))' }} />
+          <div className="reveal" style={{ animationDelay: '0.2s' }}>
+            <div className="axel-hero-brief" aria-label="業務支援の流れ">
+              <div className="axel-hero-brief__head"><span>OPERATION BRIEF</span><b>構成例</b></div>
+              {[
+                ['INPUT', '受け取る', '帳票・データ・担当者からの依頼'],
+                ['WORK', '作業する', '入力・整理・照合・下書き'],
+                ['CHECK', '確認する', '差異と例外を担当者へ返す'],
+                ['OUTPUT', '納品する', '成果物・履歴・次回の手順'],
+              ].map(([en, title, body], i) => (
+                <div className="axel-hero-brief__row" key={en}>
+                  <span>{String(i + 1).padStart(2, '0')}</span><div><small>{en}</small><strong>{title}</strong><p>{body}</p></div>
+                </div>
+              ))}
+              <div className="axel-hero-brief__foot"><span /> 実際の業務に合わせて確認箇所を設計</div>
             </div>
           </div>
         </div>

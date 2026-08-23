@@ -9,6 +9,9 @@
 @media (max-width: 920px) {
   .grid2 { grid-template-columns: 1fr !important; }
   .svc-row { grid-template-columns: 1fr !important; }
+  .operation-domain-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .operations-cta { align-items: stretch; flex-wrap: wrap; }
+  .operations-cta > div { flex-basis: 100%; }
 }
 
 /* Phone — drop the inline header links / dropdown, show the hamburger.
@@ -16,9 +19,47 @@
 @media (max-width: 760px) {
   .foot-grid { grid-template-columns: 1fr 1fr !important; gap: 28px !important; }
   .site-nav { gap: 12px !important; }
-  .site-nav > a:not(:has(button)) { display: none !important; }
+  .site-nav > a:not(:has(button)):not(.cl-action-link) { display: none !important; }
   .site-nav > .nav-drop { display: none !important; }
   .nav-burger { display: inline-flex !important; }
+
+  .operations-delivery,
+  .payroll-workflow,
+  .automation-workflow,
+  .business-delivery-hero { border-radius: 18px; }
+  .operations-delivery__head,
+  .business-delivery-hero__head,
+  .workflow-caption { align-items: flex-start; flex-direction: column; }
+  .delivery-chain,
+  .delivery-chain--compact { grid-template-columns: 1fr; }
+  .delivery-chain__arrow { justify-self: center; transform: rotate(90deg); }
+  .delivery-step__body { font-size: 12.5px; }
+  .operation-domain-grid { grid-template-columns: 1fr; }
+  .operation-domain dl div { grid-template-columns: 82px 1fr; }
+  .operations-cta { flex-direction: column; }
+  .operations-cta a,
+  .operations-cta a > button { width: 100%; }
+
+  .payroll-lane { grid-template-columns: 1fr; }
+  .payroll-lane__name { min-height: auto; }
+  .payroll-lane__steps { grid-template-columns: 1fr; }
+  .payroll-node__arrow { justify-self: center; transform: rotate(90deg); }
+
+  .automation-canvas { overflow: visible; }
+  .automation-mainline { min-width: 0; flex-direction: column; align-items: stretch; }
+  .automation-node,
+  .automation-branches .automation-node { width: 100%; }
+  .automation-connector { align-self: center; margin: 8px 0; transform: rotate(90deg); }
+  .automation-branches { padding-left: 0; }
+  .automation-branches::before { display: none; }
+  .automation-foot { align-items: flex-start; flex-direction: column; }
+
+  .service-artifact { min-height: auto; }
+  .artifact-output { grid-template-columns: 1fr 1fr 1fr; }
+  .artifact-output span { grid-column: 1 / -1; }
+  .blueprint-layers { padding: 20px; }
+  .blueprint-note { margin: 0 20px 20px; }
+  .axel-hero-brief { margin: 8px auto 0; }
 }
 
 /* Utility: elements (typically <br> or decorative visuals) hidden on phone.

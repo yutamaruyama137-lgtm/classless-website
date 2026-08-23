@@ -5,16 +5,16 @@ function RoleSplit() {
   const ref = useReveal();
 
   const you = [
-    { t: '現場を教える', d: 'どんな仕事で、どこが大変か。現場の言葉のままで充分です' },
-    { t: '方針を決める', d: '私たちの提案に「やる・やらない」の判断をするだけ' },
-    { t: 'あとは任せる', d: '横文字の勉強も、ツール選びも、一切不要です' },
+    { t: '資料と依頼を共有する', d: '現在使っている帳票、入力データ、依頼方法をそのまま共有いただきます' },
+    { t: '確認者と判断条件を決める', d: '金額・対外送信・例外など、社内で確認する箇所を決めます' },
+    { t: '成果物を確認する', d: '納品物と確認ログを見て、修正点や次回の変更を伝えていただきます' },
   ];
   const us = [
-    { t: '最新AIを学び続ける', d: '毎日生まれる新ツールの目利きは、私たちの本業です' },
-    { t: '御社に合う形に作る', d: '現場をヒアリングし、いまの業務にそのまま組み込む' },
-    { t: '現場に定着させる', d: '使われるまで伴走。研修も運用もセットで請け負います' },
+    { t: '現行手順を整理する', d: '資料の受領から処理・確認・納品までを分解し、責任範囲を明確にします' },
+    { t: '実務と仕組みをつくる', d: '定型作業を実行し、合意した範囲から連携や自動化を構築します' },
+    { t: '履歴と手順を残す', d: '成果物、確認ログ、例外対応、次回運用の手順をまとめて共有します' },
   ];
-  const steps = ['可視化', '最適化', '定着'];
+  const steps = ['受領', '処理', '確認', '納品'];
 
   // inline icons (24x24, stroke2, currentColor)
   const IconUser = () => (
@@ -66,22 +66,22 @@ function RoleSplit() {
         <div className="reveal" style={{ maxWidth: '42em', marginBottom: 'clamp(40px, 5vw, 64px)' }}>
           <Eyebrow>Our Approach</Eyebrow>
           <h2 style={{ fontSize: 'clamp(27px, 3.5vw, 46px)', fontWeight: 900, marginTop: 18, letterSpacing: '0.01em', lineHeight: 1.34 }}>
-            経営者が、AIを無理に<span style={{ color: 'var(--brand-orange)' }}>学ぶ必要</span>はありません。
+            AIを学ぶ前に、<span style={{ color: 'var(--brand-orange)' }}>業務の受け渡し</span>を決めます。
           </h2>
           <p style={{ fontSize: 'clamp(16px, 1.6vw, 19px)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.85, marginTop: 20 }}>
-            経理を税理士に任せるように、AIは私たちに。学ぶのは、私たちの仕事です。
+            お客様が判断する箇所と、Classlessが担当する作業を分け、毎回同じ流れで確認できる状態にします。
           </p>
         </div>
 
         {/* big sub-heading: あなた vs 私たち */}
         <h3 className="reveal" style={{ fontSize: 'clamp(22px, 2.8vw, 34px)', fontWeight: 900, lineHeight: 1.45, letterSpacing: '0.01em', marginBottom: 'clamp(32px, 4vw, 52px)' }}>
-          現場を知るのは、<span style={{ color: 'var(--brand-orange)' }}>あなた</span>。AIを知るのは、<span style={{ color: 'var(--brand-blue)' }}>私たち</span>。
+          業務の判断は、<span style={{ color: 'var(--brand-orange)' }}>お客様</span>。整理・実行・記録は、<span style={{ color: 'var(--brand-blue)' }}>Classless</span>。
         </h3>
 
         {/* two columns */}
         <div className="grid2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(20px, 3vw, 32px)', alignItems: 'stretch' }}>
-          <Column side="you" accent="var(--brand-orange)" badge="orange" kicker="経営者がやることは、3つだけ" items={you} IconC={IconUser} />
-          <Column side="us" accent="var(--brand-blue)" badge="blue" kicker="私たちがやること、ぜんぶ" items={us} IconC={IconSpark} />
+          <Column side="you" accent="var(--brand-orange)" badge="orange" kicker="お客様にお願いすること" items={you} IconC={IconUser} />
+          <Column side="us" accent="var(--brand-blue)" badge="blue" kicker="Classlessが担当すること" items={us} IconC={IconSpark} />
         </div>
 
         {/* process band */}
@@ -91,7 +91,7 @@ function RoleSplit() {
           display: 'flex', flexDirection: 'column', gap: 22,
         }}>
           <p style={{ fontSize: 14.5, lineHeight: 1.9, color: 'var(--text-secondary)', margin: 0 }}>
-            「人に仕事をつける」から、業務がブラックボックス化する。だからまず——
+            業務は、担当者名ではなく、受け渡しの流れで整理します。
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 14 }}>
             {steps.map((s, i) => (

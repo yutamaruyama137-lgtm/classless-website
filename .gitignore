@@ -25,3 +25,7 @@ dist-ssr
 
 
 .vercel
+
+# Local review and source-document artifacts
+.playwright-cli/
+tmp/

@@ -23,11 +23,10 @@ function LtHead({ en, title, lead, invert = false }) {
    Hero — 商談だけ、トスする。
    ================================================================ */
 function LtHero() {
-  const { Button } = window.ClasslessDesignSystem_225e16;
   const { useReveal, Arrow } = window;
   const ref = useReveal();
 
-  const badges = ['完全成果報酬', '固定費ゼロ', '最短数日で立ち上げ'];
+  const badges = ['対象企業を事前に確認', '商談条件をすり合わせ', '開始時期は個別にご案内'];
 
   return (
     <section id="lt-hero" ref={ref} style={{
@@ -51,7 +50,7 @@ function LtHero() {
               商談<span style={{ backgroundImage: LT_GRAD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>だけ</span>、トスする。
             </h1>
             <p className="reveal" style={{ fontSize: 'clamp(15px, 1.6vw, 17.5px)', lineHeight: 2, color: 'var(--text-secondary)', fontWeight: 500, marginTop: 22, maxWidth: '32em', animationDelay: '0.2s' }}>
-              リートスは、AI×LinkedInで決裁者に直接アプローチし、質の高い商談を作って届ける営業インフラ。あなたは届いた商談で、クロージングに集中するだけ。
+              リートスは、対象企業の整理、候補者の確認、文面作成、送信後の返信対応、日程調整までを支援します。アプローチ条件と商談の定義は、開始前にすり合わせます。
             </p>
             <div className="reveal" style={{ display: 'flex', gap: 10, marginTop: 26, flexWrap: 'wrap', animationDelay: '0.28s' }}>
               {badges.map((b) => (
@@ -66,7 +65,7 @@ function LtHero() {
               ))}
             </div>
             <div className="reveal" style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap', animationDelay: '0.36s' }}>
-              <a href="/contact"><Button size="lg" iconRight={<Arrow />}>無料で相談する</Button></a>
+              <a href="/contact" className="cl-action-link cl-action-link--primary cl-action-link--lg">無料で相談する <Arrow /></a>
             </div>
           </div>
 
@@ -89,16 +88,16 @@ function LtChallenge() {
   const { useReveal } = window;
   const ref = useReveal();
   const stats = [
-    { n: '約10倍', t: '営業職の人手不足感', d: '他職種と比べた営業職の不足感。採用市場では奪い合いが続く。' },
-    { n: '2.5年', t: 'インサイドセールスの平均在籍', d: '採用できても定着しない。育てた頃には、また採用に逆戻り。' },
-    { n: '約90%', t: '決裁者に届かない電話', d: '従来のテレアポは、決裁者に「届く前」に大半が消えていく。' },
-    { n: '50〜100万円', t: '成果が出る前に消える固定費', d: '外注も採用も、当たっても外れても初期費用と月額が積み上がる。' },
+    { n: '採用難', t: '営業担当を確保しにくい', d: '採用・育成に時間がかかり、接点づくりを始めるまでの負担が大きい。' },
+    { n: '属人化', t: '担当者ごとに進め方が違う', d: '対象企業の選び方や送信文面、追客の記録が個人に寄りやすい。' },
+    { n: '接点不足', t: '決裁者まで届きにくい', d: '代表電話や一斉送信だけでは、確認してほしい相手へ情報が届きにくい。' },
+    { n: '先行負担', t: '成果が出る前に費用がかかる', d: '採用や外注では、準備・教育・運用に先行して費用と工数が発生する。' },
   ];
   return (
     <section id="lt-challenge" ref={ref} style={{ background: 'var(--color-bg-subtle)', paddingTop: 'var(--section-y)', paddingBottom: 'var(--section-y)' }}>
       <div className="cl-container">
-        <LtHead en="Challenge" title={<span>商品はいい。<br />でも、売る人がいない。</span>}
-          lead="営業の採用・育成は、いまや最も難しい経営課題のひとつ。かけた時間と人件費の9割が、会話にすらならず消えていきます。" />
+        <LtHead en="Challenge" title={<span>商品はいい。<br />でも、接点づくりに手が回らない。</span>}
+          lead="営業担当の採用・育成には時間がかかります。対象企業の整理、文面作成、送信、返信確認、日程調整にも継続的な工数が必要です。" />
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'clamp(16px, 2vw, 22px)', marginTop: 'clamp(40px, 5vw, 64px)' }}>
           {stats.map((s, i) => (
             <div key={s.t} className="reveal" style={{
@@ -123,9 +122,9 @@ function LtSolution() {
   const { useReveal } = window;
   const ref = useReveal();
   const cards = [
-    { t: '訪問ゼロ', d: '商談はすべてオンライン。移動も対面アポも不要で、最短数日で立ち上がる。', icon: 'M3 12h18M12 3v18' },
-    { t: 'AIで量産', d: 'リスト作成も文面生成もAIが担当。人手をかけずに決裁者へ大量にアプローチ。', icon: null },
-    { t: '完全成果報酬', d: '月額固定なし。初期3万円のみで、出た成果にだけお支払い。固定費はゼロ。', icon: null },
+    { t: 'オンラインで進行', d: 'ヒアリング、対象企業の確認、契約、日程調整までオンラインで進めます。開始日は準備状況を確認してご案内します。', icon: 'M3 12h18M12 3v18' },
+    { t: '対象と文面を設計', d: '候補企業を整理し、企業ごとの確認内容を踏まえて文面を作成します。送信条件は事前に合意します。', icon: null },
+    { t: '条件に応じてお見積もり', d: '対象市場、利用チャネル、商談条件を確認し、対応範囲と費用をご提示します。', icon: null },
   ];
   const icons = [
     <svg key="0" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="url(#ltg0)" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><defs><linearGradient id="ltg0" x1="0" y1="0" x2="1" y2="0"><stop stopColor={LT_BLUE}/><stop offset="1" stopColor={LT_PURPLE}/></linearGradient></defs><rect x="2.5" y="5" width="19" height="13" rx="2.5"/><path d="M8 21h8"/><path d="M12 18v3"/></svg>,
@@ -135,8 +134,8 @@ function LtSolution() {
   return (
     <section id="lt-solution" ref={ref} style={{ paddingTop: 'var(--section-y)', paddingBottom: 'var(--section-y)' }}>
       <div className="cl-container">
-        <LtHead en="Solution" title={<span>商談<span style={{ backgroundImage: LT_GRAD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>“だけ”</span>を、作って届ける。</span>}
-          lead="リートスは「契約代行」ではなく、決裁者との商談を供給する営業インフラ。刈り取りはあなた、商談供給はリートス。" />
+        <LtHead en="Solution" title={<span>商談条件に合う接点を、<span style={{ backgroundImage: LT_GRAD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>日程調整まで</span>支援する。</span>}
+          lead="リートスは契約・受注判断を代行するサービスではありません。合意した条件に沿って、候補整理から日程調整までを担当します。" />
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 'clamp(16px, 2vw, 24px)', marginTop: 'clamp(40px, 5vw, 64px)' }}>
           {cards.map((c, i) => (
             <div key={c.t} className="reveal" style={{
@@ -159,16 +158,16 @@ function LtSolution() {
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, letterSpacing: '0.14em', color: LT_PURPLE, fontWeight: 700 }}>LEADTOSS</div>
             <div style={{ fontSize: 'clamp(17px, 1.9vw, 21px)', fontWeight: 900, marginTop: 8 }}>決裁者との商談を、作ってセットするまで。</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 16 }}>
-              {['ターゲット設計', 'AI量産アプローチ', '返信対応・関係構築', 'Zoom商談セット'].map((x) => (
+              {['候補企業の整理', '企業別文面の作成', '返信内容の記録', '商談日程の調整'].map((x) => (
                 <span key={x} style={{ fontSize: 12.5, fontWeight: 700, padding: '6px 12px', borderRadius: 999, background: '#fff', border: '1px solid var(--color-border)', color: 'var(--text-secondary)' }}>{x}</span>
               ))}
             </div>
           </div>
           <div style={{ padding: 'clamp(24px, 3vw, 36px)', background: '#fff', borderLeft: '1px solid var(--color-border)' }}>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, letterSpacing: '0.14em', color: 'var(--text-muted)', fontWeight: 700 }}>YOU</div>
-            <div style={{ fontSize: 'clamp(17px, 1.9vw, 21px)', fontWeight: 900, marginTop: 8 }}>届いた商談で、提案・受注に集中。</div>
+            <div style={{ fontSize: 'clamp(17px, 1.9vw, 21px)', fontWeight: 900, marginTop: 8 }}>商談で、提案と受注判断を行う。</div>
             <p style={{ fontSize: 14, lineHeight: 1.9, color: 'var(--text-secondary)', marginTop: 14 }}>
-              最も価値の高い「クロージング」に、リソースを全集中できる。
+              当日の提案内容、見積もり、契約条件、受注判断はお客様が担当します。
             </p>
           </div>
         </div>
@@ -184,23 +183,23 @@ function LtWhyLinkedin() {
   const { useReveal } = window;
   const ref = useReveal();
   const stats = [
-    { n: '13億人超', t: '世界のLinkedIn登録ユーザー数', d: 'ビジネス特化型SNSとして、海外の決裁者・購買担当が日常的に利用。' },
-    { n: '25%超', t: '経営層・役職者の割合', d: '利用者の4人に1人以上が決裁層。役職で直接ターゲティングできる。' },
-    { n: '約4%', t: '日本の普及率(欧米は60〜75%)', d: '日本でやっている会社が、まだ少ない。決裁者に直接届けば埋もれずに目立てる、先行者利益のタイミング。' },
+    { n: 'ROLE', t: '役職条件で候補を整理', d: '業種・企業・役職など、開始前に合意した条件で候補を確認します。' },
+    { n: 'PROFILE', t: '公開情報を事前に確認', d: '候補者の公開プロフィールと企業情報を確認し、対象外を除きます。' },
+    { n: 'RECORD', t: '接点と反応を記録', d: '送信内容、送信日、返信、次の対応を残し、月次の見直しに使います。' },
   ];
   const rows = [
-    ['LinkedIn', '◎ 低', '◎ 高', '◎ 直接'],
-    ['メール', '◯', '◯', '△'],
-    ['問い合わせフォーム', '◯', '△', '△'],
-    ['テレアポ', '× 高', '◯', '× 約1割'],
+    ['LinkedIn', '企業・役職条件', '公開プロフィール', '個別メッセージ'],
+    ['メール', '保有・調査リスト', '企業情報', '個別メール'],
+    ['問い合わせフォーム', '企業リスト', '企業サイト', '指定フォーム'],
+    ['電話', '企業・電話番号', '会話時に確認', '代表・部署番号'],
   ];
   return (
     <section id="lt-linkedin" ref={ref} style={{ background: 'var(--neutral-900)', position: 'relative', overflow: 'hidden', paddingTop: 'var(--section-y)', paddingBottom: 'var(--section-y)' }}>
       <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: `radial-gradient(800px 400px at 80% -10%, rgba(139,92,246,0.22), transparent 60%), radial-gradient(700px 380px at 10% 110%, rgba(62,123,250,0.18), transparent 60%)`, pointerEvents: 'none' }} />
       <div className="cl-container" style={{ position: 'relative', zIndex: 1 }}>
         <LtHead en="Why LinkedIn" invert
-          title={<span style={{ color: '#fff' }}>世界の決裁者は、<br />もうLinkedInにいる。</span>}
-          lead="中心はコスト効率と質に優れたLinkedIn。メール・問い合わせフォームも重ね、1社に複数チャネルで接触して取りこぼしません。" />
+          title={<span style={{ color: '#fff' }}>対象企業と役職を確認して、<br />接点をつくる。</span>}
+          lead="LinkedInを中心に、必要に応じてメールや問い合わせフォームを利用します。使うチャネルと送信条件は事前に確認します。" />
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'clamp(16px, 2vw, 24px)', marginTop: 'clamp(40px, 5vw, 64px)' }}>
           {stats.map((s, i) => (
             <div key={s.t} className="reveal" style={{
@@ -219,7 +218,7 @@ function LtWhyLinkedin() {
           <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 560 }}>
             <thead>
               <tr>
-                {['チャネル', 'コスト', 'アポの質', '決裁者到達'].map((h) => (
+                {['チャネル', '候補の絞り込み', '事前確認', '連絡方法'].map((h) => (
                   <th key={h} style={{ textAlign: 'left', fontFamily: 'var(--font-jp)', fontWeight: 700, fontSize: 12.5, letterSpacing: '0.06em', color: 'rgba(255,255,255,0.55)', padding: '12px 16px', borderBottom: '1px solid rgba(255,255,255,0.18)' }}>{h}</th>
                 ))}
               </tr>
@@ -251,22 +250,22 @@ function LtHow() {
   const { useReveal } = window;
   const ref = useReveal();
   const steps = [
-    { n: '01', t: 'ターゲット設計', d: '業界・役職・地域・企業規模・アクティブ度の5つのフィルタで、会うべき決裁者を精密に定義。' },
-    { n: '02', t: 'AIでリスト&文面', d: 'リスト化と企業分析、1通ずつのパーソナライズ文面生成をAIが担当。定型コピペは送らない。' },
-    { n: '03', t: 'マルチチャネル送信', d: 'LinkedIn・メール・問い合わせフォームで週100〜200件を安全運用。InMailで未接続の決裁者にも。' },
+    { n: '01', t: '対象条件の確認', d: '業種・役職・地域・企業規模など、候補企業を整理する条件をすり合わせます。' },
+    { n: '02', t: '候補・文面の下書き', d: '公開情報をもとに候補を整理し、企業ごとの確認内容を踏まえて文面を作成します。' },
+    { n: '03', t: '送信・記録', d: '合意したチャネルと件数で送信し、対象・文面・送信日・反応を記録します。' },
     { n: '04', t: '返信・関係構築', d: 'いきなり売り込まず、相手の文脈に合わせて接点を温める。' },
-    { n: '05', t: 'Zoom商談セット', d: '日程調整まで行い、決裁者との商談を確定。あとはあなたが受注するだけ。' },
+    { n: '05', t: '商談日程の調整', d: '合意した商談条件を確認し、候補日を調整してお客様へ引き継ぎます。' },
   ];
   const funnel = [
-    { label: 'つながり申請', n: '400–870', unit: '件 / 月・1アカウント', w: '100%' },
-    { label: '承認(承認率20–50%)', n: '80–300', unit: '件 / 月', w: '68%' },
-    { label: '商談化(返信率20–40%)', n: '10–40', unit: '有望リード / 月', w: '38%' },
+    { label: '対象候補', n: '条件に合う企業', unit: '業種・役職・地域などで整理', w: '100%' },
+    { label: '反応を確認', n: '返信・接続', unit: '文面と対象条件を見直す', w: '68%' },
+    { label: '商談条件を確認', n: '日程調整', unit: '合意した条件を満たす接点', w: '38%' },
   ];
   return (
     <section id="lt-how" ref={ref} style={{ background: 'var(--color-bg-subtle)', paddingTop: 'var(--section-y)', paddingBottom: 'var(--section-y)' }}>
       <div className="cl-container">
-        <LtHead en="How It Works" title={<span>AIが回し、人は「商談」だけに集中する。</span>}
-          lead="13億人から、会うべき決裁者だけに絞り込み、アプローチから商談セットまでをワンストップで。" />
+        <LtHead en="How It Works" title={<span>対象を決め、接点づくりを記録しながら進める。</span>}
+          lead="対象企業と役職の条件をすり合わせ、候補整理から文面作成、送信、返信対応、日程調整までを一つの流れで支援します。" />
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 'clamp(14px, 1.8vw, 20px)', marginTop: 'clamp(40px, 5vw, 64px)' }}>
           {steps.map((st, i) => (
@@ -287,7 +286,7 @@ function LtHow() {
           marginTop: 'clamp(40px, 5vw, 64px)', background: '#fff', border: '1px solid var(--color-border)',
           borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', padding: 'clamp(26px, 3.4vw, 44px)',
         }}>
-          <div style={{ fontWeight: 900, fontSize: 'clamp(18px, 2.2vw, 24px)' }}>実数のレンジを、そのまま開示。</div>
+          <div style={{ fontWeight: 900, fontSize: 'clamp(18px, 2.2vw, 24px)' }}>運用状況を、段階ごとに確認。</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 26 }}>
             {funnel.map((f) => (
               <div key={f.label}>
@@ -302,10 +301,10 @@ function LtHow() {
             ))}
           </div>
           <p style={{ marginTop: 22, fontSize: 14.5, fontWeight: 800, color: 'var(--text-primary)' }}>
-            → 1アカウントあたり、<span style={{ backgroundImage: LT_GRAD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>月5〜15商談</span>が現実的なライン。
+            → 反応率と商談数は、対象市場・商材・条件・利用チャネルによって変わります。月次実績を確認しながら対象と文面を見直します。
           </p>
           <p style={{ marginTop: 8, fontSize: 12.5, color: 'var(--text-muted)', lineHeight: 1.8 }}>
-            ※月次レポートでアクション数・反応率・商談数を毎月開示します。商談はZoom、契約は電子契約+NDA、連絡は全ツール対応。すべてオンラインで完結します。
+            ※月次レポートでアクション数・反応率・商談数を共有します。商談方法、契約方法、連絡チャネルは開始前に確認します。
           </p>
         </div>
       </div>
@@ -314,36 +313,35 @@ function LtHow() {
 }
 
 /* ================================================================
-   Pricing — 固定費ゼロ。出た成果にだけ、払う。
+   Pricing — scope and conditions are agreed before work begins.
    ================================================================ */
 function LtPricing() {
   const { useReveal } = window;
   const ref = useReveal();
   const compare = [
-    ['初期費用', '20〜80万円', '50〜100万円', '3万円'],
-    ['月額固定', 'あり', '人件費', 'なし'],
-    ['立ち上がり', '2〜4週間', '3〜6ヶ月', '最短数日'],
-    ['失注時のコスト', '固定費が継続', '雇用リスク', '費用ゼロ'],
+    ['初期費用', '会社・契約により異なる', '採用・教育費', '個別見積もり'],
+    ['費用の決め方', '契約条件による', '人件費・採用費', '対応範囲に応じて提示'],
+    ['開始時期', '契約内容による', '採用状況による', '準備確認後にご案内'],
+    ['成果条件', '会社ごとに異なる', '社内で設定', '開始前に定義'],
   ];
   const fees = [
-    ['初期費用', '¥30,000', '契約時(期間限定価格)'],
-    ['アポ単価報酬', '¥10,000–50,000', 'Zoom商談の実施ごと'],
-    ['成約報酬', '成約額の10–15%', '成約・入金後'],
-    ['月額固定 / ツール費', 'なし ／ 実費別', '—'],
+    ['対象企業の設計', '個別見積もり', '業種・役職・地域などを確認'],
+    ['アプローチ運用', '個別見積もり', 'チャネル・件数・文面確認範囲を確認'],
+    ['商談条件', '事前に定義', '対象者・課題・日程確定などをすり合わせ'],
+    ['外部ツール費', '実費を事前提示', '利用する場合のみ'],
   ];
   return (
     <section id="lt-pricing" ref={ref} style={{ paddingTop: 'var(--section-y)', paddingBottom: 'var(--section-y)' }}>
       <div className="cl-container">
-        <LtHead en="Pricing" title={<span>固定費ゼロ。<br />出た成果にだけ、払う。</span>}
-          lead="月額固定なし。初期3万円のみで、成果が出た分だけのお支払い。リスクを反転させた完全成果報酬型です。" />
+        <LtHead en="Pricing" title={<span>対象と対応範囲を確認して、<br />お見積もりします。</span>}
+          lead="対象市場、利用チャネル、送信条件、商談の定義をすり合わせたうえで、対応範囲と費用をご提示します。" />
 
         <div className="grid2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(20px, 3vw, 36px)', marginTop: 'clamp(40px, 5vw, 64px)', alignItems: 'start' }}>
           {/* 料金テーブル */}
           <div className="reveal" style={{ border: '2px solid transparent', borderRadius: 'var(--radius-lg)', background: `linear-gradient(#fff, #fff) padding-box, ${LT_GRAD} border-box`, boxShadow: 'var(--shadow-md)', padding: 'clamp(24px, 3vw, 36px)' }}>
-            <div style={{ display: 'inline-flex', padding: '5px 14px', borderRadius: 999, background: LT_GRAD, color: '#fff', fontSize: 12, fontWeight: 800, letterSpacing: '0.06em' }}>完全成果報酬</div>
+            <div style={{ display: 'inline-flex', padding: '5px 14px', borderRadius: 999, background: LT_GRAD, color: '#fff', fontSize: 12, fontWeight: 800, letterSpacing: '0.06em' }}>個別見積もり</div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginTop: 18 }}>
-              <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 800, fontSize: 'clamp(36px, 4.4vw, 52px)', letterSpacing: '-0.01em' }}>¥30,000</span>
-              <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-muted)' }}>初期のみ</span>
+              <span style={{ fontFamily: 'var(--font-jp)', fontWeight: 900, fontSize: 'clamp(27px, 3.4vw, 42px)', letterSpacing: '0.01em' }}>条件確認後にご提示</span>
             </div>
             <dl style={{ margin: '22px 0 0', borderTop: '1px solid var(--color-border)' }}>
               {fees.map(([k, v, when]) => (
@@ -356,7 +354,7 @@ function LtPricing() {
                 </div>
               ))}
             </dl>
-            <p style={{ fontSize: 11.5, color: 'var(--text-muted)', marginTop: 14, lineHeight: 1.8 }}>※ターゲットや業界によってアポ単価は上下します。</p>
+            <p style={{ fontSize: 11.5, color: 'var(--text-muted)', marginTop: 14, lineHeight: 1.8 }}>※対象市場・商材・チャネル・対応範囲によって費用は異なります。</p>
           </div>
 
           {/* 比較表 */}
@@ -399,14 +397,13 @@ function LtPricing() {
    Flow — 導入の流れ + CTA。
    ================================================================ */
 function LtFlow() {
-  const { Button } = window.ClasslessDesignSystem_225e16;
   const { useReveal, Arrow } = window;
   const ref = useReveal();
   const steps = ['お問い合わせ / DM', 'Zoomで30分ヒアリング', '電子契約 + NDA', 'キックオフ', '商談供給スタート'];
   return (
     <section id="lt-flow" ref={ref} style={{ background: 'var(--color-bg-subtle)', paddingTop: 'var(--section-y)', paddingBottom: 'var(--section-y)' }}>
       <div className="cl-container">
-        <LtHead en="Get Started" title="商談獲得から成約まで、よりスマートに。" lead="すべてオンラインで完結。最短数日で商談供給が立ち上がります。" />
+        <LtHead en="Get Started" title="対象と商談条件を決めてから、運用を始めます。" lead="ヒアリング後に、対象企業・利用チャネル・文面確認・商談条件・開始時期をご案内します。" />
         <ol style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: 'clamp(12px, 1.6vw, 18px)', marginTop: 'clamp(40px, 5vw, 60px)', counterReset: 'lt' }}>
           {steps.map((t, i) => (
             <li key={t} className="reveal" style={{
@@ -420,7 +417,7 @@ function LtFlow() {
           ))}
         </ol>
         <div className="reveal" style={{ display: 'flex', justifyContent: 'center', marginTop: 'clamp(44px, 5vw, 64px)' }}>
-          <a href="/contact"><Button size="lg" iconRight={<Arrow />}>無料で相談する</Button></a>
+          <a href="/contact" className="cl-action-link cl-action-link--primary cl-action-link--lg">無料で相談する <Arrow /></a>
         </div>
       </div>
     </section>

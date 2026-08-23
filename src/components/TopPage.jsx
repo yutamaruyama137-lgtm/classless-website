@@ -269,9 +269,9 @@ function TopBusiness() {
   const ref = useReveal();
   const titleRef = useScrollVar(0.5, 0.9, 0.46);
   const s = makeSplit();
-  const w1 = s.chars('Classlessは、AIの力で');
-  const w2 = s.chars('企業のオペレーションと成長を');
-  const w3 = s.chars('加速させる挑戦を続けています。');
+  const w1 = s.chars('仕事の流れを整理し、');
+  const w2 = s.chars('人と仕組みの両方で');
+  const w3 = s.chars('事業を前へ進めます。');
   const wN = s.count();
 
   const businesses = [
@@ -280,7 +280,7 @@ function TopBusiness() {
       logo: '/assets/logo-axel.png',
       logoW: 150,
       en: 'AXEL — AI × BPO',
-      desc: 'AI×BPOで、企業のオペレーションとスピードを加速させる時間単価制の伴走型サービス。業務の巻き取りからAI自動化・定着までを一気通貫で担います。',
+      desc: '経理・営業事務・採用・マーケティングなどの実務を支援。現在の帳票や手順を受け取り、作業・確認・納品の流れを整え、合意した範囲から自動化します。',
       href: '/axel',
       accent: 'linear-gradient(90deg, #2b50f0, #f0367c)',
     },
@@ -289,7 +289,7 @@ function TopBusiness() {
       logo: '/assets/logo-leadtoss.png',
       logoW: 132,
       en: 'LEADTOSS — Sales Infrastructure',
-      desc: 'AI×LinkedInで決裁者に直接アプローチし、商談だけを作って届ける完全成果報酬型の営業インフラ。固定費ゼロで、質の高い商談を供給します。',
+      desc: '対象企業の整理、候補者の確認、文面作成、送信後の対応まで、法人営業の初期接点づくりを支援します。条件と成果の定義は事前にすり合わせます。',
       href: '/leadtoss',
       accent: 'linear-gradient(90deg, #3e7bfa, #8b5cf6)',
     },
@@ -390,7 +390,6 @@ function TopNews() {
    Join — ダークバンド。実写真が支給されたら写真モザイクをここに追加する。
    ================================================================ */
 function TopJoin() {
-  const { Button } = window.ClasslessDesignSystem_225e16;
   const { useReveal, Arrow, StarField, useScrollVar, makeSplit } = window;
   const ref = useReveal();
   const titleRef = useScrollVar(0.5, 0.92, 0.5);
@@ -417,7 +416,7 @@ function TopJoin() {
               Classlessは、AIで企業のオペレーションを変える「アクセル」と、営業の常識を変える「リートス」を通じて、一緒に未来を実装する仲間・パートナーを探しています。事業のご相談も、協業のご提案も、お気軽にどうぞ。
             </p>
             <div style={{ marginTop: 30 }}>
-              <a href="/contact"><Button size="lg" iconRight={<Arrow />}>お問い合わせへ</Button></a>
+              <a href="/contact" className="cl-action-link cl-action-link--primary cl-action-link--lg">お問い合わせへ <Arrow /></a>
             </div>
           </div>
         </div>

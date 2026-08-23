@@ -1,6 +1,6 @@
 /* Classless corporate site — 事業内容 (4 business segments, Digital-Gorilla-style rows) */
 function Services() {
-  const { Badge, Button } = window.ClasslessDesignSystem_225e16;
+  const { Badge } = window.ClasslessDesignSystem_225e16;
   const { useReveal, Eyebrow, BrandVisual, Arrow, useScrollVar, makeSplit } = window;
   const ref = useReveal();
   const titleRef = useScrollVar(0.5, 0.9, 0.46);
@@ -105,7 +105,7 @@ function Services() {
         </div>
 
         <div className="reveal" style={{ display: 'flex', justifyContent: 'center', marginTop: 'clamp(52px, 6vw, 84px)' }}>
-          <a href="/business"><Button variant="secondary" tone="ink" size="lg" iconRight={<Arrow />}>事業内容をくわしく見る</Button></a>
+          <a href="/business" className="cl-action-link cl-action-link--secondary cl-action-link--lg">事業内容をくわしく見る <Arrow /></a>
         </div>
       </div>
     </section>

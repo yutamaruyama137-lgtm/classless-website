@@ -8,11 +8,17 @@ const mods = import.meta.glob('./articles/*.js', { eager: true })
 const ARTICLES = Object.values(mods)
   .map((m) => m.article)
   .filter(Boolean)
+  .map((article) => ({
+    updatedAt: article.date,
+    ...article,
+  }))
   // newest first (date string is YYYY.MM.DD, lexicographically sortable)
   .sort((a, b) => String(b.date).localeCompare(String(a.date)))
 
 // Category order + display tone for the index page sections.
 export const BLOG_CATEGORIES = [
+  { key: '業務フロー設計', tone: 'blue' },
+  { key: 'n8n・自動化', tone: 'green' },
   { key: 'AI BPO比較', tone: 'blue' },
   { key: '業務おすすめAI', tone: 'orange' },
   { key: 'AI導入・活用', tone: 'green' },

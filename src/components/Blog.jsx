@@ -75,7 +75,6 @@ function ArticleCard({ a, size = 'md' }) {
    of pricing are bundled together. The body stays information-first; brand and
    price talk are consolidated here at the end on purpose. */
 function ArticleCta() {
-  const { Button } = window.ClasslessDesignSystem_225e16;
   const { Arrow } = window;
   const price = [
     ['初期費用', '0円'],
@@ -105,7 +104,7 @@ function ArticleCta() {
         ))}
       </div>
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
-        <a href="/contact"><Button size="lg" iconRight={<Arrow />}>無料AI診断・相談はこちら</Button></a>
+        <a href="/contact" className="cl-action-link cl-action-link--primary cl-action-link--lg">無料AI診断・相談はこちら <Arrow /></a>
         <a href="/#pricing" style={{ color: 'rgba(255,255,255,0.7)', fontSize: 13.5, fontWeight: 700 }}>料金の詳細を見る →</a>
       </div>
       <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12, lineHeight: 1.7, margin: '16px 0 0' }}>※金額は目安です。まずは無料相談・無料体験から、何から始めるかを一緒に整理します。</p>
@@ -199,8 +198,6 @@ function BlogArticle({ slug, onAnchor }) {
   const narrow = useBlogNarrow();
 
   const a = all.find((x) => x.slug === slug);
-  React.useEffect(() => { if (a) document.title = `${a.title}｜Classless`; }, [a]);
-
   if (!a) {
     return (
       <section style={{ paddingTop: 140, paddingBottom: 'var(--section-y)' }}>
@@ -237,8 +234,12 @@ function BlogArticle({ slug, onAnchor }) {
           <article style={{ minWidth: 0 }}>
             <span style={{ display: 'inline-block', fontFamily: 'var(--font-jp)', fontWeight: 700, fontSize: 12, color: `var(--${toneOf(a)}-700)`, background: `var(--${toneOf(a)}-50)`, padding: '4px 12px', borderRadius: 'var(--radius-pill)' }}>{a.category}</span>
             <h1 className="reveal" style={{ fontSize: 'clamp(25px,3.4vw,40px)', fontWeight: 900, lineHeight: 1.45, letterSpacing: '0.01em', margin: '16px 0 16px' }}>{a.title}</h1>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 16, fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--text-muted)', fontWeight: 600, marginBottom: 24 }}>
-              <span>{a.date}</span><span>約{a.readMin}分で読めます</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '7px 16px', flexWrap: 'wrap', fontSize: 13, color: 'var(--text-muted)', fontWeight: 600, marginBottom: 24 }}>
+              <span>公開日：<time dateTime={a.date.replaceAll('.', '-')}>{a.date}</time></span>
+              {a.updatedAt && a.updatedAt !== a.date && <span>更新日：<time dateTime={a.updatedAt.replaceAll('.', '-')}>{a.updatedAt}</time></span>}
+              {a.author && <span>著者：{a.author}</span>}
+              {a.reviewer && <span>監修：{a.reviewer}</span>}
+              <span>約{a.readMin}分で読めます</span>
             </div>
 
             <div className="reveal" style={{ marginBottom: 'clamp(24px,3vw,36px)' }}>
@@ -299,12 +300,11 @@ function TocBox({ toc }) {
 }
 
 function SidebarCta() {
-  const { Button } = window.ClasslessDesignSystem_225e16;
   return (
     <div style={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', padding: 'clamp(20px,2.2vw,26px)' }}>
       <p style={{ fontWeight: 800, fontSize: 14.5, lineHeight: 1.6, margin: '0 0 6px', color: 'var(--text-primary)' }}>Classlessについて</p>
       <p style={{ color: 'var(--text-secondary)', fontSize: 12.5, lineHeight: 1.85, margin: '0 0 16px' }}>東北・仙台発、地域・中小企業に伴走するAI活用パートナー。無料相談も受け付けています。</p>
-      <a href="/contact"><Button fullWidth size="sm" variant="secondary" tone="ink">無料で相談してみる</Button></a>
+      <a href="/contact" className="cl-action-link cl-action-link--secondary cl-action-link--sm cl-action-link--full">無料で相談してみる</a>
     </div>
   );
 }
@@ -317,8 +317,6 @@ function BlogIndex() {
   const all = window.BLOG_ARTICLES || [];
   const cats = window.BLOG_CATEGORIES || [];
 
-  React.useEffect(() => { document.title = 'ブログ｜Classless — AI活用・業務効率化のお役立ちコラム'; }, []);
-
   const featured = all.slice(0, 3);
   const recent = all.slice(0, 9);
   const ranking = all.slice(0, 5); // simple "popular" proxy
@@ -329,10 +327,10 @@ function BlogIndex() {
         {/* page heading */}
         <div className="reveal"><Eyebrow>Blog</Eyebrow></div>
         <h1 className="reveal" style={{ fontSize: 'clamp(28px,4vw,52px)', fontWeight: 900, marginTop: 16, lineHeight: 1.3, letterSpacing: '0.01em' }}>
-          AI活用と業務効率化の、<span style={{ color: 'var(--brand-blue)' }}>お役立ちコラム</span>
+          現場で使える、<span style={{ color: 'var(--brand-blue)' }}>業務改善の設計ノート</span>
         </h1>
         <p className="reveal" style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text-secondary)', fontWeight: 500, marginTop: 16, maxWidth: '46em', animationDelay: '0.12s' }}>
-          AI BPOの選び方、業務別おすすめAIツール、生成AIの導入ノウハウまで。地方・中小企業がAXを進めるための実践情報をお届けします。
+          給与計算の手順整理、業務フローの書き方、n8nによる自動化まで。担当者・確認者・締切・例外処理が見える、実務に持ち込める形で解説します。
         </p>
 
         {/* featured */}

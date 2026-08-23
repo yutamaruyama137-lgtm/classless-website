@@ -83,9 +83,7 @@ function ContactBand() {
             <div style={{ fontFamily: 'var(--font-eyebrow)', fontWeight: 700, fontSize: 'clamp(34px, 5vw, 64px)', letterSpacing: '0.01em', color: 'var(--text-primary)' }}>Contact</div>
             <p style={{ fontSize: 16, color: 'var(--text-secondary)', fontWeight: 600, marginTop: 10 }}>AI活用・営業のご相談、お見積りはこちらから。</p>
           </div>
-          <a href="/contact" className="reveal" style={{ animationDelay: '0.1s' }}>
-            <Button size="lg" iconRight={<Arrow />}>無料相談・お問い合わせ</Button>
-          </a>
+          <a href="/contact" className="reveal cl-action-link cl-action-link--primary cl-action-link--lg" style={{ animationDelay: '0.1s' }}>無料相談・お問い合わせ <Arrow /></a>
         </div>
       </div>
     </section>

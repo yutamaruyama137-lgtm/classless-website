@@ -4,7 +4,6 @@
 const NOTE_URL = 'https://note.com/classlessllc_731';
 
 function Voices() {
-  const { Button } = window.ClasslessDesignSystem_225e16;
   const { useReveal, Eyebrow, BrandVisual, Arrow } = window;
   const ref = useReveal();
 
@@ -70,9 +69,7 @@ function Voices() {
         </div>
 
         <div className="reveal" style={{ display: 'flex', justifyContent: 'center', marginTop: 'clamp(40px, 5vw, 64px)' }}>
-          <a href={NOTE_URL} target="_blank" rel="noopener noreferrer">
-            <Button variant="secondary" tone="ink" size="lg" iconRight={<Arrow />}>note で記事を見る</Button>
-          </a>
+          <a href={NOTE_URL} target="_blank" rel="noopener noreferrer" className="cl-action-link cl-action-link--secondary cl-action-link--lg">note で記事を見る <Arrow /></a>
         </div>
       </div>
     </section>
