@@ -75,7 +75,10 @@ function inject({ path, title, description, body, jsonLd = [], noindex = false, 
     .replace(/<meta property="og:url" content="[^"]*"\s*\/>/, `<meta property="og:url" content="${canonical}" />`)
     .replace('<meta name="twitter:card" content="summary_large_image" />', `<meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="${esc(title)}" /><meta name="twitter:description" content="${esc(description)}" />`)
     .replace('</head>', `${jsonLd.map((data) => `<script type="application/ld+json" data-classless-jsonld="true">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`).join('')}</head>`)
-    .replace('<div id="root"></div>', `<div id="root">${body}</div>`)
+    // Keep the first-paint shell and place crawlable/no-JS content beside it.
+    // JavaScript hides this copy before first paint; React replaces the entire
+    // root once the application bundle is ready.
+    .replace('<div class="seo-prerender"></div>', `<div class="seo-prerender">${body}</div>`)
   return html
 }
 

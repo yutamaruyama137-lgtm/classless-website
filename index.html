@@ -33,6 +33,150 @@
     <meta name="twitter:image" content="https://www.classless.jp/ogp-workflow.png" />
     <meta name="theme-color" content="#ffffff" />
 
+    <!--
+      First-paint shell: the prerendered copy remains in the document for search
+      engines and no-JS visitors, while JavaScript visitors see a branded frame
+      until React commits. This script intentionally runs before the body exists
+      so the SEO copy can never flash unstyled.
+    -->
+    <script>
+      (function () {
+        var path = location.pathname.replace(/\/+$/, '') || '/';
+        document.documentElement.classList.add('js', 'classless-booting');
+        document.documentElement.setAttribute('data-boot-route', path === '/' ? 'home' : 'inner');
+      }());
+    </script>
+    <style>
+      :root { color-scheme: light; }
+      html, body { margin: 0; min-height: 100%; background: #fff; }
+      .boot-shell { display: none; }
+      .seo-prerender {
+        box-sizing: border-box;
+        width: min(100% - 48px, 960px);
+        margin: 0 auto;
+        padding: 96px 0;
+        color: #162137;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", sans-serif;
+        line-height: 1.8;
+      }
+      .seo-prerender h1 { margin: 0 0 24px; font-size: clamp(30px, 5vw, 56px); line-height: 1.35; }
+      .seo-prerender h2 { margin-top: 56px; line-height: 1.45; }
+      .seo-prerender img { max-width: 100%; height: auto; }
+      .js.classless-booting .seo-prerender { display: none !important; }
+      .js.classless-booting .boot-shell {
+        position: relative;
+        display: block;
+        min-height: 100svh;
+        overflow: hidden;
+        color: #111827;
+        background: #fff;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", sans-serif;
+      }
+      .boot-shell--handoff {
+        position: fixed !important;
+        inset: 0;
+        z-index: 1000;
+        display: block !important;
+        min-height: 100svh;
+        opacity: 1;
+        transition: opacity .2s ease-out;
+      }
+      .boot-shell--exit { opacity: 0; }
+      .boot-header {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 1200px;
+        height: 74px;
+        margin: 0 auto;
+        padding-inline: clamp(20px, 5vw, 64px);
+      }
+      .boot-logo { display: block; width: auto; height: 44px; }
+      .boot-nav { display: flex; align-items: center; gap: 30px; }
+      .boot-nav span { width: 72px; height: 10px; border-radius: 999px; background: #e9edf5; }
+      .boot-nav span:last-child { width: 86px; height: 34px; background: #2b50f0; }
+      .boot-home,
+      .boot-inner { display: none; }
+      .js.classless-booting[data-boot-route="home"] .boot-home { display: flex; }
+      .js.classless-booting[data-boot-route="inner"] .boot-inner { display: block; }
+      .boot-home {
+        position: relative;
+        box-sizing: border-box;
+        min-height: 92svh;
+        align-items: center;
+        padding: 0;
+        isolation: isolate;
+      }
+      .boot-home__content {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 1200px;
+        margin-inline: auto;
+        padding: 40px clamp(20px, 5vw, 64px) 120px;
+      }
+      .boot-home::before,
+      .boot-home::after {
+        position: absolute;
+        z-index: -1;
+        width: min(52vw, 680px);
+        aspect-ratio: 1;
+        border-radius: 50%;
+        content: "";
+        filter: blur(64px);
+        opacity: .72;
+      }
+      .boot-home::before {
+        top: -32%; left: -12%;
+        background: radial-gradient(circle, rgba(55,171,217,.32), rgba(55,171,217,0) 67%);
+        animation: boot-breathe 2.8s ease-in-out infinite alternate;
+      }
+      .boot-home::after {
+        right: -14%; bottom: -45%;
+        background: radial-gradient(circle, rgba(43,80,240,.22), rgba(43,80,240,0) 67%);
+        animation: boot-breathe 3.4s ease-in-out .2s infinite alternate-reverse;
+      }
+      .boot-title { margin: 0; font-size: clamp(44px, 8vw, 104px); font-weight: 700; line-height: 1.28; letter-spacing: .015em; }
+      .boot-title span { display: block; }
+      .boot-tagline { margin: 30px 0 0; color: #6b7280; font-size: clamp(13px, 1.4vw, 16px); font-weight: 600; letter-spacing: .08em; }
+      .boot-panel {
+        position: absolute;
+        top: 8%; right: -5%;
+        z-index: -1;
+        width: clamp(260px, 29vw, 450px);
+        height: clamp(155px, 17vw, 260px);
+        transform: skewX(-18deg);
+        background: linear-gradient(135deg, rgba(55,171,217,.14), rgba(43,80,240,.12));
+      }
+      .boot-inner { box-sizing: border-box; min-height: calc(100svh - 74px); padding: clamp(64px, 9vw, 118px) max(24px, calc((100vw - 1180px) / 2)); }
+      .boot-inner__eyebrow { width: 96px; height: 10px; border-radius: 999px; background: #cbd6ff; }
+      .boot-inner__title { width: min(72vw, 600px); height: clamp(42px, 6vw, 68px); margin-top: 24px; border-radius: 12px; background: #e9edf5; }
+      .boot-inner__line { width: min(84vw, 720px); height: 14px; margin-top: 30px; border-radius: 999px; background: #f0f2f7; }
+      .boot-inner__line + .boot-inner__line { width: min(66vw, 560px); margin-top: 12px; }
+      .boot-inner__cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 64px; }
+      .boot-inner__cards span { height: 150px; border: 1px solid #edf0f5; border-radius: 18px; background: linear-gradient(135deg, #fafbfe, #f4f7ff); }
+      @keyframes boot-breathe { to { transform: translate3d(3vw, 2vh, 0) scale(1.08); opacity: .9; } }
+      @media (max-width: 760px) {
+        .boot-logo { height: 39px; }
+        .boot-nav span { display: none; }
+        .boot-nav span:last-child { display: block; width: 28px; height: 2px; border-radius: 0; box-shadow: 0 7px #111827, 0 -7px #111827; background: #111827; }
+        .boot-home { min-height: 92svh; }
+        .boot-title { font-size: clamp(44px, 8vw, 104px); }
+        .boot-panel { top: 4%; right: -34%; opacity: .7; }
+        .boot-inner { padding-inline: 24px; }
+        .boot-inner__cards { grid-template-columns: 1fr; }
+        .boot-inner__cards span:nth-child(n+2) { display: none; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .boot-home::before, .boot-home::after { animation: none; }
+        .boot-shell--handoff { transition: none; }
+      }
+    </style>
+    <noscript><style>.boot-shell{display:none!important}.seo-prerender{display:block!important}</style></noscript>
+
     <!-- ===== Google Analytics (GA4) =====
          旧サイトで使用していた測定ID(G-E72Y97T6QC)を復元。
          別IDに変える場合は2箇所の G-E72Y97T6QC を置き換えてください。 -->
@@ -46,7 +190,29 @@
     <!-- ===== End Google Analytics ===== -->
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root" data-prerender="true">
+      <div class="boot-shell" aria-hidden="true">
+        <div class="boot-header">
+          <img class="boot-logo" src="/assets/logo-classless-horizontal.png" alt="" width="164" height="44" />
+          <div class="boot-nav"><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="boot-home">
+          <div class="boot-home__content">
+            <div class="boot-title"><span>AIで、人間を</span><span>面白くする。</span></div>
+            <div class="boot-tagline">Making Humans Interesting with AI.</div>
+          </div>
+          <span class="boot-panel"></span>
+        </div>
+        <div class="boot-inner">
+          <div class="boot-inner__eyebrow"></div>
+          <div class="boot-inner__title"></div>
+          <div class="boot-inner__line"></div>
+          <div class="boot-inner__line"></div>
+          <div class="boot-inner__cards"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+      <div class="seo-prerender"></div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

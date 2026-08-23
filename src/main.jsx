@@ -85,6 +85,56 @@ function scrollToId(id) {
 }
 
 function App() {
+  const route = getRoute()
+
+  // React has committed underneath the first-paint shell. Keep the home shell
+  // in place until the real hero's original character animation has started,
+  // then fade it away. This avoids turning the title blank during the handoff.
+  React.useLayoutEffect(() => {
+    const html = document.documentElement
+    document.getElementById('root')?.removeAttribute('data-prerender')
+    const bootShell = document.querySelector('.boot-shell--handoff')
+    if (!bootShell) {
+      html.classList.remove('classless-booting')
+      html.removeAttribute('data-boot-route')
+      return undefined
+    }
+
+    let deadlineTimer
+    let handoffTimer
+    let removeTimer
+    let cancelled = false
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const fontsReady = document.fonts?.ready || Promise.resolve()
+    const fontDeadline = new Promise((resolve) => { deadlineTimer = window.setTimeout(resolve, 900) })
+
+    Promise.race([fontsReady, fontDeadline]).then(() => {
+      if (cancelled) return
+      window.clearTimeout(deadlineTimer)
+      // On the home page, allow the first hero characters to begin underneath
+      // the identical shell title before cross-fading the shell away.
+      handoffTimer = window.setTimeout(() => {
+        if (cancelled) return
+        bootShell.classList.add('boot-shell--exit')
+        removeTimer = window.setTimeout(() => {
+          bootShell.remove()
+          html.classList.remove('classless-booting')
+          html.removeAttribute('data-boot-route')
+        }, reducedMotion ? 0 : 220)
+      }, route === 'home' && !reducedMotion ? 480 : 0)
+    })
+
+    return () => {
+      cancelled = true
+      window.clearTimeout(deadlineTimer)
+      window.clearTimeout(handoffTimer)
+      window.clearTimeout(removeTimer)
+      bootShell.remove()
+      html.classList.remove('classless-booting')
+      html.removeAttribute('data-boot-route')
+    }
+  }, [route])
+
   const {
     Header, Company, ServicesDetail, Philosophy, ContactBand, ContactPage, Footer, Voices,
     Background, RoleSplit, WhatWeDo, Pricing, Flow, Faq,
@@ -92,7 +142,6 @@ function App() {
     AxelHero, LeadtossPage,
   } = window
 
-  const route = getRoute()
   const article = route === 'article'
     ? (window.BLOG_ARTICLES || []).find((item) => item.slug === getSlug())
     : null
@@ -240,7 +289,14 @@ function App() {
   setTimeout(startTextAnimations, 900)
 }
 
-createRoot(document.getElementById('root')).render(<App />)
+const appRoot = document.getElementById('root')
+const firstPaintShell = appRoot.querySelector('.boot-shell')
+if (firstPaintShell) {
+  // Preserve the shell outside React's managed root for a short cross-fade.
+  firstPaintShell.classList.add('boot-shell--handoff')
+  appRoot.before(firstPaintShell)
+}
+createRoot(appRoot).render(<App />)
 
 // Parallax drift on [data-parallax] wrappers.
 if (window.initParallax) window.initParallax()
