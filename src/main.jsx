@@ -38,6 +38,7 @@ import './components/CtaFooter.jsx'
 import './components/ContactPage.jsx'
 import './components/LegalPages.jsx'
 import './components/Blog.jsx'
+import './components/AskAi.jsx'
 // 2026.07 二事業体制リデザイン: トップ(LayerX型) + アクセル + リートス
 import './components/TopPage.jsx'
 import './components/AxelPage.jsx'
@@ -139,7 +140,7 @@ function App() {
     Header, Company, ServicesDetail, Philosophy, ContactBand, ContactPage, Footer, Voices,
     Background, RoleSplit, WhatWeDo, Pricing, Flow, Faq,
     TopHero, LogoTicker, TopStatement, TopBusiness, TopNews, TopJoin,
-    AxelHero, LeadtossPage,
+    AxelHero, LeadtossPage, AskAi,
   } = window
 
   const article = route === 'article'
@@ -170,6 +171,7 @@ function App() {
       <Header links={navLinks} cta={cta} homeHref={homeHref} onAnchor={scrollToId} />
       <main>{children}</main>
       <Footer />
+      {!['contact', 'privacy', 'terms', 'tokushoho', 'notFound'].includes(route) && <AskAi route={route} />}
     </div>
   )
 

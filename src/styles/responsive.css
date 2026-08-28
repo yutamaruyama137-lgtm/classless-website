@@ -60,6 +60,13 @@
   .blueprint-layers { padding: 20px; }
   .blueprint-note { margin: 0 20px 20px; }
   .axel-hero-brief { margin: 8px auto 0; }
+
+  .ask-ai {
+    right: max(14px, env(safe-area-inset-right));
+    bottom: max(14px, env(safe-area-inset-bottom));
+  }
+  .ask-ai__panel { width: min(344px, calc(100vw - 28px)); padding: 18px; border-radius: 18px; }
+  .ask-ai__trigger { min-height: 44px; padding-right: 16px; }
 }
 
 /* Utility: elements (typically <br> or decorative visuals) hidden on phone.

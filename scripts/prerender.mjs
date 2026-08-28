@@ -9,6 +9,7 @@ const siteUrl = 'https://www.classless.jp'
 const siteName = '合同会社Classless'
 const defaultImage = `${siteUrl}/ogp-workflow.png`
 const organizationLogo = `${siteUrl}/assets/logo-classless-stacked-dark.png`
+const organizationId = `${siteUrl}/#organization`
 const template = await readFile(join(dist, 'index.html'), 'utf8')
 
 const routeMeta = [
@@ -61,6 +62,13 @@ function breadcrumb(path, title, isArticle = false) {
   return { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items }
 }
 
+function serviceSchema(path, description) {
+  const service = path === '/axel'
+    ? { name: 'アクセル', serviceType: 'AI×BPO' }
+    : { name: 'リートス', serviceType: '営業支援' }
+  return { '@context': 'https://schema.org', '@type': 'Service', '@id': `${siteUrl}${path}#service`, name: service.name, serviceType: service.serviceType, url: `${siteUrl}${path}`, description, provider: { '@type': 'Organization', '@id': organizationId, name: siteName } }
+}
+
 function inject({ path, title, description, body, jsonLd = [], noindex = false, type = 'website' }) {
   const canonical = `${siteUrl}${path === '/' ? '/' : path}`
   let html = template
@@ -90,18 +98,19 @@ async function emit(path, html) {
   await writeFile(htmlFile, html)
 }
 
-const organization = { '@context': 'https://schema.org', '@type': 'Organization', '@id': `${siteUrl}/#organization`, name: siteName, alternateName: 'Classless', url: `${siteUrl}/`, logo: organizationLogo, founder: { '@type': 'Person', name: '丸山 侑太' }, foundingDate: '2025-10-01' }
+const organization = { '@context': 'https://schema.org', '@type': 'Organization', '@id': organizationId, name: siteName, alternateName: 'Classless', url: `${siteUrl}/`, logo: organizationLogo, founder: { '@type': 'Person', name: '丸山 侑太' }, foundingDate: '2025-10-01', contactPoint: { '@type': 'ContactPoint', contactType: 'customer service', email: 'contact@classless.jp' }, sameAs: ['https://note.com/classlessllc_731'], address: { '@type': 'PostalAddress', streetAddress: '円山町5-3 MIEUX渋谷ビル 5階', addressLocality: '渋谷区', addressRegion: '東京都', addressCountry: 'JP' } }
 for (const [path, title, description] of routeMeta) {
   let body = `<main><h1>${esc(title.split('｜')[0])}</h1><p>${esc(description)}</p></main>`
   if (path === '/blog') body = `<main><h1>現場で使える、業務改善の設計ノート</h1><p>${esc(description)}</p><section><h2>記事一覧</h2>${articles.map((a) => `<article><h3><a href="/blog/${esc(a.slug)}">${esc(a.title)}</a></h3><p>${esc(a.excerpt)}</p></article>`).join('')}</section></main>`
-  const jsonLd = path === '/' ? [organization, { '@context': 'https://schema.org', '@type': 'WebSite', '@id': `${siteUrl}/#website`, url: `${siteUrl}/`, name: siteName, publisher: { '@id': `${siteUrl}/#organization` }, inLanguage: 'ja-JP' }] : [breadcrumb(path, title)]
+  const jsonLd = path === '/' ? [organization, { '@context': 'https://schema.org', '@type': 'WebSite', '@id': `${siteUrl}/#website`, url: `${siteUrl}/`, name: siteName, publisher: { '@id': organizationId }, inLanguage: 'ja-JP' }] : [breadcrumb(path, title)]
+  if (path === '/axel' || path === '/leadtoss') jsonLd.push(serviceSchema(path, description))
   await emit(path, inject({ path, title, description, body, jsonLd }))
 }
 
 for (const article of articles) {
   const path = `/blog/${article.slug}`
   const title = `${article.title}｜Classless`
-  const articleLd = { '@context': 'https://schema.org', '@type': 'Article', '@id': `${siteUrl}${path}#article`, headline: article.title, description: article.excerpt, mainEntityOfPage: `${siteUrl}${path}`, datePublished: iso(article.date), dateModified: iso(article.updatedAt), ...(article.author ? { author: { '@type': article.authorType || 'Person', name: article.author } } : {}), publisher: { '@type': 'Organization', '@id': `${siteUrl}/#organization`, name: siteName, logo: { '@type': 'ImageObject', url: organizationLogo } }, image: [defaultImage], inLanguage: 'ja-JP', keywords: article.keywords }
+  const articleLd = { '@context': 'https://schema.org', '@type': 'Article', '@id': `${siteUrl}${path}#article`, headline: article.title, description: article.excerpt, mainEntityOfPage: `${siteUrl}${path}`, datePublished: iso(article.date), dateModified: iso(article.updatedAt), ...(article.author ? { author: { '@type': article.authorType || 'Person', name: article.author } } : {}), publisher: { '@type': 'Organization', '@id': organizationId, name: siteName, logo: { '@type': 'ImageObject', url: organizationLogo } }, image: [defaultImage], inLanguage: 'ja-JP', keywords: article.keywords }
   await emit(path, inject({ path, title, description: article.excerpt, body: articleHtml(article), jsonLd: [breadcrumb(path, title, true), articleLd], type: 'article' }))
 }
 

@@ -92,7 +92,7 @@ function ArticleCta() {
       <div style={{ fontFamily: 'var(--font-eyebrow)', fontWeight: 700, fontSize: 12, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--brand-blue)' }}>About Classless</div>
       <p style={{ color: '#fff', fontSize: 'clamp(18px,2.2vw,24px)', fontWeight: 900, lineHeight: 1.5, margin: '10px 0 8px' }}>御社専属の「外部AI部署」を、小さくはじめませんか？</p>
       <p style={{ color: 'rgba(255,255,255,0.74)', fontSize: 14, lineHeight: 1.9, margin: '0 0 20px', maxWidth: '40em' }}>
-        Classlessは東北・仙台発、地域・中小企業に伴走するAI活用パートナーです。AI BPO・AIシステム開発・データ活用・AI教育まで一気通貫で支援します。初期費用0円・実働は時給固定で、必要な分だけスモールスタートできます。
+        東京・渋谷を拠点に、中小企業の業務設計・AI活用・営業支援に伴走するClasslessです。AI BPO・AIシステム開発・データ活用・AI教育まで一気通貫で支援します。初期費用0円・実働は時給固定で、必要な分だけスモールスタートできます。
       </p>
       {/* 金額感 */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 22 }}>
@@ -303,7 +303,7 @@ function SidebarCta() {
   return (
     <div style={{ background: '#fff', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', padding: 'clamp(20px,2.2vw,26px)' }}>
       <p style={{ fontWeight: 800, fontSize: 14.5, lineHeight: 1.6, margin: '0 0 6px', color: 'var(--text-primary)' }}>Classlessについて</p>
-      <p style={{ color: 'var(--text-secondary)', fontSize: 12.5, lineHeight: 1.85, margin: '0 0 16px' }}>東北・仙台発、地域・中小企業に伴走するAI活用パートナー。無料相談も受け付けています。</p>
+      <p style={{ color: 'var(--text-secondary)', fontSize: 12.5, lineHeight: 1.85, margin: '0 0 16px' }}>東京・渋谷を拠点に、中小企業の業務設計・AI活用・営業支援に伴走するClasslessです。無料相談も受け付けています。</p>
       <a href="/contact" className="cl-action-link cl-action-link--secondary cl-action-link--sm cl-action-link--full">無料で相談してみる</a>
     </div>
   );

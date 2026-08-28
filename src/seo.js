@@ -2,6 +2,7 @@ const SITE_URL = 'https://www.classless.jp'
 const SITE_NAME = '合同会社Classless'
 const DEFAULT_IMAGE = `${SITE_URL}/ogp-workflow.png`
 const ORGANIZATION_LOGO = `${SITE_URL}/assets/logo-classless-stacked-dark.png`
+const ORGANIZATION_ID = `${SITE_URL}/#organization`
 
 const ROUTE_META = {
   home: {
@@ -99,6 +100,17 @@ function breadcrumb(items) {
   }
 }
 
+function serviceSchema(route, canonical, description) {
+  const service = route === 'axel'
+    ? { name: 'アクセル', serviceType: 'AI×BPO' }
+    : { name: 'リートス', serviceType: '営業支援' }
+  return {
+    '@context': 'https://schema.org', '@type': 'Service', '@id': `${canonical}#service`,
+    name: service.name, serviceType: service.serviceType, url: canonical, description,
+    provider: { '@type': 'Organization', '@id': ORGANIZATION_ID, name: SITE_NAME },
+  }
+}
+
 export function dateToIso(value) {
   return String(value || '').replaceAll('.', '-')
 }
@@ -147,11 +159,13 @@ export function applySeo(route, article) {
   const structured = []
   if (route === 'home') {
     structured.push({
-      '@context': 'https://schema.org', '@type': 'Organization', '@id': `${SITE_URL}/#organization`,
+      '@context': 'https://schema.org', '@type': 'Organization', '@id': ORGANIZATION_ID,
       name: SITE_NAME, alternateName: 'Classless', url: `${SITE_URL}/`,
       logo: ORGANIZATION_LOGO,
       founder: { '@type': 'Person', name: '丸山 侑太' },
       foundingDate: '2025-10-01',
+      contactPoint: { '@type': 'ContactPoint', contactType: 'customer service', email: 'contact@classless.jp' },
+      sameAs: ['https://note.com/classlessllc_731'],
       address: {
         '@type': 'PostalAddress', streetAddress: '円山町5-3 MIEUX渋谷ビル 5階',
         addressLocality: '渋谷区', addressRegion: '東京都', addressCountry: 'JP',
@@ -159,7 +173,7 @@ export function applySeo(route, article) {
     })
     structured.push({
       '@context': 'https://schema.org', '@type': 'WebSite', '@id': `${SITE_URL}/#website`,
-      url: `${SITE_URL}/`, name: SITE_NAME, publisher: { '@id': `${SITE_URL}/#organization` }, inLanguage: 'ja-JP',
+      url: `${SITE_URL}/`, name: SITE_NAME, publisher: { '@id': ORGANIZATION_ID }, inLanguage: 'ja-JP',
     })
   } else if (!data.noindex) {
     const crumbs = [{ name: 'ホーム', path: '/' }]
@@ -168,13 +182,15 @@ export function applySeo(route, article) {
     structured.push(breadcrumb(crumbs))
   }
 
+  if (route === 'axel' || route === 'leadtoss') structured.push(serviceSchema(route, canonical, data.description))
+
   if (route === 'article' && article) {
     structured.push({
       '@context': 'https://schema.org', '@type': 'Article', '@id': `${canonical}#article`,
       headline: article.title, description: article.excerpt, mainEntityOfPage: canonical,
       datePublished: dateToIso(article.date), dateModified: dateToIso(article.updatedAt || article.date),
       ...(article.author ? { author: { '@type': article.authorType || 'Person', name: article.author } } : {}),
-      publisher: { '@type': 'Organization', '@id': `${SITE_URL}/#organization`, name: SITE_NAME,
+      publisher: { '@type': 'Organization', '@id': ORGANIZATION_ID, name: SITE_NAME,
         logo: { '@type': 'ImageObject', url: ORGANIZATION_LOGO } },
       image: [data.image || DEFAULT_IMAGE], inLanguage: 'ja-JP',
       keywords: article.keywords,

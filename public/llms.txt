@@ -1,0 +1,12 @@
+# 合同会社Classless
+
+> 合同会社Classlessは東京都渋谷区を拠点に、AIを活用した業務支援と営業支援を提供しています。
+
+## 公式ページ
+
+- [会社概要](https://www.classless.jp/philosophy): 合同会社Classlessの考え方と、東京都渋谷区の会社情報。
+- [アクセル](https://www.classless.jp/axel): 業務の棚卸し、手順設計、実務代行、自動化を支援するAI×BPOサービス。
+- [リートス](https://www.classless.jp/leadtoss): LinkedInを活用し、対象企業の決裁者との接点づくりを支援する営業支援サービス。
+- [事業内容](https://www.classless.jp/business): アクセルとリートスの支援内容の一覧。
+- [業務改善ナレッジ](https://www.classless.jp/blog): 給与計算、業務フロー、n8n自動化などの実務記事。
+- [お問い合わせ](https://www.classless.jp/contact): 業務改善、BPO、自動化、営業支援に関する相談窓口。
