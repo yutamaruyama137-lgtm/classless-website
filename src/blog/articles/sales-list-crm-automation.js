@@ -1,0 +1,118 @@
+export const article = {
+  slug: 'sales-list-crm-automation',
+  category: 'n8n・自動化',
+  tone: 'green',
+  title: '企業調査からCRM登録まで自動化｜営業リストをAIで整える業務フロー',
+  excerpt:
+    '企業調査、営業リスト整備、CRM登録をAIと自動化でつなぐ実務フローを解説。HubSpot、Salesforce、Apollo.io、n8n、Google Sheetsを例に、ツール連携の条件と人が確認すべきポイントを整理します。',
+  date: '2026.09.04',
+  readMin: 10,
+  keywords: ['企業調査 CRM登録 自動化', '営業リスト CRM登録 自動化', 'CRM 登録 自動化', '営業リスト 自動化', 'n8n HubSpot Salesforce'],
+  blocks: [
+    { t: 'lead', text: '企業調査からCRM登録までをAIで自動化するなら、最初から「完全自動で架電先を量産する」のではなく、候補企業の収集、要約、重複確認、CRM登録の下書きまでを小さくつなぐのが現実的です。特にGoogle SheetsやCRMに散らばった候補企業を整理し、AIで企業概要を要約し、人が確認してHubSpotやSalesforceへ登録する流れにすると、営業現場で使いやすい運用になります。' },
+
+    { t: 'h2', text: '対象となる営業業務' },
+    { t: 'p', text: 'この記事で扱うのは、営業担当者や営業企画が毎週行う「新規開拓リスト作成」の前後工程です。既存記事の[営業におすすめのAIツール比較](/blog/sales-ai-tools)では商談・メール・議事録まで広く扱っていますが、ここでは商談前の企業調査とCRM登録に絞ります。' },
+    { t: 'ul', items: [
+      'ターゲット条件に合う企業候補をGoogle Sheetsなどへ集める',
+      '企業サイト、採用ページ、ニュース、既存CRM情報を確認する',
+      '業種、従業員規模、所在地、課題仮説、優先度を整理する',
+      '重複や対象外企業を除外し、営業担当者が確認できる状態にする',
+      '確認済みの企業だけをHubSpot、SalesforceなどのCRMへ登録する',
+    ] },
+    { t: 'callout', title: '検索意図の切り分け', text: '「営業 AI ツール おすすめ」はツール比較の検索意図です。一方で「営業リスト作成 AI 自動化」「CRM 登録 自動化」は、すでに手作業の詰まりがあり、実際の業務フローや接続条件を知りたい検索意図です。この記事は後者に合わせています。', tone: 'green' },
+
+    { t: 'h2', text: '現状の手順と詰まり' },
+    { t: 'p', text: '営業リスト作成が重くなる理由は、企業名を集める作業そのものよりも、判断材料が複数ツールに分散していることにあります。スプレッドシート、名刺管理、過去商談、Web検索、CRMを行き来するため、担当者ごとに調査粒度が変わります。' },
+    { t: 'table', head: ['工程', 'よくある手作業', '詰まりやすい点'], rows: [
+      ['候補企業の収集', '展示会リスト、検索結果、紹介企業をシートへ転記', '表記ゆれ、重複、対象外企業が混ざる'],
+      ['企業調査', 'Webサイトや採用情報を開いて概要を読む', '調査メモの粒度が担当者ごとに異なる'],
+      ['優先度付け', '担当者の経験でA/B/Cを付ける', '判断基準が残らず、後で再現できない'],
+      ['CRM登録', 'HubSpotやSalesforceへ会社・担当者情報を手入力', '二重登録、必須項目漏れ、入力待ちが起きる'],
+      ['営業開始', '担当者がメール文面や架電メモを作る', 'なぜその企業へ接触するのかが共有されない'],
+    ] },
+
+    { t: 'h2', text: 'AI・自動化を使う箇所' },
+    { t: 'p', text: 'AIを使う箇所は、判断の代替ではなく「下書き作成」と「確認しやすい形への整形」に限定します。n8nのようなワークフロー自動化ツールを使う場合、Google Sheetsを受付台帳にして、HTTP Request、AI処理ノード、HubSpotノード、Salesforceノードを段階的につなぐ構成が考えられます。AIには企業名、URL、既存CRM照合結果を渡し、企業概要、想定課題、接触理由、不足情報をJSONで返させると、CRM登録前の確認ステータスを管理しやすくなります。n8n全体の設計原則は[n8nワークフローの作り方](/blog/n8n-workflow-design-guide)でも整理しています。' },
+    { t: 'ol', items: [
+      '営業企画がターゲット条件を決め、候補企業をGoogle Sheetsへ追加する',
+      'n8nが新規行を検知し、企業URLや会社名をもとに調査タスクを作る',
+      'AIが企業概要、想定部門、営業仮説、確認すべき不足情報を下書きする',
+      '既存CRMに同名企業や同一ドメインがあるかを照合する',
+      '担当者が対象可否、優先度、接触理由を確認する',
+      '確認済みの行だけをCRMへ登録し、担当者へ通知する',
+    ] },
+    { t: 'img', label: 'SALES LIST FLOW', caption: '営業リスト作成は、AIに判断を丸投げせず「調査下書き→人の確認→CRM登録」に分ける' },
+
+    { t: 'h2', text: '人が判断・確認する箇所' },
+    { t: 'p', text: '営業リストは売上に直結するため、AIが出した候補をそのまま接触対象にしない設計が重要です。特に、既存顧客、失注直後の企業、代理店経由で接点がある企業、競合企業などは、AIだけでは判断しきれないことがあります。' },
+    { t: 'ul', items: [
+      '**対象外条件**：既存顧客、商談中、過去クレーム、競合、採用・IR情報から見た明らかな対象外',
+      '**接触理由**：なぜ今その企業に連絡するのか、営業担当者が説明できるか',
+      '**情報の正確性**：企業名、URL、所在地、部署名、役職、メールアドレスの確認',
+      '**重複登録**：同一ドメイン、旧社名、グループ会社、拠点違いの扱い',
+      '**個人情報・規約**：取得元の利用規約、個人情報の扱い、社内AIガイドラインとの整合',
+    ] },
+    { t: 'p', text: 'AIへの入力範囲や社内ルールは、[AIセキュリティリスクと対策](/blog/ai-security-risk)と[社内AI利用ガイドラインの作り方](/blog/ai-guideline-template)を合わせて決めると、営業担当者ごとの判断ぶれを減らせます。' },
+
+    { t: 'h2', text: '使用候補ツールと接続条件' },
+    { t: 'p', text: 'ここでは採用実績ではなく、各社が公式に提供している機能や連携ページをもとに、営業リスト作成フローでの役割を整理します。実際に使う前には、自社契約プラン、API制限、データ利用条件、管理者権限を確認してください。' },
+    { t: 'table', head: ['製品・企業', '使う工程', '確認する接続条件'], rows: [
+      ['HubSpot', '候補企業のCRM登録、営業活動の管理、AIによる企業調査・アプローチ支援', '[HubSpot CRM](https://www.hubspot.com/products/crm)と[HubSpot CRM Object APIs](https://developers.hubspot.com/docs/api-reference/latest/crm/using-object-apis)の利用権限、AI支援に使う場合は[HubSpot AI Prospecting Agent](https://www.hubspot.com/products/sales/ai-prospecting-agent)の対象エディションとHubSpot Credits'],
+      ['Salesforce Sales Cloud', '既存リード・取引先との照合、活動履歴の管理、メール・予定の自動同期', '[Salesforce Sales Cloud](https://www.salesforce.com/ap/sales/cloud/)や[Einstein Activity Capture](https://help.salesforce.com/s/articleView?id=sales.einstein_sales_aac.htm&language=en&type=5)の利用可否、Google/Microsoftアカウント接続、項目権限'],
+      ['Apollo.io', '担当者データ中心の補完、CSVやCRMデータのエンリッチメント', '[Apollo CRM Enrichment](https://www.apollo.io/product/enrich)と[Apollo Developer Docs](https://docs.apollo.io/)の利用条件、API利用権限、データ利用規約'],
+      ['n8n', 'Google Sheets、HubSpot、Salesforce、AI処理をつなぐワークフロー基盤', '[n8n HubSpot node](https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.hubspot)と[n8n Salesforce node](https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.salesforce)の認証方式、Credential管理、再実行設計'],
+      ['Google Sheets API', '営業リストの受付台帳、確認ステータス、CRM登録可否の管理', '[spreadsheets.values.append](https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets.values/append)などの書き込み権限、OAuthスコープ、列設計'],
+      ['Zapier', 'CRMやシート間の簡易連携、既存SaaSをまたぐ通知・登録', '[ZapierのGoogle Sheets連携](https://zapier.com/apps/google-sheets/integrations)やHubSpot/Salesforce連携の対象アクション、接続アカウント、実行回数'],
+    ] },
+
+    { t: 'h2', text: 'Before / Afterの営業フロー' },
+    { t: 'table', head: ['観点', 'Before：手作業中心', 'After：AI・自動化を併用'], rows: [
+      ['候補追加', '担当者が個別に企業名をメモし、後で転記する', '受付シートへ追加した時点で調査ステータスが作られる'],
+      ['企業調査', '担当者が検索して概要を読み、自由記述でメモする', 'AIが要約・課題仮説・不足項目を同じ列構成で下書きする'],
+      ['重複確認', 'CRMを開いて手動検索する', '会社名・ドメインで既存CRMを照合し、候補行に結果を戻す'],
+      ['登録判断', '忙しい担当者ほど未確認のまま放置される', '対象可否、優先度、接触理由を人が選択してから登録する'],
+      ['CRM登録', '担当者が会社情報を手入力する', '確認済み行だけをHubSpotやSalesforceへ送る'],
+      ['運用改善', '誰がどの条件で除外したか分からない', '除外理由と確認者を残し、次回リスト条件に反映する'],
+    ] },
+
+    { t: 'h2', text: '導入の最小単位' },
+    { t: 'p', text: '最初の導入単位は「営業責任者が全件確認できる件数の候補企業を、AIで調査下書きし、人が確認してCRM登録する」程度に抑えるのが現実的です。いきなりメール送信や架電指示まで自動化すると、誤送信や対象外接触のリスクが上がります。AI導入全体の進め方は[AI導入の進め方5ステップ](/blog/ai-implementation-steps)も参考になります。' },
+    { t: 'ol', items: [
+      '営業対象条件を1セグメントに絞る',
+      'Google Sheetsに候補企業、URL、確認ステータス、除外理由、CRM登録IDの列を作る',
+      'AIが出力する項目を「企業概要」「想定課題」「接触理由」「不足情報」に限定する',
+      'CRM登録前に必ず人が対象可否を選ぶ',
+      '短い試行期間を決め、誤登録、重複、対象外混入、確認待ち件数を振り返る',
+    ] },
+    { t: 'callout', title: '最初に自動化しないほうがよい工程', text: '初回接触メールの自動送信、個人メールアドレスの大量取得、失注企業への再接触、契約条件に関わる判断は、最初の自動化対象から外すのが無難です。まずは調査下書きとCRM登録補助に限定し、営業責任者が許容できる精度と運用負荷を確認してください。', tone: 'orange' },
+
+    { t: 'h2', text: '運用上の注意' },
+    { t: 'p', text: '営業リスト自動化で重要なのは、ワークフローを一度作って終わりにしないことです。ターゲット条件、除外条件、CRM項目、AIの出力フォーマットは、実際の商談結果や営業担当者のフィードバックで更新します。' },
+    { t: 'ul', items: [
+      'AIの出力には「根拠URL」「確認日」「確認者」を残す',
+      '同じ候補企業を再実行しても二重登録されないように、一意キーを会社ドメインで持つ',
+      'CRM登録後にシート側へCRM IDを戻し、再登録を防ぐ',
+      'AIが取得できなかった情報は空欄のままにし、推測で埋めない',
+      '外部データベースやAPIを使う場合は、商用利用条件と社内の個人情報管理ルールを確認する',
+      '営業成果の評価では、AIだけの効果として成約率や売上増を断定しない',
+    ] },
+
+    { t: 'h2', text: 'まとめ｜営業リスト自動化は「確認できる下書き」から始める' },
+    { t: 'p', text: '営業リスト作成のAI自動化は、企業候補を増やすためだけでなく、営業担当者が同じ基準で判断できる下書きを作るために使うと定着しやすくなります。HubSpot、Salesforce、Apollo.io、n8n、Google Sheetsのような既存ツールを前提に、まずは企業調査とCRM登録補助だけを小さくつなぎ、人が確認するゲートを残して運用してください。営業AI全体の選定は[営業におすすめのAIツール比較](/blog/sales-ai-tools)、自動化設計の基本は[n8nワークフローの作り方](/blog/n8n-workflow-design-guide)、導入後の効果測定は[AI導入のROIの測り方](/blog/ai-roi)で確認できます。' },
+    { t: 'refs', title: '公式参考リンク', items: [
+      { label: 'HubSpot｜CRM', href: 'https://www.hubspot.com/products/crm' },
+      { label: 'HubSpot Developers｜CRM Object APIs', href: 'https://developers.hubspot.com/docs/api-reference/latest/crm/using-object-apis' },
+      { label: 'HubSpot｜AI Prospecting Agent', href: 'https://www.hubspot.com/products/sales/ai-prospecting-agent' },
+      { label: 'HubSpot Knowledge Base｜Understand Agent Hub', href: 'https://knowledge.hubspot.com/ai/understand-agent-hub' },
+      { label: 'Salesforce｜Sales Cloud', href: 'https://www.salesforce.com/ap/sales/cloud/' },
+      { label: 'Salesforce Help｜Einstein Activity Capture', href: 'https://help.salesforce.com/s/articleView?id=sales.einstein_sales_aac.htm&language=en&type=5' },
+      { label: 'Apollo.io｜CRM Enrichment', href: 'https://www.apollo.io/product/enrich' },
+      { label: 'Apollo Developer Docs', href: 'https://docs.apollo.io/' },
+      { label: 'n8n Docs｜HubSpot node', href: 'https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.hubspot' },
+      { label: 'n8n Docs｜Salesforce node', href: 'https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.salesforce' },
+      { label: 'Google for Developers｜spreadsheets.values.append', href: 'https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets.values/append' },
+    ] },
+    { t: 'cta' },
+  ],
+}
