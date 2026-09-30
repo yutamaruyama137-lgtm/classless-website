@@ -200,6 +200,7 @@ function LogoTicker() {
     { src: '/assets/logos/logo-enepal.png', alt: 'enepal', h: 54 },
     { src: '/assets/logos/logo-uwec.png', alt: 'University of Wisconsin-Eau Claire', h: 48 },
     { src: '/assets/logos/logo-earth-energy.png', alt: 'アースエナジー', h: 44 },
+    { src: '/assets/logos/logo-new-partner.png', alt: 'パートナー企業ロゴ', h: 44 },
   ];
 
   // 同じ列を2つ並べてシームレスにループさせる(2列目は読み上げ・タブ対象外)
