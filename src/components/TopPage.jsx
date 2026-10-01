@@ -228,6 +228,57 @@ function LogoTicker() {
 }
 
 /* ================================================================
+   Media & Activities — 掲載・出展実績
+   ================================================================ */
+function TopHighlights() {
+  const { useReveal } = window;
+  const ref = useReveal();
+  const card = {
+    overflow: 'hidden', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)',
+    background: '#fff', boxShadow: 'var(--shadow-sm)', display: 'flex', flexDirection: 'column',
+  };
+  const body = { display: 'flex', flexDirection: 'column', alignItems: 'flex-start', padding: 'clamp(22px, 2.8vw, 34px)', flex: 1 };
+  const linkStyle = { display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 'auto', paddingTop: 22, color: 'var(--brand-blue)', fontWeight: 800, fontSize: 14 };
+
+  return (
+    <section id="activities" ref={ref} style={{ background: 'var(--color-bg-subtle)', paddingTop: 'var(--section-y)', paddingBottom: 'var(--section-y)' }}>
+      <div className="cl-container">
+        <div className="reveal"><span className="cl-eyebrow">Media &amp; Activities</span></div>
+        <h2 className="reveal" style={{ fontSize: 'clamp(27px, 3.5vw, 46px)', fontWeight: 900, lineHeight: 1.32, marginTop: 18, marginBottom: 'clamp(30px, 4vw, 48px)' }}>
+          メディア掲載・出展実績
+        </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: 'clamp(18px, 2.4vw, 28px)', alignItems: 'stretch' }}>
+          <article className="reveal" style={{ ...card, animationDelay: '0.06s' }}>
+            <div aria-hidden="true" style={{ minHeight: 220, padding: '30px clamp(22px, 3vw, 36px)', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 12, background: 'linear-gradient(135deg, #eef4ff 0%, #f8f5ff 100%)' }}>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 800, letterSpacing: '0.14em', color: 'var(--brand-blue)' }}>MEDIA COVERAGE</span>
+              <span style={{ fontSize: 'clamp(26px, 3vw, 36px)', fontWeight: 900, letterSpacing: '0.02em', color: 'var(--text-primary)' }}>渋谷のラジオ</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>OFFICIAL NOTE</span>
+            </div>
+            <div style={body}>
+              <h3 style={{ fontSize: 'clamp(19px, 2vw, 23px)', fontWeight: 900, lineHeight: 1.5, marginBottom: 12 }}>渋谷のラジオ公式noteに掲載</h3>
+              <p style={{ fontSize: 14.5, lineHeight: 1.9, color: 'var(--text-secondary)', margin: 0 }}>合同会社Classlessの活動を、渋谷のラジオ公式noteでご紹介いただきました。</p>
+              <a href="https://note.com/shiburadi/n/n690381263ee5" target="_blank" rel="noopener noreferrer" style={linkStyle}>掲載記事を読む <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+          <article className="reveal" style={{ ...card, animationDelay: '0.14s' }}>
+            <img src="/assets/daterise-2026-booth.jpg" alt="DATERISE! 2026での合同会社Classlessのブース" loading="lazy" style={{ display: 'block', width: '100%', height: 220, objectFit: 'cover', objectPosition: 'center 54%' }} />
+            <div style={body}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: 10, marginBottom: 10 }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', color: 'var(--brand-blue)' }}>BOOTH EXHIBITION</span>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--text-muted)' }}>2026.09.05</span>
+              </div>
+              <h3 style={{ fontSize: 'clamp(19px, 2vw, 23px)', fontWeight: 900, lineHeight: 1.5, marginBottom: 12 }}>DATERISE! 2026に出店</h3>
+              <p style={{ fontSize: 14.5, lineHeight: 1.9, color: 'var(--text-secondary)', margin: 0 }}>仙台国際センターで開催されたスタートアップイベントに、合同会社Classlessとしてブース出展しました。</p>
+              <a href="https://01booster.com/program/daterise/index.html" target="_blank" rel="noopener noreferrer" style={linkStyle}>イベント公式サイト <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ================================================================
    Statement — Vision。短い宣言 + 私たちについてへ。
    ================================================================ */
 function TopStatement() {
@@ -427,4 +478,4 @@ function TopJoin() {
   );
 }
 
-Object.assign(window, { TopHero, LogoTicker, TopStatement, TopBusiness, TopNews, TopJoin, CircleLink, GeoDecor });
+Object.assign(window, { TopHero, LogoTicker, TopHighlights, TopStatement, TopBusiness, TopNews, TopJoin, CircleLink, GeoDecor });
