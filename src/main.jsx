@@ -139,7 +139,7 @@ function App() {
   const {
     Header, Company, ServicesDetail, Philosophy, ContactBand, ContactPage, Footer, Voices,
     Background, RoleSplit, WhatWeDo, Pricing, Flow, Faq,
-    TopHero, LogoTicker, TopStatement, TopBusiness, TopNews, TopJoin,
+    TopHero, LogoTicker, TopHighlights, TopStatement, TopBusiness, TopNews, TopJoin,
     AxelHero, LeadtossPage, AskAi,
   } = window
 
@@ -268,6 +268,7 @@ function App() {
     <React.Fragment>
       <TopHero />
       <LogoTicker />
+      <TopHighlights />
       <TopStatement />
       <TopBusiness />
       <TopNews />
