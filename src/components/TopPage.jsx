@@ -355,15 +355,13 @@ function TopNews() {
   const all = window.BLOG_ARTICLES || [];
   const featured = [
     {
-      date: '', category: 'メディア', tone: 'blue',
+      slug: 'shibuya-radio-feature', date: '2026.10.01', category: 'ニュース', tone: 'blue',
       title: '渋谷のラジオ公式noteに掲載されました',
-      href: 'https://note.com/shiburadi/n/n690381263ee5', external: true,
     },
     {
-      date: '2026.09.05', category: '出展', tone: 'green',
+      slug: 'daterise-2026-exhibition', date: '2026.10.01', category: 'ニュース', tone: 'green',
       title: '合同会社ClasslessがDATERISE! 2026に出店しました',
-      href: 'https://01booster.com/program/daterise/index.html',
-      image: '/assets/daterise-2026-booth.jpg', external: true,
+      image: '/assets/daterise-2026-booth.jpg',
     },
   ];
   const latest = [...featured, ...all.slice(0, 3)];
@@ -379,7 +377,7 @@ function TopNews() {
           </div>
           <div>
             {latest.map((a, i) => (
-              <a key={a.slug || a.href} href={a.href || `/blog/${a.slug}`} target={a.external ? '_blank' : undefined} rel={a.external ? 'noopener noreferrer' : undefined} className="news-row reveal" style={{
+              <a key={a.slug} href={`/blog/${a.slug}`} className="news-row reveal" style={{
                 display: 'grid', gridTemplateColumns: 'auto auto 1fr', alignItems: 'center', gap: 'clamp(14px, 2vw, 26px)',
                 padding: 'clamp(18px, 2.2vw, 26px) 4px', borderBottom: '1px solid var(--color-border)',
                 borderTop: i === 0 ? '1px solid var(--color-border)' : 'none',
