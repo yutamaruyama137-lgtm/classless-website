@@ -5,6 +5,7 @@ export const article = {
   title: '合同会社ClasslessがDATERISE! 2026に出店しました',
   excerpt: '仙台国際センターで開催されたDATERISE! 2026に、合同会社Classlessとしてブース出展しました。',
   date: '2026.10.01',
+  image: '/assets/daterise-2026-booth.jpg',
   readMin: 1,
   keywords: ['DATERISE!', '出展', 'Classless'],
   blocks: [

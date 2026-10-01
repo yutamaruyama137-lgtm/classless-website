@@ -353,18 +353,7 @@ function TopNews() {
   const { useReveal } = window;
   const ref = useReveal();
   const all = window.BLOG_ARTICLES || [];
-  const featured = [
-    {
-      slug: 'shibuya-radio-feature', date: '2026.10.01', category: 'ニュース', tone: 'blue',
-      title: '渋谷のラジオ公式noteに掲載されました',
-    },
-    {
-      slug: 'daterise-2026-exhibition', date: '2026.10.01', category: 'ニュース', tone: 'green',
-      title: '合同会社ClasslessがDATERISE! 2026に出店しました',
-      image: '/assets/daterise-2026-booth.jpg',
-    },
-  ];
-  const latest = [...featured, ...all.slice(0, 3)];
+  const latest = all.slice(0, 5);
   const toneOf = (a) => a.tone || 'blue';
   return (
     <section id="news" ref={ref} style={{ paddingTop: 'var(--section-y)', paddingBottom: 'var(--section-y)' }}>
