@@ -1,12 +1,17 @@
 # 合同会社Classless
 
-> 合同会社Classlessは東京都渋谷区を拠点に、AIを活用した業務支援と営業支援を提供しています。
+> AI事業「アクセル」とコミュニティ組成事業の2つの事業で、プロジェクトに伴走します。
 
 ## 公式ページ
 
-- [会社概要](https://www.classless.jp/philosophy): 合同会社Classlessの考え方と、東京都渋谷区の会社情報。
-- [アクセル](https://www.classless.jp/axel): 業務の棚卸し、手順設計、実務代行、自動化を支援するAI×BPOサービス。
-- [リートス](https://www.classless.jp/leadtoss): LinkedInを活用し、対象企業の決裁者との接点づくりを支援する営業支援サービス。
-- [事業内容](https://www.classless.jp/business): アクセルとリートスの支援内容の一覧。
-- [業務改善ナレッジ](https://www.classless.jp/blog): 給与計算、業務フロー、n8n自動化などの実務記事。
-- [お問い合わせ](https://www.classless.jp/contact): 業務改善、BPO、自動化、営業支援に関する相談窓口。
+- [AI事業・アクセル](https://www.classless.jp/#ai): n8nのワークフロー設計、データベースマネジメント、サイト設計・制作。業務の整理から設計・実装・運用まで支援。
+- [コミュニティ組成事業](https://www.classless.jp/#community): コミュニティの企画・運営、地域おこし協力隊ネットワーク設計、地域のプロジェクト支援。
+- [取り組み](https://www.classless.jp/#projects): アクセル、Tokyo Global Hub、ちいきのかまど。
+- [会社概要](https://www.classless.jp/#company): 合同会社Classless。東京都渋谷区を拠点に、代表は丸山侑太。
+- [ニュース・ナレッジ](https://www.classless.jp/blog): 活動のお知らせと、給与計算、業務フロー、n8n自動化などの実務記事。
+- [お問い合わせ](https://www.classless.jp/contact): AI活用・しくみづくり、コミュニティ・地域のプロジェクトに関する相談窓口。
+
+## 関連する取り組みの公式発信
+
+- [Tokyo Global Hub](https://note.com/tokyoglobalhub): 国際交流コミュニティの活動。
+- [ちいきのかまど](https://chiikinokamado.jp/): 人と地域をつなぐ活動。

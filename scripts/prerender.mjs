@@ -1,6 +1,7 @@
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
+import { ROUTE_META } from '../src/seo.js'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const root = join(here, '..')
@@ -12,18 +13,14 @@ const organizationLogo = `${siteUrl}/assets/logo-classless-stacked-dark.png`
 const organizationId = `${siteUrl}/#organization`
 const template = await readFile(join(dist, 'index.html'), 'utf8')
 
-const routeMeta = [
-  ['/', '合同会社Classless｜AIで、業務の進め方を変える', '合同会社Classlessは、業務の棚卸し・手順設計・実務代行・自動化までを一続きで支援します。AI×BPO「アクセル」と成果報酬型営業支援「リートス」を提供しています。', '2026-08-22', '1.0'],
-  ['/axel', 'アクセル｜業務設計から実務・自動化まで伴走するAI×BPO', 'アクセルは、経理・人事・営業事務などの業務を棚卸しし、手順化したうえで実務代行と自動化を進めるAI×BPOサービスです。', '2026-08-22', '0.9'],
-  ['/leadtoss', 'リートス｜決裁者との商談機会をつくる営業支援', 'リートスは、LinkedInを活用して対象企業の決裁者との接点をつくる、完全成果報酬型の営業支援サービスです。', '2026-08-22', '0.9'],
-  ['/business', '事業内容｜合同会社Classless', '合同会社Classlessが提供する、AI×BPO「アクセル」と成果報酬型営業支援「リートス」の支援内容をご紹介します。', '2026-08-22', '0.7'],
-  ['/philosophy', '私たちについて｜合同会社Classless', '合同会社Classlessのミッション、会社概要、事業に対する考え方をご紹介します。', '2026-08-22', '0.7'],
-  ['/contact', 'お問い合わせ｜合同会社Classless', '業務の棚卸し、BPO、自動化、営業支援に関するご相談はこちらから。現在の業務や課題が整理できていない段階でもご相談いただけます。', '2026-08-22', '0.6'],
-  ['/blog', '業務改善ナレッジ｜給与計算・業務フロー・n8n自動化｜Classless', '給与計算の業務設計、業務フローの作り方、n8nを使った自動化など、現場でそのまま使える業務改善の手順とチェックポイントを紹介します。', '2026-08-22', '0.9'],
-  ['/privacy', 'プライバシーポリシー｜合同会社Classless', '合同会社Classlessのプライバシーポリシーです。', '2026-07-02', '0.3'],
-  ['/terms', '利用規約｜合同会社Classless', '合同会社Classlessのサービス利用規約です。', '2026-07-02', '0.3'],
-  ['/tokushoho', '特定商取引法に基づく表記｜合同会社Classless', '合同会社Classlessの特定商取引法に基づく表記です。', '2026-07-02', '0.3'],
-]
+// Runtime metadata is also used for crawlable HTML, so descriptions stay aligned.
+const routeMeta = Object.entries(ROUTE_META)
+  .filter(([route]) => route !== 'notFound')
+  .map(([route, meta]) => [
+    meta.path, meta.title, meta.description,
+    ['home', 'contact'].includes(route) ? '2026-11-09' : route === 'blog' ? '2026-08-22' : '2026-07-02',
+    route === 'home' ? '1.0' : route === 'blog' ? '0.9' : route === 'contact' ? '0.6' : '0.3',
+  ])
 
 const articleDir = join(root, 'src', 'blog', 'articles')
 const files = (await readdir(articleDir)).filter((name) => name.endsWith('.js')).sort()
@@ -62,12 +59,6 @@ function breadcrumb(path, title, isArticle = false) {
   return { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items }
 }
 
-function serviceSchema(path, description) {
-  const service = path === '/axel'
-    ? { name: 'アクセル', serviceType: 'AI×BPO' }
-    : { name: 'リートス', serviceType: '営業支援' }
-  return { '@context': 'https://schema.org', '@type': 'Service', '@id': `${siteUrl}${path}#service`, name: service.name, serviceType: service.serviceType, url: `${siteUrl}${path}`, description, provider: { '@type': 'Organization', '@id': organizationId, name: siteName } }
-}
 
 function inject({ path, title, description, body, jsonLd = [], noindex = false, type = 'website' }) {
   const canonical = `${siteUrl}${path === '/' ? '/' : path}`
@@ -101,10 +92,24 @@ async function emit(path, html) {
 const organization = { '@context': 'https://schema.org', '@type': 'Organization', '@id': organizationId, name: siteName, alternateName: 'Classless', url: `${siteUrl}/`, logo: organizationLogo, founder: { '@type': 'Person', name: '丸山 侑太' }, foundingDate: '2025-10-01', contactPoint: { '@type': 'ContactPoint', contactType: 'customer service', email: 'contact@classless.jp' }, sameAs: ['https://note.com/classlessllc_731'], address: { '@type': 'PostalAddress', streetAddress: '円山町5-3 MIEUX渋谷ビル 5階', addressLocality: '渋谷区', addressRegion: '東京都', addressCountry: 'JP' } }
 for (const [path, title, description] of routeMeta) {
   let body = `<main><h1>${esc(title.split('｜')[0])}</h1><p>${esc(description)}</p></main>`
+  if (path === '/') body = `<main>
+    <h1>AIで、人間を面白くする。</h1><p>${esc(description)}</p>
+    <section id="business"><h2>しくみをつくる。つながりを育てる。</h2>
+      <section id="ai"><h3>AI事業「アクセル」</h3><p>業務の整理から設計・実装・運用までを支援します。</p><ul><li>n8nによるワークフロー設計・業務自動化</li><li>データベースマネジメント</li><li>サイト設計・制作</li></ul><a href="/contact?topic=ai">AI・しくみづくりを相談する</a></section>
+      <section id="community"><h3>コミュニティ組成事業</h3><p>コミュニティの企画・運営、地域おこし協力隊のネットワーク設計、地域のプロジェクト支援に取り組みます。</p><a href="https://chiikinokamado.jp/">ちいきのかまどを見る</a></section>
+    </section>
+    <section id="projects"><h2>ともにつくる、取り組み。</h2><h3>アクセル</h3><p>n8nによる自動化、データベース管理、サイト設計。</p><h3>Tokyo Global Hub</h3><p>交流をきっかけに、一緒に活動できるコミュニティづくり。</p><a href="https://note.com/tokyoglobalhub">Tokyo Global Hubの活動</a><h3>ちいきのかまど</h3><p>地域で動く人とプロジェクトを支える取り組み。</p><a href="https://chiikinokamado.jp/">ちいきのかまどの活動</a></section>
+    <section id="company"><h2>Classlessについて</h2><dl><dt>会社名</dt><dd>合同会社Classless</dd><dt>代表者</dt><dd>丸山 侑太</dd><dt>所在地</dt><dd>東京都渋谷区円山町5-3 MIEUX渋谷ビル 5階</dd><dt>設立</dt><dd>2025年10月1日</dd></dl></section>
+    <p><a href="/contact">相談する</a> / <a href="/blog">ニュース・ナレッジ</a></p>
+  </main>`
   if (path === '/blog') body = `<main><h1>現場で使える、業務改善の設計ノート</h1><p>${esc(description)}</p><section><h2>記事一覧</h2>${articles.map((a) => `<article><h3><a href="/blog/${esc(a.slug)}">${esc(a.title)}</a></h3><p>${esc(a.excerpt)}</p></article>`).join('')}</section></main>`
   const jsonLd = path === '/' ? [organization, { '@context': 'https://schema.org', '@type': 'WebSite', '@id': `${siteUrl}/#website`, url: `${siteUrl}/`, name: siteName, publisher: { '@id': organizationId }, inLanguage: 'ja-JP' }] : [breadcrumb(path, title)]
-  if (path === '/axel' || path === '/leadtoss') jsonLd.push(serviceSchema(path, description))
   await emit(path, inject({ path, title, description, body, jsonLd }))
+}
+
+const legacyRedirects = { '/axel': '/#ai', '/leadtoss': '/', '/business': '/#business', '/philosophy': '/#company' }
+for (const [path, destination] of Object.entries(legacyRedirects)) {
+  await emit(path, `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="robots" content="noindex, follow"><meta http-equiv="refresh" content="0; url=${destination}"><link rel="canonical" href="${siteUrl}/"><title>Classless</title></head><body><a href="${destination}">新しいページへ移動する</a></body></html>`)
 }
 
 for (const article of articles) {

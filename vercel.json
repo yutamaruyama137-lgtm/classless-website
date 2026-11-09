@@ -15,6 +15,27 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/axel",
+      "destination": "/#ai",
+      "permanent": true
+    },
+    {
+      "source": "/leadtoss",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/business",
+      "destination": "/#business",
+      "permanent": true
+    },
+    {
+      "source": "/philosophy",
+      "destination": "/#company",
+      "permanent": true
+    }
   ]
 }
-

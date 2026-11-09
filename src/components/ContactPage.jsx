@@ -1,7 +1,4 @@
-/* Classless — お問い合わせ (contact) page.
-   No backend is wired yet, so submit builds a mailto: to the company inbox and
-   shows a thank-you state. Swap onSubmit for a POST to /api/contact once a mail
-   sender (SendGrid / Resend 等) is configured. */
+/* Classless contact: existing /api/contact submission and mailto fallback. */
 
 const CONTACT_TO = 'contact@classless.jp';
 
@@ -16,7 +13,7 @@ function ContactPage() {
   const ctTitleN = s.count();
 
   const [form, setForm] = React.useState({
-    name: '', company: '', email: '', tel: '', topic: '無料AX診断のご予約', message: '',
+    name: '', company: '', email: '', tel: '', topic: new URLSearchParams(window.location.search).get('topic') === 'community' ? 'コミュニティ・地域のプロジェクト' : 'AI・ワークフロー設計', message: '',
   });
   const [status, setStatus] = React.useState('idle'); // idle | sending | sent | error
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
@@ -70,7 +67,7 @@ function ContactPage() {
   const onBlur = (e) => { e.target.style.borderColor = 'var(--color-border-strong)'; e.target.style.boxShadow = 'none'; };
   const Req = () => <span style={{ color: 'var(--brand-red)', marginLeft: 4 }}>*</span>;
 
-  const topics = ['無料AX診断のご予約', 'AI BPO（業務代行）', 'AI開発（システム・DB最適化）', 'AI教育・研修', '料金・お見積り', 'その他'];
+  const topics = ['AI・ワークフロー設計', 'データベースマネジメント', 'サイト設計・制作', 'コミュニティ・地域のプロジェクト', 'その他'];
 
   return (
     <section id="contact" ref={ref} style={{ position: 'relative', overflow: 'hidden', background: 'transparent' }}>
@@ -85,14 +82,14 @@ function ContactPage() {
             <div className="reveal"><Eyebrow tone="blue">Contact</Eyebrow></div>
             <h1 ref={titleRef} className="split-host" style={{ fontSize: 'clamp(38px, 5.2vw, 68px)', fontWeight: 900, marginTop: 18, letterSpacing: '0.01em', lineHeight: 1.25, '--n': ctTitleN, '--win': 6 }}>{ctTitle}</h1>
             <p className="reveal" style={{ fontSize: 'clamp(15px, 1.5vw, 17px)', lineHeight: 1.95, color: 'var(--text-secondary)', fontWeight: 500, marginTop: 24, maxWidth: '26em', animationDelay: '0.1s' }}>
-              AI BPOのご相談・無料AX診断のお申し込みはこちらから。
-              経理・営業事務・採用・マーケまで、ノンコア業務をまるごと巻き取ります。初回のご相談は無料です。
+              AI活用やしくみづくり、コミュニティ・地域のプロジェクトについて。
+              まだ形になっていないアイデアも、お気軽にご相談ください。
             </p>
 
             <dl className="reveal" style={{ margin: '36px 0 0', animationDelay: '0.16s' }}>
               {[
                 ['Email', CONTACT_TO],
-                ['対応領域', 'AI BPO / AI開発 / DB最適化 / AI教育'],
+                ['対応領域', 'AI・ワークフロー / データベース / Webサイト / コミュニティ'],
               ].map(([k, v]) => (
                 <div key={k} style={{ padding: '14px 0', borderTop: '1px solid var(--color-border)' }}>
                   <dt style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>{k}</dt>

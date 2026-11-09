@@ -22,34 +22,20 @@ import './blog/registry.js'
 import './components/Bits.jsx'
 import './components/Header.jsx'
 import './components/Hero.jsx'
-import './components/Mission.jsx'
-import './components/ColorMerge.jsx'
-import './components/Services.jsx'
-import './components/Background.jsx'
-import './components/RoleSplit.jsx'
-import './components/WhatWeDo.jsx'
-import './components/Pricing.jsx'
-import './components/Flow.jsx'
-import './components/Faq.jsx'
-import './components/Voices.jsx'
-import './components/ServicesDetail.jsx'
-import './components/Philosophy.jsx'
+import './components/TopPage.jsx'
+import './components/SimpleHome.jsx'
 import './components/CtaFooter.jsx'
 import './components/ContactPage.jsx'
 import './components/LegalPages.jsx'
 import './components/Blog.jsx'
-import './components/AskAi.jsx'
-// 2026.07 二事業体制リデザイン: トップ(LayerX型) + アクセル + リートス
-import './components/TopPage.jsx'
-import './components/AxelPage.jsx'
-import './components/LeadtossPage.jsx'
+import './styles/simple-home.css'
+
+const legacyRoutes = { '/axel': '/#ai', '/leadtoss': '/', '/business': '/#business', '/philosophy': '/#company' }
+const legacyPath = window.location.pathname.replace(/\/+$/, '')
+if (legacyRoutes[legacyPath]) window.location.replace(legacyRoutes[legacyPath])
 
 function getRoute() {
   const p = window.location.pathname.replace(/\/+$/, '') || '/'
-  if (p === '/axel') return 'axel'
-  if (p === '/leadtoss') return 'leadtoss'
-  if (p === '/business') return 'business'
-  if (p === '/philosophy') return 'philosophy'
   if (p === '/contact') return 'contact'
   if (p === '/privacy') return 'privacy'
   if (p === '/terms') return 'terms'
@@ -69,19 +55,20 @@ function getSlug() {
 
 // Smooth-scroll to an in-page anchor (offset for the sticky header).
 function scrollToId(id) {
+  const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
   // The contact CTA lives on its own page.
   if (id === 'contact') {
     if (window.location.pathname.replace(/\/+$/, '') !== '/contact') window.location.href = '/contact'
     return
   }
   if (id === 'top') {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    window.scrollTo({ top: 0, behavior })
     return
   }
   const el = document.getElementById(id)
   if (el) {
     const y = el.getBoundingClientRect().top + window.scrollY - 64
-    window.scrollTo({ top: y, behavior: 'smooth' })
+    window.scrollTo({ top: y, behavior })
   }
 }
 
@@ -136,12 +123,7 @@ function App() {
     }
   }, [route])
 
-  const {
-    Header, Company, ServicesDetail, Philosophy, ContactBand, ContactPage, Footer, Voices,
-    Background, RoleSplit, WhatWeDo, Pricing, Flow, Faq,
-    TopHero, LogoTicker, TopStatement, TopBusiness, TopNews, TopJoin,
-    AxelHero, LeadtossPage, AskAi,
-  } = window
+  const { Header, ContactBand, ContactPage, Footer, TopHero, ActivityCollage, SimpleBusiness, SimpleProjects, SimpleCompany } = window
 
   const article = route === 'article'
     ? (window.BLOG_ARTICLES || []).find((item) => item.slug === getSlug())
@@ -149,20 +131,12 @@ function App() {
   applySeo(route, article)
   const cta = { label: '無料相談', href: '/contact' }
 
-  // ── Single source of truth for the header nav ──────────────────────────
-  // LayerX-style: 私たちについて / 事業内容(ドロップダウン) / ニュース / お問い合わせ
+  const sectionHref = (id) => route === 'home' ? `#${id}` : `/#${id}`
   const navLinks = [
-    { label: '私たちについて', href: '/philosophy', active: route === 'philosophy' },
-    {
-      label: '事業内容',
-      active: route === 'axel' || route === 'leadtoss' || route === 'business',
-      children: [
-        { label: 'アクセル事業', desc: 'AI×BPO — 時間単価制の業務伴走', href: '/axel', icon: '/assets/icon-axel.png' },
-        { label: 'リートス事業', desc: 'AI×LinkedIn — 成果報酬型の商談供給', href: '/leadtoss', icon: '/assets/icon-leadtoss.png' },
-      ],
-    },
-    { label: 'ニュース', href: '/blog', active: route === 'blog' || route === 'article' },
-    { label: 'お問い合わせ', href: '/contact', active: route === 'contact' },
+    { label: 'AI事業', href: sectionHref('ai') },
+    { label: 'コミュニティ組成事業', href: sectionHref('community') },
+    { label: '取り組み', href: sectionHref('projects') },
+    { label: '会社概要', href: sectionHref('company') },
   ]
   const homeHref = route === 'home' ? '#top' : '/'
 
@@ -171,55 +145,8 @@ function App() {
       <Header links={navLinks} cta={cta} homeHref={homeHref} onAnchor={scrollToId} />
       <main>{children}</main>
       <Footer />
-      {!['contact', 'privacy', 'terms', 'tokushoho', 'notFound'].includes(route) && <AskAi route={route} />}
     </div>
   )
-
-  // ── アクセル事業(AI×BPO): 既存のBPO×DXセクション群を再利用 ──
-  if (route === 'axel') {
-    return shell('アクセル事業', (
-      <React.Fragment>
-        <AxelHero onNav={scrollToId} />
-        <Background />
-        <RoleSplit />
-        <WhatWeDo />
-        <Voices />
-        <Pricing onNav={scrollToId} />
-        <Flow onNav={scrollToId} />
-        <Faq />
-        <ContactBand />
-      </React.Fragment>
-    ))
-  }
-
-  // ── リートス事業(営業代行 / 商談供給インフラ) ──
-  if (route === 'leadtoss') {
-    return shell('リートス事業', (
-      <React.Fragment>
-        <LeadtossPage />
-        <ContactBand />
-      </React.Fragment>
-    ))
-  }
-
-  if (route === 'business') {
-    return shell('事業内容', (
-      <React.Fragment>
-        <ServicesDetail />
-        <ContactBand />
-      </React.Fragment>
-    ))
-  }
-
-  if (route === 'philosophy') {
-    return shell('私たちについて', (
-      <React.Fragment>
-        <Philosophy />
-        <Company />
-        <ContactBand />
-      </React.Fragment>
-    ))
-  }
 
   if (route === 'contact') {
     return shell('お問い合わせ', <ContactPage />)
@@ -267,11 +194,10 @@ function App() {
   return shell('Classless コーポレートサイト', (
     <React.Fragment>
       <TopHero />
-      <LogoTicker />
-      <TopStatement />
-      <TopBusiness />
-      <TopNews />
-      <TopJoin />
+      <ActivityCollage />
+      <SimpleBusiness />
+      <SimpleProjects />
+      <SimpleCompany />
       <ContactBand />
     </React.Fragment>
   ))

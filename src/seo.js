@@ -7,33 +7,13 @@ const ORGANIZATION_ID = `${SITE_URL}/#organization`
 const ROUTE_META = {
   home: {
     path: '/',
-    title: '合同会社Classless｜AIで、業務の進め方を変える',
-    description: '合同会社Classlessは、業務の棚卸し・手順設計・実務代行・自動化までを一続きで支援します。AI×BPO「アクセル」と成果報酬型営業支援「リートス」を提供しています。',
-  },
-  axel: {
-    path: '/axel',
-    title: 'アクセル｜業務設計から実務・自動化まで伴走するAI×BPO',
-    description: 'アクセルは、経理・人事・営業事務などの業務を棚卸しし、手順化したうえで実務代行と自動化を進めるAI×BPOサービスです。',
-  },
-  leadtoss: {
-    path: '/leadtoss',
-    title: 'リートス｜決裁者との商談機会をつくる営業支援',
-    description: 'リートスは、LinkedInを活用して対象企業の決裁者との接点をつくる、完全成果報酬型の営業支援サービスです。',
-  },
-  business: {
-    path: '/business',
-    title: '事業内容｜合同会社Classless',
-    description: '合同会社Classlessが提供する、AI×BPO「アクセル」と成果報酬型営業支援「リートス」の支援内容をご紹介します。',
-  },
-  philosophy: {
-    path: '/philosophy',
-    title: '私たちについて｜合同会社Classless',
-    description: '合同会社Classlessのミッション、会社概要、事業に対する考え方をご紹介します。',
+    title: '合同会社Classless｜AIとコミュニティで、プロジェクトを前へ',
+    description: '合同会社Classlessは、AI事業「アクセル」とコミュニティ組成事業を展開。n8nのワークフロー設計、データベース管理、サイト制作から、Tokyo Global Hubやちいきのかまどなど人と地域をつなぐ取り組みまで支援します。',
   },
   contact: {
     path: '/contact',
     title: 'お問い合わせ｜合同会社Classless',
-    description: '業務の棚卸し、BPO、自動化、営業支援に関するご相談はこちらから。現在の業務や課題が整理できていない段階でもご相談いただけます。',
+    description: 'AI・ワークフロー設計、データベース管理、サイト制作、コミュニティ・地域のプロジェクトに関するご相談はこちらから。',
   },
   blog: {
     path: '/blog',
@@ -97,17 +77,6 @@ function breadcrumb(items) {
       '@type': 'ListItem', position: index + 1, name: item.name,
       ...(item.path ? { item: `${SITE_URL}${item.path}` } : {}),
     })),
-  }
-}
-
-function serviceSchema(route, canonical, description) {
-  const service = route === 'axel'
-    ? { name: 'アクセル', serviceType: 'AI×BPO' }
-    : { name: 'リートス', serviceType: '営業支援' }
-  return {
-    '@context': 'https://schema.org', '@type': 'Service', '@id': `${canonical}#service`,
-    name: service.name, serviceType: service.serviceType, url: canonical, description,
-    provider: { '@type': 'Organization', '@id': ORGANIZATION_ID, name: SITE_NAME },
   }
 }
 
@@ -181,8 +150,6 @@ export function applySeo(route, article) {
     else crumbs.push({ name: data.title.split('｜')[0] })
     structured.push(breadcrumb(crumbs))
   }
-
-  if (route === 'axel' || route === 'leadtoss') structured.push(serviceSchema(route, canonical, data.description))
 
   if (route === 'article' && article) {
     structured.push({
