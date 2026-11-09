@@ -97,7 +97,7 @@ function App() {
     Promise.race([fontsReady, fontDeadline]).then(() => {
       if (cancelled) return
       window.clearTimeout(deadlineTimer)
-      // The corporate hero keeps text visible and only animates its visual.
+      // Let the original hero characters begin beneath the matching first-paint shell.
       handoffTimer = window.setTimeout(() => {
         if (cancelled) return
         bootShell.classList.add('boot-shell--exit')
@@ -106,7 +106,7 @@ function App() {
           html.classList.remove('classless-booting')
           html.removeAttribute('data-boot-route')
         }, reducedMotion ? 0 : 220)
-      }, 0)
+      }, route === 'home' && !reducedMotion ? 480 : 0)
     })
 
     return () => {
@@ -120,13 +120,13 @@ function App() {
     }
   }, [route])
 
-  const { Header, ContactBand, ContactPage, Footer, TopHero, CorporateIntro, SimpleBusiness, SimpleProjects, SimpleCompany } = window
+  const { Header, ContactBand, ContactPage, Footer, TopHero, FriendlyIntro, SimpleBusiness, SimpleProjects, SimpleCompany } = window
 
   const article = route === 'article'
     ? (window.BLOG_ARTICLES || []).find((item) => item.slug === getSlug())
     : null
   applySeo(route, article)
-  const cta = { label: 'お問い合わせ', href: '/contact' }
+  const cta = { label: '無料相談', href: '/contact' }
 
   const sectionHref = (id) => route === 'home' ? `#${id}` : `/#${id}`
   const navLinks = [
@@ -190,7 +190,7 @@ function App() {
   return shell('Classless コーポレートサイト', (
     <React.Fragment>
       <TopHero />
-      <CorporateIntro />
+      <FriendlyIntro />
       <SimpleBusiness />
       <SimpleProjects />
       <SimpleCompany />

@@ -1,77 +1,78 @@
-import { CorporateImage, CorporateArrow } from './CorporateImage.jsx';
+import { friendlyImages } from '../data/friendlyImages.js';
 
-function CorporateIntro() {
-  return (
-    <section className="corporate-intro">
-      <div className="cl-container corporate-intro__grid">
-        <p className="corporate-section-label">私たちについて</p>
-        <div><h2>しくみをつくる。<br />つながりを育てる。</h2>
-          <p>人が本来の力を発揮できるように、仕事のしくみを整える。<br className="hide-sp" />新しい可能性が生まれるように、人と地域をつなぐ。</p>
-          <p>Classlessは、AIとコミュニティのふたつの事業を通じて、<br className="hide-sp" />一人ひとりの挑戦と、さまざまなプロジェクトに伴走します。</p>
-        </div>
-      </div>
-    </section>
-  );
+export function FriendlyArrow({ external = false }) {
+  return <svg aria-hidden="true" viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d={external ? 'M6 18 18 6M6 6h12v12' : 'M4 12h15M13 6l6 6-6 6'} /></svg>;
 }
-
+export function FriendlyFlower({ className = '' }) {
+  return <svg className={className} aria-hidden="true" viewBox="0 0 100 100" fill="none"><path d="M50 39C17 7 12 46 39 50C7 83 46 88 50 61C83 93 88 54 61 50C93 17 54 12 50 39Z" fill="currentColor" /><circle cx="50" cy="50" r="8" fill="#fff" /></svg>;
+}
+function FriendlyImage({ name, className = '', photo = false }) {
+  const image = friendlyImages[name];
+  const [failed, setFailed] = React.useState(false);
+  React.useEffect(() => setFailed(false), [image.src]);
+  return <div className={`friendly-image ${photo ? 'friendly-image--photo' : 'friendly-image--drawing'} ${className}`}>
+    {image.src && !failed ? <img src={image.src} alt={image.alt} width="960" height="640" loading="lazy" style={{ objectPosition: image.position }} onError={() => setFailed(true)} /> : <div className="friendly-image__fallback" role="img" aria-label={image.alt}><FriendlyFlower /><span>{image.label}</span></div>}
+  </div>;
+}
+function FriendlyIntro() {
+  const trail = React.useRef(null);
+  React.useEffect(() => {
+    const target = trail.current;
+    if (!target) return undefined;
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) { target.classList.add('is-drawn'); observer.disconnect(); }
+    }, { threshold: 0.2 });
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, []);
+  return <section className="friendly-intro"><div className="cl-container friendly-intro__inner">
+    <div className="friendly-intro__heading"><FriendlyFlower className="friendly-intro__flower" /><h2>いっしょに、<br />面白い方へ。</h2></div>
+    <div className="friendly-intro__words"><p>「こんなことができたら。」<br />その小さなアイデアから、はじめましょう。</p><p>仕事を進めるしくみをつくること。<br />人と人が出会うきっかけをつくること。</p><p>Classlessは、AIとコミュニティの力で、<br />あなたのプロジェクトに伴走します。</p></div>
+    <svg ref={trail} className="friendly-trail" aria-hidden="true" viewBox="0 0 260 130" fill="none"><path pathLength="1" d="M8 22C68 4 96 15 86 52C75 90 32 88 48 57C69 20 174 37 197 90L220 116M194 108L220 116L220 90" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+  </div></section>;
+}
 function SimpleBusiness() {
-  return (
-    <section id="business" className="corporate-business">
-      <div className="cl-container">
-        <div className="corporate-section-head"><h2>事業紹介</h2><p>アイデアを、動き続けるプロジェクトへ。</p></div>
-        <article id="ai" className="corporate-business-row">
-          <CorporateImage name="ai" />
-          <div className="corporate-business-copy">
-            <div className="corporate-business-title"><h3>AI事業</h3><img src="/assets/logo-axel.png" alt="アクセル" width="132" height="46" /></div>
-            <h4>仕事のしくみを、<br />もっと使いやすく。</h4>
-            <p>AI活用サービス「アクセル」は、業務の整理から設計・実装・運用までを支援。現場に合うしくみを、小さく始めて育てていきます。</p>
-            <ul className="corporate-services"><li>n8nによるワークフロー設計</li><li>データベースマネジメント</li><li>サイト設計・制作</li></ul>
-            <a href="/contact?topic=ai" className="corporate-text-link">AI・業務設計を相談する <CorporateArrow /></a>
-          </div>
-        </article>
-        <article id="community" className="corporate-business-row corporate-business-row--reverse">
-          <CorporateImage name="community" />
-          <div className="corporate-business-copy">
-            <div className="corporate-business-title"><h3>コミュニティ組成事業</h3></div>
-            <h4>人と地域のつながりを、<br />次の可能性へ。</h4>
-            <p>Tokyo Global Hubや「ちいきのかまど」など、人が集まり、活動が続く場をつくる。企画から運営、発信まで、プロジェクトに寄り添います。</p>
-            <ul className="corporate-services"><li>コミュニティの企画・運営</li><li>地域おこし協力隊のネットワーク設計</li><li>地域のプロジェクト支援</li></ul>
-            <a href="https://chiikinokamado.jp/" target="_blank" rel="noopener noreferrer" className="corporate-text-link">ちいきのかまどを見る <CorporateArrow external /></a>
-          </div>
-        </article>
+  return <section id="business" className="friendly-business">
+    <div className="cl-container friendly-section-heading"><p>私たちにできること</p><h2>つくる、つながる。<br className="friendly-mobile-break" />ふたつの得意。</h2></div>
+    <article id="ai" className="friendly-service friendly-service--ai"><div className="cl-container friendly-service__layout">
+      <div className="friendly-service__copy">
+        <div className="friendly-service__name"><h3>AI事業</h3><img src="/assets/logo-axel.png" alt="アクセル" width="132" height="46" /></div>
+        <h4>むずかしい仕事に、<br />やさしいしくみを。</h4>
+        <p>毎日くり返す作業も、あちこちに散らばる情報も。<br className="friendly-wide-break" />AI活用サービス「アクセル」で整理して、<br className="friendly-wide-break" />やりたいことに向き合う時間をつくります。</p>
+        <ul className="friendly-services"><li>n8nによるワークフロー設計</li><li>データベースマネジメント</li><li>サイト設計・制作</li></ul>
+        <a className="friendly-button" href="/contact?topic=ai">しくみづくりを相談する<FriendlyArrow /></a>
       </div>
-    </section>
-  );
+      <div className="friendly-service__art"><span className="friendly-note">仕事が、すいすい。</span><FriendlyImage name="ai" /><span className="friendly-service__image-note">AI活用のイメージイラスト</span></div>
+    </div></article>
+    <article id="community" className="friendly-service friendly-service--community"><div className="cl-container friendly-service__layout">
+      <div className="friendly-service__art"><span className="friendly-note">出会いから、はじまる。</span><FriendlyImage name="community" /><span className="friendly-service__image-note">コミュニティづくりのイメージイラスト</span></div>
+      <div className="friendly-service__copy">
+        <div className="friendly-service__name"><h3>コミュニティ組成事業</h3></div>
+        <h4>人と人のあいだに、<br />新しいきっかけを。</h4>
+        <p>Tokyo Global Hubや、ちいきのかまど。<br className="friendly-wide-break" />背景の違う人が集まり、話し、一緒につくる。<br className="friendly-wide-break" />そんな場と、活動が続くしくみを育てています。</p>
+        <ul className="friendly-services"><li>コミュニティの企画・運営</li><li>地域おこし協力隊のネットワーク設計</li><li>地域のプロジェクト支援</li></ul>
+        <a className="friendly-button friendly-button--green" href="https://chiikinokamado.jp/" target="_blank" rel="noopener noreferrer">ちいきのかまどを見る<FriendlyArrow external /></a>
+      </div>
+    </div></article>
+  </section>;
 }
-
 function SimpleProjects() {
   const projects = [
-    { title: 'アクセル', category: 'AI・業務設計', image: 'axel', text: '業務と情報をつなぎ、プロジェクトが前へ進む土台をつくる。', href: '/contact?topic=ai', link: '相談する' },
-    { title: 'Tokyo Global Hub', category: 'コミュニティ', image: 'globalHub', text: '異なる背景を持つ人が出会い、ともに活動するきっかけをつくる。', href: 'https://note.com/tokyoglobalhub', link: '活動を見る', external: true },
-    { title: 'ちいきのかまど', category: '地域・コミュニティ', image: 'kamado', text: '地域に関わる人をつなぎ、地域から生まれる挑戦を支える。', href: 'https://chiikinokamado.jp/', link: '活動を見る', external: true },
+    { title: 'アクセル', category: '仕事のしくみづくり', image: 'ai', text: 'n8nの自動化から、データベース、Webサイトまで。現場で使い続けられるしくみを。', href: '/contact?topic=ai', link: '相談する', photo: false },
+    { title: 'Tokyo Global Hub', category: '国際交流のコミュニティ', image: 'globalHub', text: '異なる背景を持つ人が出会い、一緒に活動する。交流から次のきっかけをつくります。', href: 'https://note.com/tokyoglobalhub', link: '活動を見る', external: true, photo: true },
+    { title: 'ちいきのかまど', category: '地域からはじまるつながり', image: 'kamado', text: '地域を知る、関わる、つながる。地域で動く人と、その挑戦を支える取り組みです。', href: 'https://chiikinokamado.jp/', link: '活動を見る', external: true, photo: true },
   ];
-  return (
-    <section id="projects" className="corporate-projects"><div className="cl-container">
-      <div className="corporate-section-head"><h2>プロジェクト</h2><p>仕事の現場から、人が集まる場まで。</p></div>
-      <div className="corporate-project-grid">{projects.map(project => (
-        <article className="corporate-project" key={project.title}>
-          <CorporateImage name={project.image} />
-          <div className="corporate-project__body"><p className="corporate-project__category">{project.category}</p><h3>{project.title}</h3><p>{project.text}</p>
-            <a className="corporate-text-link" href={project.href} {...(project.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{project.link}<CorporateArrow external={project.external} /></a>
-          </div>
-        </article>
-      ))}</div>
-    </div></section>
-  );
+  return <section id="projects" className="friendly-projects"><div className="cl-container">
+    <div className="friendly-section-heading"><p>ともにつくるプロジェクト</p><h2>いろんな場所で、<br />面白いことが動いています。</h2></div>
+    <div className="friendly-project-grid">{projects.map(project => <article className="friendly-project" key={project.title}>
+      <a className="friendly-project__image-link" href={project.href} {...(project.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} aria-label={`${project.title} ${project.link}`}><FriendlyImage name={project.image} photo={project.photo} /></a>
+      <p className="friendly-project__category">{project.category}</p><h3>{project.title}</h3><p className="friendly-project__description">{project.text}</p>
+      <a className="friendly-text-link" href={project.href} {...(project.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{project.link}<FriendlyArrow external={project.external} /></a>
+    </article>)}</div>
+  </div></section>;
 }
-
 function SimpleCompany() {
   const rows = [['会社名', '合同会社Classless'], ['代表者', '丸山 侑太'], ['所在地', '東京都渋谷区円山町5-3 MIEUX渋谷ビル 5階'], ['設立', '2025年10月1日']];
-  return (
-    <section id="company" className="corporate-company"><div className="cl-container corporate-company__grid">
-      <div><p className="corporate-section-label">会社情報</p><h2>境界を越えて、<br />可能性を広げる。</h2><p className="corporate-company__lead">テクノロジーと、人の力。<br />その両方を信じて、未来をつくります。</p></div>
-      <dl>{rows.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
-    </div></section>
-  );
+  return <section id="company" className="friendly-company"><div className="cl-container friendly-company__inner"><div className="friendly-company__intro"><p>私たちのこと</p><h2>境界を越えて、<br />可能性を広げる。</h2><p>テクノロジーも、人のつながりも。<br />挑戦する人のそばで、手を動かす会社です。</p></div><dl>{rows.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></div></section>;
 }
-Object.assign(window, { CorporateIntro, SimpleBusiness, SimpleProjects, SimpleCompany });
+Object.assign(window, { FriendlyIntro, SimpleBusiness, SimpleProjects, SimpleCompany });

@@ -47,21 +47,133 @@
       }());
     </script>
     <style>
-      :root{color-scheme:light}html,body{margin:0;min-height:100%;background:#fff}
-      .boot-shell{display:none}.seo-prerender{box-sizing:border-box;width:min(100% - 48px,960px);margin:auto;padding:96px 0;color:#14283f;font-family:sans-serif;line-height:1.8}.seo-prerender h1{font-size:clamp(30px,5vw,56px);line-height:1.35}.seo-prerender h2{margin-top:56px}.seo-prerender img{max-width:100%;height:auto}
-      .js.classless-booting .seo-prerender{display:none!important}.js.classless-booting .boot-shell{display:block;position:relative;min-height:100svh;overflow:hidden;background:#fff;color:#14283f;font-family:var(--font-jp,'Noto Sans JP',sans-serif)}
-      .boot-shell--handoff{position:fixed!important;inset:0;z-index:1000;display:block!important;opacity:1;transition:opacity .2s ease-out}.boot-shell--exit{opacity:0}
-      .boot-header,.boot-home__content{box-sizing:border-box;width:100%;max-width:1320px;margin:auto;padding-inline:clamp(24px,5vw,64px)}
-      .boot-header{height:80px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f0f2f4}.boot-logo{width:178px;height:auto;display:block}.boot-nav{display:flex;gap:30px;align-items:center}.boot-nav span{height:8px;width:65px;background:#e6ecf0}.boot-nav span:last-child{width:145px;height:46px;background:#14283f}
-      .boot-home,.boot-inner{display:none}.js.classless-booting[data-boot-route="home"] .boot-home{display:flex}.js.classless-booting[data-boot-route="inner"] .boot-inner{display:block}
-      .boot-home{position:relative;min-height:680px;height:calc(100svh - 80px);max-height:900px;align-items:center;isolation:isolate}.boot-home__content{position:relative;z-index:2;padding-block:44px 115px}.boot-statement{font-size:13px;font-weight:600;letter-spacing:.025em;color:#1674a5;margin:0 0 28px}.boot-title{font-size:clamp(50px,6.8vw,96px);font-weight:700;line-height:1.32;letter-spacing:.01em;margin:0 0 30px}.boot-title>span{display:block}.boot-tagline{font-size:16px;line-height:2.1;margin:0 0 32px;color:#566574}.boot-link{font-size:14px;font-weight:700;padding:12px 0;line-height:1.7}
-      .boot-panel{position:absolute;right:0;top:32px;bottom:80px;width:45%;border-radius:0 0 0 96px;background:#e5eff5;overflow:hidden;z-index:-1}.boot-panel:before{content:'';position:absolute;width:92%;height:76%;top:-20%;right:-24%;border:clamp(45px,7vw,110px) solid #c5dce9;border-radius:50%;box-sizing:border-box}.boot-panel:after{content:'';position:absolute;width:75%;height:76%;bottom:-25%;left:13%;border:clamp(40px,6vw,90px) solid #91bed4;border-radius:50%;box-sizing:border-box}
-      .boot-inner{padding:100px 8vw}.boot-inner__title{width:55%;height:54px;background:#edf2f5}.boot-inner__line{width:70%;height:12px;background:#f3f6f8;margin-top:28px}
-      @media(max-width:1100px){.boot-panel{width:42%}.boot-title{font-size:clamp(50px,6.8vw,84px)}}
-      @media(max-width:960px){.boot-nav span:not(:last-child){display:none}.boot-home{min-height:650px;max-height:780px}.boot-panel{width:40%;top:70px;bottom:100px}.boot-title{font-size:clamp(48px,7vw,68px)}.boot-statement{font-size:12px}.boot-tagline{font-size:14px}}
-      @media(max-width:680px){.boot-header{height:70px}.boot-logo{width:145px}.boot-nav span:last-child{width:95px;height:38px}.js.classless-booting[data-boot-route="home"] .boot-home{display:block}.boot-home{box-sizing:border-box;height:auto;min-height:760px;max-height:none;padding-top:55px;padding-bottom:265px}.boot-home__content{padding-block:0}.boot-statement{font-size:10px;margin-bottom:24px}.boot-title{font-size:clamp(38px,9.6vw,61px);line-height:1.4;margin-bottom:23px}.boot-tagline{font-size:13px;line-height:2;margin-bottom:18px}.boot-link{font-size:13px}.boot-panel{top:auto;bottom:65px;height:205px;width:72%;border-radius:0 0 0 50px}}
-      @media(max-width:360px){.boot-logo{width:126px}.boot-home{min-height:730px}.boot-statement{font-size:9px}}
-      @media(prefers-reduced-motion:reduce){.boot-shell--handoff{transition:none}}
+      :root { color-scheme: light; }
+      html, body { margin: 0; min-height: 100%; background: #fff; }
+      .boot-shell { display: none; }
+      .seo-prerender {
+        box-sizing: border-box;
+        width: min(100% - 48px, 960px);
+        margin: 0 auto;
+        padding: 96px 0;
+        color: #162137;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", sans-serif;
+        line-height: 1.8;
+      }
+      .seo-prerender h1 { margin: 0 0 24px; font-size: clamp(30px, 5vw, 56px); line-height: 1.35; }
+      .seo-prerender h2 { margin-top: 56px; line-height: 1.45; }
+      .seo-prerender img { max-width: 100%; height: auto; }
+      .js.classless-booting .seo-prerender { display: none !important; }
+      .js.classless-booting .boot-shell {
+        position: relative;
+        display: block;
+        min-height: 100svh;
+        overflow: hidden;
+        color: #111827;
+        background: #fff;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", sans-serif;
+      }
+      .boot-shell--handoff {
+        position: fixed !important;
+        inset: 0;
+        z-index: 1000;
+        display: block !important;
+        min-height: 100svh;
+        opacity: 1;
+        transition: opacity .2s ease-out;
+      }
+      .boot-shell--exit { opacity: 0; }
+      .boot-header {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 1200px;
+        height: 74px;
+        margin: 0 auto;
+        padding-inline: clamp(20px, 5vw, 64px);
+      }
+      .boot-logo { display: block; width: auto; height: 44px; }
+      .boot-nav { display: flex; align-items: center; gap: 30px; }
+      .boot-nav span { width: 72px; height: 10px; border-radius: 999px; background: #e9edf5; }
+      .boot-nav span:last-child { width: 86px; height: 34px; background: #2b50f0; }
+      .boot-home,
+      .boot-inner { display: none; }
+      .js.classless-booting[data-boot-route="home"] .boot-home { display: flex; }
+      .js.classless-booting[data-boot-route="inner"] .boot-inner { display: block; }
+      .boot-home {
+        position: relative;
+        box-sizing: border-box;
+        min-height: 92svh;
+        align-items: center;
+        padding: 0;
+        isolation: isolate;
+      }
+      .boot-home__content {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 1200px;
+        margin-inline: auto;
+        padding: 40px clamp(20px, 5vw, 64px) 120px;
+      }
+      .boot-home::before,
+      .boot-home::after {
+        position: absolute;
+        z-index: -1;
+        width: min(52vw, 680px);
+        aspect-ratio: 1;
+        border-radius: 50%;
+        content: "";
+        filter: blur(64px);
+        opacity: .72;
+      }
+      .boot-home::before {
+        top: -32%; left: -12%;
+        background: radial-gradient(circle, rgba(55,171,217,.32), rgba(55,171,217,0) 67%);
+        animation: boot-breathe 2.8s ease-in-out infinite alternate;
+      }
+      .boot-home::after {
+        right: -14%; bottom: -45%;
+        background: radial-gradient(circle, rgba(43,80,240,.22), rgba(43,80,240,0) 67%);
+        animation: boot-breathe 3.4s ease-in-out .2s infinite alternate-reverse;
+      }
+      .boot-title { margin: 0; font-size: clamp(44px, 8vw, 104px); font-weight: 700; line-height: 1.28; letter-spacing: .015em; }
+      .boot-title span { display: block; }
+      .boot-tagline { margin: 30px 0 0; color: #6b7280; font-size: clamp(13px, 1.4vw, 16px); font-weight: 600; letter-spacing: .08em; }
+      .boot-panel {
+        position: absolute;
+        top: 8%; right: -5%;
+        z-index: -1;
+        width: clamp(260px, 29vw, 450px);
+        height: clamp(155px, 17vw, 260px);
+        transform: skewX(-18deg);
+        background: linear-gradient(135deg, rgba(55,171,217,.14), rgba(43,80,240,.12));
+      }
+      .boot-inner { box-sizing: border-box; min-height: calc(100svh - 74px); padding: clamp(64px, 9vw, 118px) max(24px, calc((100vw - 1180px) / 2)); }
+      .boot-inner__eyebrow { width: 96px; height: 10px; border-radius: 999px; background: #cbd6ff; }
+      .boot-inner__title { width: min(72vw, 600px); height: clamp(42px, 6vw, 68px); margin-top: 24px; border-radius: 12px; background: #e9edf5; }
+      .boot-inner__line { width: min(84vw, 720px); height: 14px; margin-top: 30px; border-radius: 999px; background: #f0f2f7; }
+      .boot-inner__line + .boot-inner__line { width: min(66vw, 560px); margin-top: 12px; }
+      .boot-inner__cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 64px; }
+      .boot-inner__cards span { height: 150px; border: 1px solid #edf0f5; border-radius: 18px; background: linear-gradient(135deg, #fafbfe, #f4f7ff); }
+      @keyframes boot-breathe { to { transform: translate3d(3vw, 2vh, 0) scale(1.08); opacity: .9; } }
+      @media (max-width: 760px) {
+        .boot-logo { height: 39px; }
+        .boot-nav span { display: none; }
+        .boot-nav span:last-child { display: block; width: 28px; height: 2px; border-radius: 0; box-shadow: 0 7px #111827, 0 -7px #111827; background: #111827; }
+        .boot-home { min-height: 92svh; }
+        .boot-title { font-size: clamp(44px, 8vw, 104px); }
+        .boot-panel { top: 4%; right: -34%; opacity: .7; }
+        .boot-inner { padding-inline: 24px; }
+        .boot-inner__cards { grid-template-columns: 1fr; }
+        .boot-inner__cards span:nth-child(n+2) { display: none; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .boot-home::before, .boot-home::after { animation: none; }
+        .boot-shell--handoff { transition: none; }
+      }
     </style>
     <noscript><style>.boot-shell{display:none!important}.seo-prerender{display:block!important}</style></noscript>
 
@@ -86,10 +198,8 @@
         </div>
         <div class="boot-home">
           <div class="boot-home__content">
-            <p class="boot-statement">Beyond borders. Beyond possibilities.</p>
             <div class="boot-title"><span>AIで、人間を</span><span>面白くする。</span></div>
-            <p class="boot-tagline">テクノロジーと、人のつながりで。<br />新しい挑戦が動き出す、その土台をつくる。</p>
-            <div class="boot-link">私たちの事業について　→</div>
+            <div class="boot-tagline">Making Humans Interesting with AI.</div>
           </div>
           <span class="boot-panel"></span>
         </div>

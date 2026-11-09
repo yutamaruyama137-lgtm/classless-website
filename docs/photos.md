@@ -1,33 +1,29 @@
-# コーポレートサイトの画像差し替え
+# 画像を差し替える
 
-現在は、ヒーロー・2事業・3プロジェクトの **全6枠** をプレースホルダーにしています。会社とアクセルのロゴはブランド素材として表示しています。
+現在は、元のファーストビューと、オリジナルの編集イラスト2点、確認済みの活動写真2点を使っています。
 
-設定ファイル: `src/data/corporateImages.js`
+## 事業紹介とプロジェクトの画像
 
-| キー | 位置 | 推奨する写真 |
+`src/data/friendlyImages.js` の `friendlyImages` に集約しています。画像を `public/photos/` へ置き、対応する `src` と `alt` を更新してください。
+
+| キー | 現在の画像 | 表示方法 |
 | --- | --- | --- |
-| hero | ファーストビュー右側 | 仕事・チームの雰囲気が伝わる写真 |
-| ai | AI事業 | 制作風景、システムの実画面 |
-| community | コミュニティ組成事業 | 集まり、対話、活動風景 |
-| axel | アクセルのプロジェクト | 支援内容を伝える画像 |
-| globalHub | Tokyo Global Hub | 実際の交流イベント |
-| kamado | ちいきのかまど | 実際の地域活動 |
+| `ai` | `/illustrations/ai-workflow.png` | 生成イラスト、全体を収める |
+| `community` | `/illustrations/community-garden.png` | 生成イラスト、全体を収める |
+| `globalHub` | `/projects/tokyo-global-hub.jpg` | 活動写真、枠へトリミング |
+| `kamado` | `/projects/chiikinokamado.jpg` | 公式レポート、下寄せのトリミング |
 
-1. 写真を `public/photos/` に保存します。
-2. 対象キーの `src: null` を `src: '/photos/team.jpg'` のように変更します。
-3. `alt` に実際の写真の説明を記入します。
-4. `position: '50% 50%'` を変えると、顔などの表示位置を調整できます。
+`position` は写真の切り取り位置です。例: `50% 85%`。生成イラストは3:2の全体を見せ、人物や道具を切らないよう `object-fit: contain` で表示します。画像は下部で遅延読み込みします。
 
-```js
-community: {
-  src: '/photos/community.jpg',
-  alt: '参加者が意見を交わすワークショップの様子',
-  label: 'Connections for tomorrow',
-  variant: 'community',
-  position: '50% 40%',
-}
-```
+生成イラストを編集写真と誤認させないため、事業紹介にはイメージイラストのキャプションがあります。生成方式とプロンプトは [illustration-assets.md](illustration-assets.md) に記録しています。
 
-`src: null` または読み込み失敗時は、現在の抽象的なプレースホルダーを表示します。公開ページにアップロード機能はありません。画像に替えた場合は用途ラベルを重ねず、写真だけを表示します。
+## 元のファーストビュー
 
-レイアウトはPC・スマホで比率が変わります。画像は十分な余白があるものを使い、必要に応じて `position` を調整してください。過去案の活動写真は `public/projects/` に保持されていますが、現在のホームページからは読み込みません。
+`src/components/TopPage.jsx` の `HeroCutin` 内にある2枚の画像です。最初のデザインの見た目と動きを復元するため、元のUnsplash写真・斜めパネル・青い光・文字アニメーションを維持しています。変更するときは元のレイアウトとのバランスを確認してください。
+
+## 活動写真の出典
+
+- Tokyo Global Hub: 公式note [TGH立ち上げ記事](https://note.com/tokyoglobalhub/n/nbd1bd3d82cc7) のイベント写真。
+- ちいきのかまど: [Local Question #01 実施レポート](https://chiikinokamado.jp/news/local-question-01-report/) の活動紹介画像。
+
+過去のプレースホルダー用 `corporateImages.js` / `CorporateImage.jsx` は現在使わないため削除しました。
