@@ -1,38 +1,33 @@
-# 写真エリアの差し替え
+# コーポレートサイトの画像差し替え
 
-トップのファーストビューの次に、6つの画像枠がある写真ボードを配置しています。
-設定は **`src/data/activityPhotos.js` の `activityPhotos`** だけで管理します。
+現在は、ヒーロー・2事業・3プロジェクトの **全6枠** をプレースホルダーにしています。会社とアクセルのロゴはブランド素材として表示しています。
 
-## 写真を入れる
+設定ファイル: `src/data/corporateImages.js`
 
-1. 画像ファイルを `public/photos/` に保存します（フォルダがなければ作成）。
-2. 対象の枠の `src: null` を `src: '/photos/event.jpg'` などに変更します。
-3. `alt` に実際の写真の内容、`caption` に活動名などの短い説明を記入します。
-4. 顔などが切れる場合は `position: '50% 35%'` のように表示位置を調整します。
+| キー | 位置 | 推奨する写真 |
+| --- | --- | --- |
+| hero | ファーストビュー右側 | 仕事・チームの雰囲気が伝わる写真 |
+| ai | AI事業 | 制作風景、システムの実画面 |
+| community | コミュニティ組成事業 | 集まり、対話、活動風景 |
+| axel | アクセルのプロジェクト | 支援内容を伝える画像 |
+| globalHub | Tokyo Global Hub | 実際の交流イベント |
+| kamado | ちいきのかまど | 実際の地域活動 |
+
+1. 写真を `public/photos/` に保存します。
+2. 対象キーの `src: null` を `src: '/photos/team.jpg'` のように変更します。
+3. `alt` に実際の写真の説明を記入します。
+4. `position: '50% 50%'` を変えると、顔などの表示位置を調整できます。
 
 ```js
-{
-  id: 'create',
-  src: '/photos/workshop.jpg',
-  alt: 'ワークショップでアイデアを書き出す参加者',
-  caption: 'ワークショップ',
-  word: 'つくる。',
-  tone: 'yellow',
-  shape: 'small',
+community: {
+  src: '/photos/community.jpg',
+  alt: '参加者が意見を交わすワークショップの様子',
+  label: 'Connections for tomorrow',
+  variant: 'community',
   position: '50% 40%',
 }
 ```
 
-`id` は配置に使うため変更しないでください。今ある6枠への差し替えではCSS編集は不要です。
-横長の写真は `gather` / `local`、正方形・縦長は残りの4枠に向いています。
-`src: null` または読込失敗時には、図形と `word` を使った淡色の枠が表示されます。
-画像アップロード機能はなく、サイトのファイルを差し替える構成です。
+`src: null` または読み込み失敗時は、現在の抽象的なプレースホルダーを表示します。公開ページにアップロード機能はありません。画像に替えた場合は用途ラベルを重ねず、写真だけを表示します。
 
-実際の活動写真を使い、掲載許諾を確認した素材を配置してください。仮の写真を実績として載せないでください。
-
-## 現在の写真
-
-- Tokyo Global Hub: `public/projects/tokyo-global-hub.jpg`。公式note [TGH立ち上げ記事](https://note.com/tokyoglobalhub/n/nbd1bd3d82cc7) のイベント写真。
-- ちいきのかまど: `public/projects/chiikinokamado.jpg`。[Local Question #01 実施レポート](https://chiikinokamado.jp/news/local-question-01-report/) の活動写真。
-
-既存の3つのプロジェクト紹介は、このボードとは別に保持しています。
+レイアウトはPC・スマホで比率が変わります。画像は十分な余白があるものを使い、必要に応じて `position` を調整してください。過去案の活動写真は `public/projects/` に保持されていますが、現在のホームページからは読み込みません。

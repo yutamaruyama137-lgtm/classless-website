@@ -67,7 +67,7 @@ function scrollToId(id) {
   }
   const el = document.getElementById(id)
   if (el) {
-    const y = el.getBoundingClientRect().top + window.scrollY - 64
+    const y = el.getBoundingClientRect().top + window.scrollY - (document.querySelector('header')?.getBoundingClientRect().height || 80) - 20
     window.scrollTo({ top: y, behavior })
   }
 }
@@ -75,9 +75,7 @@ function scrollToId(id) {
 function App() {
   const route = getRoute()
 
-  // React has committed underneath the first-paint shell. Keep the home shell
-  // in place until the real hero's original character animation has started,
-  // then fade it away. This avoids turning the title blank during the handoff.
+  // Fade the matching first-paint shell once React and the site font are ready.
   React.useLayoutEffect(() => {
     const html = document.documentElement
     document.getElementById('root')?.removeAttribute('data-prerender')
@@ -99,8 +97,7 @@ function App() {
     Promise.race([fontsReady, fontDeadline]).then(() => {
       if (cancelled) return
       window.clearTimeout(deadlineTimer)
-      // On the home page, allow the first hero characters to begin underneath
-      // the identical shell title before cross-fading the shell away.
+      // The corporate hero keeps text visible and only animates its visual.
       handoffTimer = window.setTimeout(() => {
         if (cancelled) return
         bootShell.classList.add('boot-shell--exit')
@@ -109,7 +106,7 @@ function App() {
           html.classList.remove('classless-booting')
           html.removeAttribute('data-boot-route')
         }, reducedMotion ? 0 : 220)
-      }, route === 'home' && !reducedMotion ? 480 : 0)
+      }, 0)
     })
 
     return () => {
@@ -123,20 +120,19 @@ function App() {
     }
   }, [route])
 
-  const { Header, ContactBand, ContactPage, Footer, TopHero, ActivityCollage, SimpleBusiness, SimpleProjects, SimpleCompany } = window
+  const { Header, ContactBand, ContactPage, Footer, TopHero, CorporateIntro, SimpleBusiness, SimpleProjects, SimpleCompany } = window
 
   const article = route === 'article'
     ? (window.BLOG_ARTICLES || []).find((item) => item.slug === getSlug())
     : null
   applySeo(route, article)
-  const cta = { label: '無料相談', href: '/contact' }
+  const cta = { label: 'お問い合わせ', href: '/contact' }
 
   const sectionHref = (id) => route === 'home' ? `#${id}` : `/#${id}`
   const navLinks = [
-    { label: 'AI事業', href: sectionHref('ai') },
-    { label: 'コミュニティ組成事業', href: sectionHref('community') },
-    { label: '取り組み', href: sectionHref('projects') },
-    { label: '会社概要', href: sectionHref('company') },
+    { label: '事業紹介', href: sectionHref('business') },
+    { label: 'プロジェクト', href: sectionHref('projects') },
+    { label: '会社情報', href: sectionHref('company') },
   ]
   const homeHref = route === 'home' ? '#top' : '/'
 
@@ -194,7 +190,7 @@ function App() {
   return shell('Classless コーポレートサイト', (
     <React.Fragment>
       <TopHero />
-      <ActivityCollage />
+      <CorporateIntro />
       <SimpleBusiness />
       <SimpleProjects />
       <SimpleCompany />
