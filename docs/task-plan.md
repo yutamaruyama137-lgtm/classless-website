@@ -8,7 +8,9 @@
 - [x] 画像の一元設定と差し替えドキュメントを更新
 - [x] 本番ビルド
 - [x] PC・スマホの視覚検証と操作確認
-- [ ] GitHub / Vercelへの反映
+- [x] GitHub / Vercelへの反映
+
+公開確認: 実装コミット b6940d6。https://www.classless.jp/ で Vercel Production Ready、HTTP 200、最新バンドル index-a6fa4134.js の配信と GitHub Vercel status success を確認。
 
 ## 今回の設計判断
 
