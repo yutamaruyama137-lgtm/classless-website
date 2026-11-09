@@ -6,7 +6,9 @@
 - [x] プロジェクト・会社概要・相談導線を統合
 - [x] 実画像・レスポンシブ・リンク・アニメーションを検証
 - [x] 本番ビルド（46ルートと404ページを生成）
-- [ ] GitHub・Vercelへの公開
+- [x] GitHub・Vercelへの公開
+
+公開確認（2026-11-10）: 実装コミット `6d31d99` をVercel Productionへ反映。`https://www.classless.jp/` はHTTP 200で `index-e0e89e8c.js` を配信し、生成イラスト2点もHTTP 200 / image/pngを確認。デプロイ `dpl_5ZVQ92SSFKdP5sphB1QmxSy7rWXr` はReady、`www.classless.jp` / `classless.jp` の割り当て確認済み。
 
 ## 今回のデザイン方針
 
