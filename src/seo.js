@@ -8,7 +8,7 @@ const ROUTE_META = {
   home: {
     path: '/',
     title: '合同会社Classless｜AIとコミュニティで、プロジェクトを前へ',
-    description: '合同会社Classlessは、AI事業「アクセル」とコミュニティ組成事業を展開。n8nのワークフロー設計、データベース管理、サイト制作から、Tokyo Global Hubやちいきのかまどなど人と地域をつなぐ取り組みまで支援します。',
+    description: '「やってみたい」に、時間と仲間を。ClasslessはAI事業「アクセル」でn8nの自動化・データベース管理・サイト制作を支援し、Tokyo Global Hubやちいきのかまどで、人と地域をつなぐ活動を育てています。',
   },
   contact: {
     path: '/contact',

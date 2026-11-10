@@ -1,6 +1,8 @@
 import { friendlyImages } from '../data/friendlyImages.js';
 import { useDrawOnView } from './useDrawOnView.js';
 import { AxelExamples } from './AxelExamples.jsx';
+import { philosophy } from '../data/philosophy.js';
+import { AxelMaterialsLink } from './AxelMaterialsLink.jsx';
 
 export function FriendlyArrow({ external = false }) {
   return <svg aria-hidden="true" viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d={external ? 'M6 18 18 6M6 6h12v12' : 'M4 12h15M13 6l6 6-6 6'} /></svg>;
@@ -42,9 +44,9 @@ function FriendlyImage({ name, className = '', photo = false }) {
 }
 function FriendlyIntro() {
   const trail = useDrawOnView();
-  return <section className="friendly-intro"><div className="cl-container friendly-intro__inner">
-    <div className="friendly-intro__heading"><FriendlyFlower className="friendly-intro__flower" /><h2>いっしょに、<br />面白い方へ。</h2></div>
-    <div className="friendly-intro__words"><p>「こんなことができたら。」<br />その小さなアイデアから、はじめましょう。</p><p>仕事を進めるしくみをつくること。<br />人と人が出会うきっかけをつくること。</p><p>Classlessは、AIとコミュニティの力で、<br />あなたのプロジェクトに伴走します。</p></div>
+  return <section id="philosophy" className="friendly-intro friendly-philosophy" aria-labelledby="philosophy-heading"><div className="cl-container friendly-intro__inner">
+    <div className="friendly-intro__heading"><FriendlyFlower className="friendly-intro__flower" /><p className="friendly-philosophy__label">私たちの考え</p><h2 id="philosophy-heading">「やってみたい」に、<br />時間と仲間を。</h2></div>
+    <div className="friendly-intro__words">{philosophy.paragraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div>
     <svg ref={trail} className="friendly-trail friendly-draw" aria-hidden="true" focusable="false" viewBox="0 0 260 130" fill="none"><path pathLength="1" d="M8 22C68 4 96 15 86 52C75 90 32 88 48 57C69 20 174 37 197 90L220 116M194 108L220 116L220 90" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
   </div></section>;
 }
@@ -55,9 +57,9 @@ function SimpleBusiness() {
       <div className="friendly-service__copy">
         <div className="friendly-service__name"><h3>AI事業</h3><img src="/assets/logo-axel.png" alt="アクセル" width="132" height="46" /></div>
         <h4>むずかしい仕事に、<br />やさしいしくみを。</h4>
-        <p>社内資料を探すAI、問い合わせをつなぐ自動化、<br className="friendly-wide-break" />使いやすいデータベースやWebサイト。<br className="friendly-wide-break" />「アクセル」は、業務に合わせて設計・実装し、<br className="friendly-wide-break" />運用まで一緒に整えるAI活用サービスです。</p>
+        <p>{philosophy.ai}</p>
         <ul className="friendly-services"><li>AIエージェント・社内ナレッジ検索</li><li>n8nによる業務自動化・ツール連携</li><li>データベース設計・管理、サイト設計・制作</li></ul>
-        <a className="friendly-button" href="/contact?topic=ai">しくみづくりを相談する<FriendlyArrow /></a>
+        <div className="axel-service-actions"><a className="friendly-button" href="/contact?topic=ai">しくみづくりを相談する<FriendlyArrow /></a><AxelMaterialsLink /></div>
       </div>
       <div className="friendly-service__art"><span className="friendly-note">仕事が、すいすい。</span><FriendlyScribble className="friendly-scribble--service" variant="bend" /><FriendlyImage name="ai" /></div>
     </div><AxelExamples /></article>
@@ -66,7 +68,7 @@ function SimpleBusiness() {
       <div className="friendly-service__copy">
         <div className="friendly-service__name"><h3>コミュニティ組成事業</h3></div>
         <h4>人と人のあいだに、<br />新しいきっかけを。</h4>
-        <p>Tokyo Global Hubや、ちいきのかまど。<br className="friendly-wide-break" />背景の違う人が集まり、話し、一緒につくる。<br className="friendly-wide-break" />そんな場と、活動が続くしくみを育てています。</p>
+        <p>{philosophy.community}</p>
         <ul className="friendly-services"><li>コミュニティの企画・運営</li><li>地域おこし協力隊のネットワーク設計</li><li>地域のプロジェクト支援</li></ul>
         <a className="friendly-button friendly-button--green" href="https://chiikinokamado.jp/" target="_blank" rel="noopener noreferrer">ちいきのかまどを見る<FriendlyArrow external /></a>
       </div>
@@ -75,7 +77,7 @@ function SimpleBusiness() {
 }
 function SimpleProjects() {
   const projects = [
-    { title: 'アクセル', category: '仕事のしくみづくり', image: 'axelProject', text: 'n8nの自動化から、データベース、Webサイトまで。現場で使い続けられるしくみを。', href: '/contact?topic=ai', link: '相談する', photo: false, logo: true },
+    { title: 'アクセル', category: '仕事のしくみづくり', image: 'axelProject', text: 'n8nの自動化から、データベース、Webサイトまで。現場で使い続けられるしくみを。', href: '/#ai', link: 'アクセルを見る', photo: false, logo: true },
     { title: 'Tokyo Global Hub', category: '国際交流のコミュニティ', image: 'globalHub', text: '異なる背景を持つ人が出会い、一緒に活動する。交流から次のきっかけをつくります。', href: 'https://www.instagram.com/tokyoglobalhub/', link: 'Instagramを見る', external: true, photo: true },
     { title: 'ちいきのかまど', category: '地域からはじまるつながり', image: 'kamado', text: '地域を知る、関わる、つながる。地域で動く人と、その挑戦を支える取り組みです。', href: 'https://chiikinokamado.jp/', link: '活動を見る', external: true, photo: true },
   ];

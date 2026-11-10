@@ -30,7 +30,7 @@ import './components/LegalPages.jsx'
 import './components/Blog.jsx'
 import './styles/simple-home.css'
 
-const legacyRoutes = { '/axel': '/#ai', '/leadtoss': '/', '/business': '/#business', '/philosophy': '/#company' }
+const legacyRoutes = { '/axel': '/#ai', '/leadtoss': '/', '/business': '/#business', '/philosophy': '/#philosophy' }
 const legacyPath = window.location.pathname.replace(/\/+$/, '')
 if (legacyRoutes[legacyPath]) window.location.replace(legacyRoutes[legacyPath])
 
@@ -130,6 +130,7 @@ function App() {
 
   const sectionHref = (id) => route === 'home' ? `#${id}` : `/#${id}`
   const navLinks = [
+    { label: '私たちの考え', href: sectionHref('philosophy') },
     { label: '事業紹介', href: sectionHref('business') },
     { label: 'プロジェクト', href: sectionHref('projects') },
     { label: '会社情報', href: sectionHref('company') },
@@ -190,8 +191,8 @@ function App() {
   return shell('Classless コーポレートサイト', (
     <React.Fragment>
       <TopHero />
-      <FriendlyPartners />
       <FriendlyIntro />
+      <FriendlyPartners />
       <SimpleBusiness />
       <SimpleProjects />
       <SimpleCompany />

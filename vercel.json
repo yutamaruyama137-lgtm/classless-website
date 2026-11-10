@@ -34,7 +34,7 @@
     },
     {
       "source": "/philosophy",
-      "destination": "/#company",
+      "destination": "/#philosophy",
       "permanent": true
     }
   ]

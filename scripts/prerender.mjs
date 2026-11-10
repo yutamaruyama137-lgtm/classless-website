@@ -3,6 +3,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { ROUTE_META } from '../src/seo.js'
 import { axelExamples } from '../src/data/axelExamples.js'
+import { philosophy } from '../src/data/philosophy.js'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const root = join(here, '..')
@@ -95,9 +96,10 @@ for (const [path, title, description] of routeMeta) {
   let body = `<main><h1>${esc(title.split('｜')[0])}</h1><p>${esc(description)}</p></main>`
   if (path === '/') body = `<main>
     <h1>AIで、人間を面白くする。</h1><p>${esc(description)}</p>
+    <section id="philosophy"><h2>${esc(philosophy.title)}</h2>${philosophy.paragraphs.map(paragraph => `<p>${esc(paragraph)}</p>`).join('')}</section>
     <section id="business"><h2>しくみをつくる。つながりを育てる。</h2>
-      <section id="ai"><h3>AI事業「アクセル」</h3><p>社内資料を探すAI、問い合わせをつなぐ自動化、使いやすいデータベースやWebサイト。業務に合わせて設計・実装し、運用まで一緒に整えます。</p><ul><li>AIエージェント・社内ナレッジ検索</li><li>n8nによる業務自動化・ツール連携</li><li>データベース設計・管理、サイト設計・制作</li></ul><section id="axel-examples"><h4>アクセルで、仕事はこう変わる。</h4><p>以下は業務に合わせて設計する構築例です。</p>${axelExamples.map(example => `<article><h5>${esc(example.title)}</h5><p>${esc(example.description)}</p><dl>${example.steps.map(([label, value]) => `<dt>${esc(label)}</dt><dd>${esc(value)}</dd>`).join('')}</dl><p>設計するもの: ${esc(example.deliverables)}</p></article>`).join('')}<p>業務整理から、設計・実装、運用改善まで支援します。</p></section><a href="/contact?topic=ai">AI・しくみづくりを相談する</a></section>
-      <section id="community"><h3>コミュニティ組成事業</h3><p>コミュニティの企画・運営、地域おこし協力隊のネットワーク設計、地域のプロジェクト支援に取り組みます。</p><a href="https://chiikinokamado.jp/">ちいきのかまどを見る</a></section>
+      <section id="ai"><h3>AI事業「アクセル」</h3><p>${esc(philosophy.ai)}</p><ul><li>AIエージェント・社内ナレッジ検索</li><li>n8nによる業務自動化・ツール連携</li><li>データベース設計・管理、サイト設計・制作</li></ul><section id="axel-examples"><h4>アクセルでつくる、仕事のしくみ。</h4><p>以下は業務に合わせて設計する構築例です。</p>${axelExamples.map(example => `<article><h5>${esc(example.title)}</h5><p>${esc(example.description)}</p><dl>${example.steps.map(([label, value]) => `<dt>${esc(label)}</dt><dd>${esc(value)}</dd>`).join('')}</dl><p>${esc(example.sample)}</p><p>設計するもの: ${esc(example.deliverables)}</p></article>`).join('')}<p>業務整理から、設計・実装、運用改善まで支援します。</p></section><a href="/contact?topic=ai">AI・しくみづくりを相談する</a><p><a href="/materials/axel-service-guide.pdf">資料請求：アクセル事業資料（PDF・約2.7MB）</a></p></section>
+      <section id="community"><h3>コミュニティ組成事業</h3><p>${esc(philosophy.community)}</p><a href="https://chiikinokamado.jp/">ちいきのかまどを見る</a></section>
     </section>
     <section id="projects"><h2>ともにつくる、取り組み。</h2><h3>アクセル</h3><p>n8nによる自動化、データベース管理、サイト設計。</p><h3>Tokyo Global Hub</h3><p>交流をきっかけに、一緒に活動できるコミュニティづくり。</p><a href="https://www.instagram.com/tokyoglobalhub/">Tokyo Global Hubの活動</a><h3>ちいきのかまど</h3><p>地域で動く人とプロジェクトを支える取り組み。</p><a href="https://chiikinokamado.jp/">ちいきのかまどの活動</a></section>
     <section id="company"><h2>Classlessについて</h2><dl><dt>会社名</dt><dd>合同会社Classless</dd><dt>代表者</dt><dd>丸山 侑太</dd><dt>所在地</dt><dd>東京都渋谷区円山町5-3 MIEUX渋谷ビル 5階</dd><dt>設立</dt><dd>2025年10月1日</dd></dl></section>
@@ -108,7 +110,7 @@ for (const [path, title, description] of routeMeta) {
   await emit(path, inject({ path, title, description, body, jsonLd }))
 }
 
-const legacyRedirects = { '/axel': '/#ai', '/leadtoss': '/', '/business': '/#business', '/philosophy': '/#company' }
+const legacyRedirects = { '/axel': '/#ai', '/leadtoss': '/', '/business': '/#business', '/philosophy': '/#philosophy' }
 for (const [path, destination] of Object.entries(legacyRedirects)) {
   await emit(path, `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="robots" content="noindex, follow"><meta http-equiv="refresh" content="0; url=${destination}"><link rel="canonical" href="${siteUrl}/"><title>Classless</title></head><body><a href="${destination}">新しいページへ移動する</a></body></html>`)
 }

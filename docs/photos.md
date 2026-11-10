@@ -22,11 +22,11 @@ AI事業のイラスト下の説明キャプションは削除し、画像内容
 
 ## アクセルの構築例
 
-`src/data/axelExamples.js` に、用途3点のコピー・画像パス・altを集約しています。`public/demos/axel-knowledge.webp`、`axel-workflow.webp`、`axel-data.webp` は、独自に生成した画面イメージです。完成製品や顧客の実画面として扱わず、画面下に「構築例の画面イメージ」と表示します。全体を3:2で収め、用途を選ぶと切り替わります。生成方式とプロンプトは [axel-demo-assets.md](axel-demo-assets.md) を参照してください。
+`src/data/axelExamples.js` に、用途3点のコピー・画像パス・altを集約しています。現在は `public/demos/axel-workflow-ui.webp`、`axel-database-ui.webp`、`axel-knowledge-ui.webp` を使用。実際のワークフローエディター・台帳・資料検索画面に近い独自の構成例で、アクセルの説明内だけに表示します。画面下の「構成例のサンプル画面」と「画面を大きく見る」で、完成製品や実績の画面と混同せず内容を確認できます。全体を3:2で収め、n8n自動化→データベース管理→社内資料検索の順で切り替わります。生成方式と最終プロンプトは [axel-ui-demo-assets.md](axel-ui-demo-assets.md) を参照。旧イメージ3点は前版の記録として残し、現在の表示には使いません。
 
 ## パートナー・取引先ロゴ
 
-元の公開版 `0bf5400` にあった9点を、ヒーロー直後の静的な一覧として再掲しています。画像は `public/assets/logos/` の既存PNG、表示データは `src/components/SimpleHome.jsx` の `FriendlyPartners` です。企業の追加や実績数値の追加はしていません。横長・縦長の違いに合わせた表示高で、画像全体を収めています。
+元の公開版 `0bf5400` にあった9点を、理念の文章に続く静的な一覧として再掲しています。画像は `public/assets/logos/` の既存PNG、表示データは `src/components/SimpleHome.jsx` の `FriendlyPartners` です。企業の追加や実績数値の追加はしていません。横長・縦長の違いに合わせた表示高で、画像全体を収めています。
 
 ## 元のファーストビュー
 

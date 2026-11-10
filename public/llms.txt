@@ -4,8 +4,10 @@
 
 ## 公式ページ
 
+- [私たちの考え](https://www.classless.jp/#philosophy): 「やってみたい」に、時間と仲間を。AIで仕事の流れを整え、コミュニティで一緒に動ける関係を育てるというClasslessの考え。
 - [AI事業・アクセル](https://www.classless.jp/#ai): AIエージェント・社内ナレッジ検索、n8nの業務自動化・ツール連携、データベース設計・管理、サイト設計・制作。業務の整理から設計・実装・運用改善まで支援。
-- [アクセルの構築例](https://www.classless.jp/#axel-examples): 社内資料を質問で検索するAI、問い合わせの分類・台帳登録・担当者通知、Webフォームと運用データの連携。掲載画像は構築例の画面イメージ。
+- [アクセルの構築例](https://www.classless.jp/#axel-examples): n8nの問い合わせ自動化、データベースのレコード・対応状況管理、社内資料検索。アクセルの紹介内に、構成例のサンプル画面を掲載。
+- [アクセル事業資料](https://www.classless.jp/materials/axel-service-guide.pdf): 資料請求から直接開ける18ページのPDF（約2.7MB）。
 - [コミュニティ組成事業](https://www.classless.jp/#community): コミュニティの企画・運営、地域おこし協力隊ネットワーク設計、地域のプロジェクト支援。
 - [取り組み](https://www.classless.jp/#projects): アクセル、Tokyo Global Hub、ちいきのかまど。
 - [会社概要](https://www.classless.jp/#company): 合同会社Classless。東京都渋谷区を拠点に、代表は丸山侑太。
