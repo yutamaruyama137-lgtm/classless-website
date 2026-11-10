@@ -6,7 +6,7 @@
 - [x] 理念への導線・旧URL・検索用HTMLを整合
 - [x] 指定のアクセルPDFを原本のまま公開し、資料請求へ接続
 - [x] PC・スマホ・切替操作・拡大・既存アニメーションを確認
-- [ ] GitHub・Vercelへ反映
+- [x] GitHub・Vercelへ反映
 
 設計: 白 #ffffff、紺 #24343b、青 #167fa5、コーラル #ed735e、黄色 #ffe386、ミント #e8f5ee とNoto Sans JPを継続。既存の花・手描き矢印・余白の個性を保ち、理念を機能カードに分解せず、左の見出しと右の本文で語る。原版ヒーロー → 私たちの考え → 既存の企業ロゴ → AI事業「アクセル」（具体説明と画面例）→ コミュニティ → プロジェクト → 会社情報 → 相談の順とする。文字は左揃え、本文の行を短く保ち、スマホでは見出しから本文へ自然に続ける。
 
@@ -15,6 +15,8 @@
 参考: [Cloud Buddy](https://cloudbuddy.biz/) の課題から考え方、具体的な支援へ進む文章構成。Classlessの既存理念「AIで、人間を面白くする」「人を主役に」「地域とともに」を基に、独自の言葉でつなぐ。
 
 検証（2026-11-10）: 1440 / 768 / 390 / 320pxで横溢れなし。3デモの説明・画像の一致と拡大リンク、理念のナビ・フッター・旧URL、4矢印の一度描画とreduced-motion、既存ヒーロー・9ロゴ・Instagramを確認。本番ビルド成功（46ルート＋404）、既存の容量警告のみ。資料請求2導線はHTTP 200 / application/pdfで、原本と公開PDFのSHA-256一致を確認。詳細は [axel-materials.md](axel-materials.md)、新画像の最終プロンプトは [axel-ui-demo-assets.md](axel-ui-demo-assets.md) に記録。
+
+公開確認（2026-11-10）: 実装コミット `9dab6a3`、Vercel `dpl_HXDBjC8t14iS4Y8cH52n39JLSGgU` はProduction Ready。`www.classless.jp` はHTTP 200で `index-d13d0edb.js` と理念・資料導線を配信、新UI画像3点もHTTP 200。公開PDFはapplication/pdf / 2,790,671 bytesで原本SHA-256一致、`/philosophy` は308で `/#philosophy` へ転送を確認。
 
 ---
 
