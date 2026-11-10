@@ -1,4 +1,6 @@
 import { friendlyImages } from '../data/friendlyImages.js';
+import { useDrawOnView } from './useDrawOnView.js';
+import { AxelExamples } from './AxelExamples.jsx';
 
 export function FriendlyArrow({ external = false }) {
   return <svg aria-hidden="true" viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d={external ? 'M6 18 18 6M6 6h12v12' : 'M4 12h15M13 6l6 6-6 6'} /></svg>;
@@ -7,12 +9,13 @@ export function FriendlyFlower({ className = '' }) {
   return <svg className={className} aria-hidden="true" viewBox="0 0 100 100" fill="none"><path d="M50 39C17 7 12 46 39 50C7 83 46 88 50 61C83 93 88 54 61 50C93 17 54 12 50 39Z" fill="currentColor" /><circle cx="50" cy="50" r="8" fill="#fff" /></svg>;
 }
 export function FriendlyScribble({ className = '', variant = 'loop' }) {
+  const line = useDrawOnView();
   const paths = {
     loop: 'M12 18C53 3 92 7 88 36C85 63 45 64 49 44C53 23 106 36 119 69L125 89M107 79L125 89L129 68',
     bend: 'M12 20C35 6 67 8 83 25C103 46 93 74 111 90M92 83L111 90L115 70',
     swoop: 'M10 34C43 65 83 63 114 31M93 30L114 31L109 53',
   };
-  return <svg className={`friendly-scribble ${className}`} aria-hidden="true" focusable="false" viewBox="0 0 144 104" fill="none"><path d={paths[variant] || paths.loop} stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+  return <svg ref={line} className={`friendly-scribble friendly-draw ${className}`} aria-hidden="true" focusable="false" viewBox="0 0 144 104" fill="none"><path pathLength="1" d={paths[variant] || paths.loop} stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>;
 }
 function FriendlyPartners() {
   // Restore the original published partner list, without adding claims or companies.
@@ -38,20 +41,11 @@ function FriendlyImage({ name, className = '', photo = false }) {
   </div>;
 }
 function FriendlyIntro() {
-  const trail = React.useRef(null);
-  React.useEffect(() => {
-    const target = trail.current;
-    if (!target) return undefined;
-    const observer = new IntersectionObserver(entries => {
-      if (entries.some(entry => entry.isIntersecting)) { target.classList.add('is-drawn'); observer.disconnect(); }
-    }, { threshold: 0.2 });
-    observer.observe(target);
-    return () => observer.disconnect();
-  }, []);
+  const trail = useDrawOnView();
   return <section className="friendly-intro"><div className="cl-container friendly-intro__inner">
     <div className="friendly-intro__heading"><FriendlyFlower className="friendly-intro__flower" /><h2>いっしょに、<br />面白い方へ。</h2></div>
     <div className="friendly-intro__words"><p>「こんなことができたら。」<br />その小さなアイデアから、はじめましょう。</p><p>仕事を進めるしくみをつくること。<br />人と人が出会うきっかけをつくること。</p><p>Classlessは、AIとコミュニティの力で、<br />あなたのプロジェクトに伴走します。</p></div>
-    <svg ref={trail} className="friendly-trail" aria-hidden="true" viewBox="0 0 260 130" fill="none"><path pathLength="1" d="M8 22C68 4 96 15 86 52C75 90 32 88 48 57C69 20 174 37 197 90L220 116M194 108L220 116L220 90" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+    <svg ref={trail} className="friendly-trail friendly-draw" aria-hidden="true" focusable="false" viewBox="0 0 260 130" fill="none"><path pathLength="1" d="M8 22C68 4 96 15 86 52C75 90 32 88 48 57C69 20 174 37 197 90L220 116M194 108L220 116L220 90" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
   </div></section>;
 }
 function SimpleBusiness() {
@@ -61,12 +55,12 @@ function SimpleBusiness() {
       <div className="friendly-service__copy">
         <div className="friendly-service__name"><h3>AI事業</h3><img src="/assets/logo-axel.png" alt="アクセル" width="132" height="46" /></div>
         <h4>むずかしい仕事に、<br />やさしいしくみを。</h4>
-        <p>毎日くり返す作業も、あちこちに散らばる情報も。<br className="friendly-wide-break" />AI活用サービス「アクセル」で整理して、<br className="friendly-wide-break" />やりたいことに向き合う時間をつくります。</p>
-        <ul className="friendly-services"><li>n8nによるワークフロー設計</li><li>データベースマネジメント</li><li>サイト設計・制作</li></ul>
+        <p>社内資料を探すAI、問い合わせをつなぐ自動化、<br className="friendly-wide-break" />使いやすいデータベースやWebサイト。<br className="friendly-wide-break" />「アクセル」は、業務に合わせて設計・実装し、<br className="friendly-wide-break" />運用まで一緒に整えるAI活用サービスです。</p>
+        <ul className="friendly-services"><li>AIエージェント・社内ナレッジ検索</li><li>n8nによる業務自動化・ツール連携</li><li>データベース設計・管理、サイト設計・制作</li></ul>
         <a className="friendly-button" href="/contact?topic=ai">しくみづくりを相談する<FriendlyArrow /></a>
       </div>
-      <div className="friendly-service__art"><span className="friendly-note">仕事が、すいすい。</span><FriendlyScribble className="friendly-scribble--service" variant="bend" /><FriendlyImage name="ai" /><span className="friendly-service__image-note">AI活用のイメージイラスト</span></div>
-    </div></article>
+      <div className="friendly-service__art"><span className="friendly-note">仕事が、すいすい。</span><FriendlyScribble className="friendly-scribble--service" variant="bend" /><FriendlyImage name="ai" /></div>
+    </div><AxelExamples /></article>
     <article id="community" className="friendly-service friendly-service--community"><div className="cl-container friendly-service__layout">
       <div className="friendly-service__art"><span className="friendly-note">出会いから、はじまる。</span><FriendlyImage name="community" /><span className="friendly-service__image-note">コミュニティづくりのイメージイラスト</span></div>
       <div className="friendly-service__copy">

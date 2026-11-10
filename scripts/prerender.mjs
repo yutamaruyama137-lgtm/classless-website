@@ -2,6 +2,7 @@ import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { ROUTE_META } from '../src/seo.js'
+import { axelExamples } from '../src/data/axelExamples.js'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const root = join(here, '..')
@@ -18,7 +19,7 @@ const routeMeta = Object.entries(ROUTE_META)
   .filter(([route]) => route !== 'notFound')
   .map(([route, meta]) => [
     meta.path, meta.title, meta.description,
-    ['home', 'contact'].includes(route) ? '2026-11-09' : route === 'blog' ? '2026-08-22' : '2026-07-02',
+    route === 'home' ? '2026-11-10' : route === 'contact' ? '2026-11-09' : route === 'blog' ? '2026-08-22' : '2026-07-02',
     route === 'home' ? '1.0' : route === 'blog' ? '0.9' : route === 'contact' ? '0.6' : '0.3',
   ])
 
@@ -95,7 +96,7 @@ for (const [path, title, description] of routeMeta) {
   if (path === '/') body = `<main>
     <h1>AIで、人間を面白くする。</h1><p>${esc(description)}</p>
     <section id="business"><h2>しくみをつくる。つながりを育てる。</h2>
-      <section id="ai"><h3>AI事業「アクセル」</h3><p>業務の整理から設計・実装・運用までを支援します。</p><ul><li>n8nによるワークフロー設計・業務自動化</li><li>データベースマネジメント</li><li>サイト設計・制作</li></ul><a href="/contact?topic=ai">AI・しくみづくりを相談する</a></section>
+      <section id="ai"><h3>AI事業「アクセル」</h3><p>社内資料を探すAI、問い合わせをつなぐ自動化、使いやすいデータベースやWebサイト。業務に合わせて設計・実装し、運用まで一緒に整えます。</p><ul><li>AIエージェント・社内ナレッジ検索</li><li>n8nによる業務自動化・ツール連携</li><li>データベース設計・管理、サイト設計・制作</li></ul><section id="axel-examples"><h4>アクセルで、仕事はこう変わる。</h4><p>以下は業務に合わせて設計する構築例です。</p>${axelExamples.map(example => `<article><h5>${esc(example.title)}</h5><p>${esc(example.description)}</p><dl>${example.steps.map(([label, value]) => `<dt>${esc(label)}</dt><dd>${esc(value)}</dd>`).join('')}</dl><p>設計するもの: ${esc(example.deliverables)}</p></article>`).join('')}<p>業務整理から、設計・実装、運用改善まで支援します。</p></section><a href="/contact?topic=ai">AI・しくみづくりを相談する</a></section>
       <section id="community"><h3>コミュニティ組成事業</h3><p>コミュニティの企画・運営、地域おこし協力隊のネットワーク設計、地域のプロジェクト支援に取り組みます。</p><a href="https://chiikinokamado.jp/">ちいきのかまどを見る</a></section>
     </section>
     <section id="projects"><h2>ともにつくる、取り組み。</h2><h3>アクセル</h3><p>n8nによる自動化、データベース管理、サイト設計。</p><h3>Tokyo Global Hub</h3><p>交流をきっかけに、一緒に活動できるコミュニティづくり。</p><a href="https://www.instagram.com/tokyoglobalhub/">Tokyo Global Hubの活動</a><h3>ちいきのかまど</h3><p>地域で動く人とプロジェクトを支える取り組み。</p><a href="https://chiikinokamado.jp/">ちいきのかまどの活動</a></section>

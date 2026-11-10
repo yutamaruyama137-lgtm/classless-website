@@ -16,9 +16,13 @@
 
 `position` は写真の切り取り位置です。例: `50% 85%`。生成イラストは3:2の全体を見せ、人物や道具を切らないよう `object-fit: contain` で表示します。画像は下部で遅延読み込みします。
 
-生成イラストを編集写真と誤認させないため、事業紹介にはイメージイラストのキャプションがあります。生成方式とプロンプトは [illustration-assets.md](illustration-assets.md) に記録しています。
+AI事業のイラスト下の説明キャプションは削除し、画像内容を説明するaltは維持しています。生成方式とプロンプトは [illustration-assets.md](illustration-assets.md) に記録しています。
 
 `ai` と `axelProject` は別の画像設定です。最初のAI事業紹介は生成イラストを維持し、プロジェクト紹介では既存のアクセルロゴを使っています。Tokyo Global Hubの画像とテキストのリンク先は [公式Instagram](https://www.instagram.com/tokyoglobalhub/) です。写真の出典は下記のnote記事のままです。
+
+## アクセルの構築例
+
+`src/data/axelExamples.js` に、用途3点のコピー・画像パス・altを集約しています。`public/demos/axel-knowledge.webp`、`axel-workflow.webp`、`axel-data.webp` は、独自に生成した画面イメージです。完成製品や顧客の実画面として扱わず、画面下に「構築例の画面イメージ」と表示します。全体を3:2で収め、用途を選ぶと切り替わります。生成方式とプロンプトは [axel-demo-assets.md](axel-demo-assets.md) を参照してください。
 
 ## パートナー・取引先ロゴ
 
