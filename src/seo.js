@@ -15,6 +15,11 @@ const ROUTE_META = {
     title: 'お問い合わせ｜合同会社Classless',
     description: 'AI・ワークフロー設計、データベース管理、サイト制作、コミュニティ・地域のプロジェクトに関するご相談はこちらから。',
   },
+  axel: {
+    path: '/axel',
+    title: 'アクセル｜n8n自動化・AI活用・データベース管理｜Classless',
+    description: 'アクセルはn8nの業務自動化、データベース管理、社内資料検索のAIを現場に合わせて設計・実装するサービスです。具体的な構築例と、事業資料の請求はこちらから。',
+  },
   blog: {
     path: '/blog',
     title: '業務改善ナレッジ｜給与計算・業務フロー・n8n自動化｜Classless',

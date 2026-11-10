@@ -24,19 +24,24 @@ import './components/Header.jsx'
 import './components/Hero.jsx'
 import './components/TopPage.jsx'
 import './components/SimpleHome.jsx'
+import { AxelPage } from './components/AxelPage.jsx'
 import './components/CtaFooter.jsx'
 import './components/ContactPage.jsx'
 import './components/LegalPages.jsx'
 import './components/Blog.jsx'
 import './styles/simple-home.css'
+import './styles/axel-detail.css'
 
-const legacyRoutes = { '/axel': '/#ai', '/leadtoss': '/', '/business': '/#business', '/philosophy': '/#philosophy' }
+const legacyRoutes = { '/leadtoss': '/', '/business': '/#business', '/philosophy': '/#philosophy' }
 const legacyPath = window.location.pathname.replace(/\/+$/, '')
 if (legacyRoutes[legacyPath]) window.location.replace(legacyRoutes[legacyPath])
+// Keep previously shared homepage demo links pointed at the dedicated service page.
+if (!legacyPath && window.location.hash === '#axel-examples') window.location.replace('/axel#axel-examples')
 
 function getRoute() {
   const p = window.location.pathname.replace(/\/+$/, '') || '/'
   if (p === '/contact') return 'contact'
+  if (p === '/axel') return 'axel'
   if (p === '/privacy') return 'privacy'
   if (p === '/terms') return 'terms'
   if (p === '/tokushoho') return 'tokushoho'
@@ -147,6 +152,10 @@ function App() {
 
   if (route === 'contact') {
     return shell('お問い合わせ', <ContactPage />)
+  }
+
+  if (route === 'axel') {
+    return shell('アクセル｜AI・自動化のしくみづくり', <AxelPage />)
   }
 
   if (route === 'blog') {

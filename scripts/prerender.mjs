@@ -20,8 +20,8 @@ const routeMeta = Object.entries(ROUTE_META)
   .filter(([route]) => route !== 'notFound')
   .map(([route, meta]) => [
     meta.path, meta.title, meta.description,
-    route === 'home' ? '2026-11-10' : route === 'contact' ? '2026-11-09' : route === 'blog' ? '2026-08-22' : '2026-07-02',
-    route === 'home' ? '1.0' : route === 'blog' ? '0.9' : route === 'contact' ? '0.6' : '0.3',
+    route === 'home' || route === 'axel' ? '2026-11-10' : route === 'contact' ? '2026-11-09' : route === 'blog' ? '2026-08-22' : '2026-07-02',
+    route === 'home' ? '1.0' : route === 'axel' || route === 'blog' ? '0.9' : route === 'contact' ? '0.6' : '0.3',
   ])
 
 const articleDir = join(root, 'src', 'blog', 'articles')
@@ -98,19 +98,20 @@ for (const [path, title, description] of routeMeta) {
     <h1>AIで、人間を面白くする。</h1><p>${esc(description)}</p>
     <section id="philosophy"><h2>${esc(philosophy.title)}</h2>${philosophy.paragraphs.map(paragraph => `<p>${esc(paragraph)}</p>`).join('')}</section>
     <section id="business"><h2>しくみをつくる。つながりを育てる。</h2>
-      <section id="ai"><h3>AI事業「アクセル」</h3><p>${esc(philosophy.ai)}</p><ul><li>AIエージェント・社内ナレッジ検索</li><li>n8nによる業務自動化・ツール連携</li><li>データベース設計・管理、サイト設計・制作</li></ul><section id="axel-examples"><h4>アクセルでつくる、仕事のしくみ。</h4><p>以下は業務に合わせて設計する構築例です。</p>${axelExamples.map(example => `<article><h5>${esc(example.title)}</h5><p>${esc(example.description)}</p><dl>${example.steps.map(([label, value]) => `<dt>${esc(label)}</dt><dd>${esc(value)}</dd>`).join('')}</dl><p>${esc(example.sample)}</p><p>設計するもの: ${esc(example.deliverables)}</p></article>`).join('')}<p>業務整理から、設計・実装、運用改善まで支援します。</p></section><a href="/contact?topic=ai">AI・しくみづくりを相談する</a><p><a href="/materials/axel-service-guide.pdf">資料請求：アクセル事業資料（PDF・約2.7MB）</a></p></section>
+      <section id="ai"><h3>AI事業「アクセル」</h3><p>${esc(philosophy.ai)}</p><ul><li>AIエージェント・社内ナレッジ検索</li><li>n8nによる業務自動化・ツール連携</li><li>データベース設計・管理、サイト設計・制作</li></ul><p><a href="/axel">アクセルを詳しく見る</a></p><p><a href="/axel#materials">アクセルの資料請求</a></p></section>
       <section id="community"><h3>コミュニティ組成事業</h3><p>${esc(philosophy.community)}</p><a href="https://chiikinokamado.jp/">ちいきのかまどを見る</a></section>
     </section>
     <section id="projects"><h2>ともにつくる、取り組み。</h2><h3>アクセル</h3><p>n8nによる自動化、データベース管理、サイト設計。</p><h3>Tokyo Global Hub</h3><p>交流をきっかけに、一緒に活動できるコミュニティづくり。</p><a href="https://www.instagram.com/tokyoglobalhub/">Tokyo Global Hubの活動</a><h3>ちいきのかまど</h3><p>地域で動く人とプロジェクトを支える取り組み。</p><a href="https://chiikinokamado.jp/">ちいきのかまどの活動</a></section>
     <section id="company"><h2>Classlessについて</h2><dl><dt>会社名</dt><dd>合同会社Classless</dd><dt>代表者</dt><dd>丸山 侑太</dd><dt>所在地</dt><dd>東京都渋谷区円山町5-3 MIEUX渋谷ビル 5階</dd><dt>設立</dt><dd>2025年10月1日</dd></dl></section>
     <p><a href="/contact">相談する</a> / <a href="/blog">ニュース・ナレッジ</a></p>
   </main>`
+  if (path === '/axel') body = `<main><nav><a href="/">ホーム</a> / アクセル</nav><h1>アクセル — 人が考える時間を、しくみでつくる。</h1><p>${esc(description)}</p><section id="axel-examples"><h2>アクセルでつくる、仕事のしくみ。</h2><p>以下は業務に合わせて設計する構築例です。</p>${axelExamples.map(example => `<article><h3>${esc(example.title)}</h3><p>${esc(example.description)}</p><dl>${example.steps.map(([label, value]) => `<dt>${esc(label)}</dt><dd>${esc(value)}</dd>`).join('')}</dl><p>${esc(example.sample)}</p><p>設計するもの: ${esc(example.deliverables)}</p></article>`).join('')}<p>業務整理から、設計・実装、運用改善まで支援します。</p></section><section id="materials"><h2>アクセルの資料請求</h2><p>お名前・会社名・メールアドレスの入力と、個人情報の取り扱いへの同意後に、事業資料（PDF / 18ページ / 約2.7MB）をダウンロードできます。</p><p>フォームのご利用にはJavaScriptを有効にしてください。</p><a href="/privacy">プライバシーポリシー</a></section><a href="/contact?topic=ai">業務について相談する</a></main>`
   if (path === '/blog') body = `<main><h1>現場で使える、業務改善の設計ノート</h1><p>${esc(description)}</p><section><h2>記事一覧</h2>${articles.map((a) => `<article><h3><a href="/blog/${esc(a.slug)}">${esc(a.title)}</a></h3><p>${esc(a.excerpt)}</p></article>`).join('')}</section></main>`
   const jsonLd = path === '/' ? [organization, { '@context': 'https://schema.org', '@type': 'WebSite', '@id': `${siteUrl}/#website`, url: `${siteUrl}/`, name: siteName, publisher: { '@id': organizationId }, inLanguage: 'ja-JP' }] : [breadcrumb(path, title)]
   await emit(path, inject({ path, title, description, body, jsonLd }))
 }
 
-const legacyRedirects = { '/axel': '/#ai', '/leadtoss': '/', '/business': '/#business', '/philosophy': '/#philosophy' }
+const legacyRedirects = { '/leadtoss': '/', '/business': '/#business', '/philosophy': '/#philosophy' }
 for (const [path, destination] of Object.entries(legacyRedirects)) {
   await emit(path, `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="robots" content="noindex, follow"><meta http-equiv="refresh" content="0; url=${destination}"><link rel="canonical" href="${siteUrl}/"><title>Classless</title></head><body><a href="${destination}">新しいページへ移動する</a></body></html>`)
 }

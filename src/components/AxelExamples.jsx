@@ -17,7 +17,7 @@ export function AxelExamples() {
   const example = axelExamples.find(item => item.id === selected);
   return <section id="axel-examples" className="cl-container axel-examples" aria-labelledby="axel-examples-heading">
     <div className="axel-examples__intro">
-      <h4 id="axel-examples-heading">アクセルでつくる、仕事のしくみ。</h4>
+      <h2 id="axel-examples-heading">アクセルでつくる、仕事のしくみ。</h2>
       <p>例えば、Webサイトに届いた一件の相談。<br className="friendly-wide-break" />内容を整理し、台帳へつなぎ、担当者が動き出すまで。アクセルが設計する流れを、サンプル画面で紹介します。</p>
     </div>
     <div className="axel-examples__choices" role="group" aria-label="アクセルの構築例を選ぶ">
@@ -25,7 +25,7 @@ export function AxelExamples() {
     </div>
     <div id="axel-example-panel" className="axel-examples__panel" role="region" aria-labelledby="axel-example-title">
       <div className="axel-examples__copy" aria-live="polite" aria-atomic="true">
-        <h5 id="axel-example-title">{example.title}</h5>
+        <h3 id="axel-example-title">{example.title}</h3>
         <p>{example.description}</p>
         <dl>{example.steps.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
         <p className="axel-examples__sample">{example.sample}</p>

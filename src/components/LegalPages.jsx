@@ -31,15 +31,16 @@ function LegalShell({ eyebrow, title, updated, children }) {
 
 function PrivacyPolicy() {
   return (
-    <LegalShell eyebrow="Privacy Policy" title="プライバシーポリシー" updated={LEGAL_UPDATED}>
+    <LegalShell eyebrow="Privacy Policy" title="プライバシーポリシー" updated="2026年11月10日">
       <p style={lp}>{LEGAL_INFO.company}（以下「当社」といいます）は、当社が提供するサービスおよびWebサイトにおけるユーザーの個人情報の取扱いについて、以下のとおりプライバシーポリシー（以下「本ポリシー」といいます）を定めます。</p>
       <h2 style={lh2}>第1条（個人情報）</h2>
       <p style={lp}>「個人情報」とは、個人情報保護法に定める「個人情報」を指し、氏名、会社名、メールアドレス、電話番号その他の記述等により特定の個人を識別できる情報を指します。</p>
       <h2 style={lh2}>第2条（個人情報の収集方法）</h2>
-      <p style={lp}>当社は、お問い合わせフォームの送信、商談・契約、その他の方法を通じて、ユーザーから氏名・会社名・メールアドレス・電話番号・お問い合わせ内容等の個人情報を取得することがあります。</p>
+      <p style={lp}>当社は、お問い合わせフォームの送信、資料請求、商談・契約、その他の方法を通じて、ユーザーから氏名・会社名・メールアドレス・電話番号・お問い合わせ内容等の個人情報を取得することがあります。</p>
       <h2 style={lh2}>第3条（個人情報を収集・利用する目的）</h2>
       <p style={lp}>当社が個人情報を収集・利用する目的は、以下のとおりです。</p>
       <ul style={{ paddingLeft: 22, margin: '0 0 14px' }}>
+        <li style={lli}>ご請求いただいた資料の提供のため</li>
         <li style={lli}>お問い合わせへの対応、ご連絡のため</li>
         <li style={lli}>当社サービスの提供・運営・改善のため</li>
         <li style={lli}>サービスに関するご案内・ご提案のため</li>

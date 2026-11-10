@@ -1,6 +1,5 @@
 import { friendlyImages } from '../data/friendlyImages.js';
 import { useDrawOnView } from './useDrawOnView.js';
-import { AxelExamples } from './AxelExamples.jsx';
 import { philosophy } from '../data/philosophy.js';
 import { AxelMaterialsLink } from './AxelMaterialsLink.jsx';
 
@@ -59,10 +58,10 @@ function SimpleBusiness() {
         <h4>むずかしい仕事に、<br />やさしいしくみを。</h4>
         <p>{philosophy.ai}</p>
         <ul className="friendly-services"><li>AIエージェント・社内ナレッジ検索</li><li>n8nによる業務自動化・ツール連携</li><li>データベース設計・管理、サイト設計・制作</li></ul>
-        <div className="axel-service-actions"><a className="friendly-button" href="/contact?topic=ai">しくみづくりを相談する<FriendlyArrow /></a><AxelMaterialsLink /></div>
+        <div className="axel-service-actions"><a className="friendly-button" href="/axel">アクセルを詳しく見る<FriendlyArrow /></a><AxelMaterialsLink /></div>
       </div>
       <div className="friendly-service__art"><span className="friendly-note">仕事が、すいすい。</span><FriendlyScribble className="friendly-scribble--service" variant="bend" /><FriendlyImage name="ai" /></div>
-    </div><AxelExamples /></article>
+    </div></article>
     <article id="community" className="friendly-service friendly-service--community"><div className="cl-container friendly-service__layout">
       <div className="friendly-service__art"><span className="friendly-note">出会いから、はじまる。</span><FriendlyImage name="community" /><span className="friendly-service__image-note">コミュニティづくりのイメージイラスト</span></div>
       <div className="friendly-service__copy">
@@ -77,7 +76,7 @@ function SimpleBusiness() {
 }
 function SimpleProjects() {
   const projects = [
-    { title: 'アクセル', category: '仕事のしくみづくり', image: 'axelProject', text: 'n8nの自動化から、データベース、Webサイトまで。現場で使い続けられるしくみを。', href: '/#ai', link: 'アクセルを見る', photo: false, logo: true },
+    { title: 'アクセル', category: '仕事のしくみづくり', image: 'axelProject', text: 'n8nの自動化から、データベース、Webサイトまで。現場で使い続けられるしくみを。', href: '/axel', link: 'アクセルを詳しく見る', photo: false, logo: true },
     { title: 'Tokyo Global Hub', category: '国際交流のコミュニティ', image: 'globalHub', text: '異なる背景を持つ人が出会い、一緒に活動する。交流から次のきっかけをつくります。', href: 'https://www.instagram.com/tokyoglobalhub/', link: 'Instagramを見る', external: true, photo: true },
     { title: 'ちいきのかまど', category: '地域からはじまるつながり', image: 'kamado', text: '地域を知る、関わる、つながる。地域で動く人と、その挑戦を支える取り組みです。', href: 'https://chiikinokamado.jp/', link: '活動を見る', external: true, photo: true },
   ];
