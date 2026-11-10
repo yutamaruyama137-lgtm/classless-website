@@ -9,6 +9,7 @@
 | キー | 現在の画像 | 表示方法 |
 | --- | --- | --- |
 | `ai` | `/illustrations/ai-workflow.png` | 生成イラスト、全体を収める |
+| `axelProject` | `/assets/logo-axel.png` | アクセルのプロジェクト紹介のみ、ロゴ全体を余白付きで表示 |
 | `community` | `/illustrations/community-garden.png` | 生成イラスト、全体を収める |
 | `globalHub` | `/projects/tokyo-global-hub.jpg` | 活動写真、枠へトリミング |
 | `kamado` | `/projects/chiikinokamado.jpg` | 公式レポート、下寄せのトリミング |
@@ -16,6 +17,12 @@
 `position` は写真の切り取り位置です。例: `50% 85%`。生成イラストは3:2の全体を見せ、人物や道具を切らないよう `object-fit: contain` で表示します。画像は下部で遅延読み込みします。
 
 生成イラストを編集写真と誤認させないため、事業紹介にはイメージイラストのキャプションがあります。生成方式とプロンプトは [illustration-assets.md](illustration-assets.md) に記録しています。
+
+`ai` と `axelProject` は別の画像設定です。最初のAI事業紹介は生成イラストを維持し、プロジェクト紹介では既存のアクセルロゴを使っています。Tokyo Global Hubの画像とテキストのリンク先は [公式Instagram](https://www.instagram.com/tokyoglobalhub/) です。写真の出典は下記のnote記事のままです。
+
+## パートナー・取引先ロゴ
+
+元の公開版 `0bf5400` にあった9点を、ヒーロー直後の静的な一覧として再掲しています。画像は `public/assets/logos/` の既存PNG、表示データは `src/components/SimpleHome.jsx` の `FriendlyPartners` です。企業の追加や実績数値の追加はしていません。横長・縦長の違いに合わせた表示高で、画像全体を収めています。
 
 ## 元のファーストビュー
 

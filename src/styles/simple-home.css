@@ -12,6 +12,16 @@
 .friendly-trail{position:absolute;left:23%;bottom:-65px;width:210px;height:105px;color:var(--friend-coral);pointer-events:none}
 .friendly-trail path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.35s cubic-bezier(.25,.5,.2,1)}
 .friendly-trail.is-drawn path{stroke-dashoffset:0}
+.friendly-partners{padding:48px 0 44px;background:#fff;color:var(--friend-ink)}
+.friendly-partners h2{text-align:center;font-size:13px;font-weight:500;letter-spacing:.08em;color:#65767b;margin:0 0 24px}
+.friendly-partners ul{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;list-style:none;margin:0;padding:0}
+.friendly-partners li{flex:0 1 calc(20% - 18px);min-width:0;height:82px;display:flex;align-items:center;justify-content:center;padding:6px 10px;box-sizing:border-box}
+.friendly-partners img{display:block;max-width:100%;width:auto;height:var(--partner-height);object-fit:contain}
+.friendly-scribble{position:absolute;display:block;pointer-events:none;color:var(--friend-coral);width:144px;height:104px}
+.friendly-scribble--service{z-index:1;top:7px;right:13%;width:86px;height:72px;transform:rotate(-12deg)}
+.friendly-scribble--projects{right:12%;bottom:-14px;width:155px;height:112px;transform:rotate(9deg)}
+.friendly-contact__action{position:relative;flex:none}
+.friendly-scribble--contact{top:-79px;left:-19px;width:133px;height:96px;transform:rotate(36deg)}
 .friendly-section-heading>p{font-size:14px;letter-spacing:.035em;font-weight:600;margin:0 0 18px;color:var(--friend-blue)}
 .friendly-section-heading>h2{font-size:clamp(29px,3.3vw,43px);line-height:1.7;margin:0}
 .friendly-business{padding-top:70px;scroll-margin-top:98px;overflow:hidden}
@@ -51,7 +61,7 @@
 .friendly-service--community .friendly-note{left:27%;transform:rotate(4deg)}
 .friendly-service--community .friendly-services>li:before{background:#72ac92;border-radius:50%}
 .friendly-projects{padding:100px 0 105px;background:#fff;scroll-margin-top:98px}
-.friendly-projects .friendly-section-heading{margin-bottom:55px}
+.friendly-projects .friendly-section-heading{position:relative;margin-bottom:55px}
 .friendly-project-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:34px;align-items:start}
 .friendly-project:nth-child(2){padding-top:50px}
 .friendly-project:nth-child(3){padding-top:12px}
@@ -60,6 +70,9 @@
 .friendly-project:nth-child(3) .friendly-project__image-link{border-radius:90px 90px 9px 9px}
 .friendly-project .friendly-image>img{aspect-ratio:1.4;transition:transform .5s ease}
 .friendly-project .friendly-image--drawing{mix-blend-mode:multiply}
+.friendly-project__image-link--logo{background:#edf7fb}
+.friendly-project .friendly-image--logo{aspect-ratio:1.4;box-sizing:border-box;padding:36px;display:flex;align-items:center;justify-content:center}
+.friendly-project .friendly-image--logo>img{width:100%;height:auto;aspect-ratio:auto;max-height:100%;object-fit:contain}
 .friendly-project__image-link:hover img{transform:scale(1.035)}
 .friendly-project__category{font-size:12px;color:var(--friend-blue);margin:25px 0 8px;font-weight:500}
 .friendly-project>h3{font-size:24px;font-weight:700;letter-spacing:.015em;line-height:1.5;margin:0 0 15px;color:var(--friend-ink)}
@@ -92,7 +105,12 @@
 .friendly-footer a:hover{color:var(--friend-blue);text-decoration:underline;text-underline-offset:5px}
 :where(a,button,input,select,textarea):focus-visible{outline:3px solid #167fa5;outline-offset:5px}
 @media(max-width:1000px){.friendly-intro__inner{gap:45px}.friendly-intro__heading{padding-left:30px}.friendly-service__layout,.friendly-service--community .friendly-service__layout{gap:35px}.friendly-wide-break{display:none}.friendly-service__copy>h4{font-size:29px}.friendly-service__art{margin-right:-30px}.friendly-service--community .friendly-service__art{margin-left:-30px}.friendly-company__inner{gap:45px}.friendly-project-grid{gap:22px}.friendly-project>h3{font-size:21px}.friendly-contact__inner{padding-left:65px}.friendly-button--contact{min-width:210px}}
+@media(min-width:761px) and (max-width:1000px){.friendly-partners li{flex-basis:calc(33.333% - 15px)}}
 @media(max-width:760px){
+.friendly-partners{padding:36px 0 20px}.friendly-partners h2{font-size:12px;margin-bottom:18px}.friendly-partners ul{gap:6px 16px}.friendly-partners li{flex-basis:calc(50% - 8px);height:72px;padding:8px}.friendly-partners img{height:calc(var(--partner-height) * .82)}
+.friendly-scribble--service{right:10%;top:5px;width:63px;height:55px}.friendly-scribble--projects{position:relative;right:auto;bottom:auto;margin:8px 12px -12px auto;width:96px;height:68px;transform:rotate(-8deg)}
+.friendly-contact__action{display:inline-block;margin-top:30px;padding-top:18px}.friendly-scribble--contact{top:-25px;left:155px;width:88px;height:64px;transform:rotate(85deg)}
+.friendly-contact__action .friendly-button--contact{margin-top:0}.friendly-project .friendly-image--logo{aspect-ratio:1.6;padding:38px}
 .friendly-intro{padding:65px 0 75px}.friendly-intro__inner{grid-template-columns:1fr;gap:20px}.friendly-intro__heading{padding:5px 0 10px 38px}.friendly-intro h2{font-size:36px;line-height:1.6}.friendly-intro__flower{width:55px;height:55px;left:-6px;top:-12px}.friendly-intro__words{padding-left:38px}.friendly-intro__words>p{font-size:13px;line-height:2.05;margin-bottom:18px}.friendly-trail{left:auto;right:0;bottom:-55px;width:130px;height:65px}
 .friendly-business{padding-top:45px}.friendly-section-heading>p{font-size:12px;margin-bottom:12px}.friendly-section-heading>h2{font-size:29px;line-height:1.65}.friendly-mobile-break{display:block}
 .friendly-service--ai{padding:40px 0 65px}.friendly-service__layout,.friendly-service--community .friendly-service__layout{grid-template-columns:1fr;gap:20px}.friendly-service__name{margin-bottom:17px;min-height:35px}.friendly-service__name>h3{font-size:17px}.friendly-service__name>img{width:105px}.friendly-service__copy>h4{font-size:29px;line-height:1.6;margin-bottom:18px}.friendly-service__copy>p{font-size:13px;line-height:2.1;margin-bottom:21px}.friendly-services{margin-bottom:26px}.friendly-services>li{font-size:12px;margin-bottom:8px}.friendly-button{font-size:12px;padding:14px 20px;min-height:52px;gap:24px}

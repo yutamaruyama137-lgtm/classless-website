@@ -120,7 +120,7 @@ function App() {
     }
   }, [route])
 
-  const { Header, ContactBand, ContactPage, Footer, TopHero, FriendlyIntro, SimpleBusiness, SimpleProjects, SimpleCompany } = window
+  const { Header, ContactBand, ContactPage, Footer, TopHero, FriendlyIntro, FriendlyPartners, SimpleBusiness, SimpleProjects, SimpleCompany } = window
 
   const article = route === 'article'
     ? (window.BLOG_ARTICLES || []).find((item) => item.slug === getSlug())
@@ -190,6 +190,7 @@ function App() {
   return shell('Classless コーポレートサイト', (
     <React.Fragment>
       <TopHero />
+      <FriendlyPartners />
       <FriendlyIntro />
       <SimpleBusiness />
       <SimpleProjects />

@@ -98,7 +98,7 @@ for (const [path, title, description] of routeMeta) {
       <section id="ai"><h3>AI事業「アクセル」</h3><p>業務の整理から設計・実装・運用までを支援します。</p><ul><li>n8nによるワークフロー設計・業務自動化</li><li>データベースマネジメント</li><li>サイト設計・制作</li></ul><a href="/contact?topic=ai">AI・しくみづくりを相談する</a></section>
       <section id="community"><h3>コミュニティ組成事業</h3><p>コミュニティの企画・運営、地域おこし協力隊のネットワーク設計、地域のプロジェクト支援に取り組みます。</p><a href="https://chiikinokamado.jp/">ちいきのかまどを見る</a></section>
     </section>
-    <section id="projects"><h2>ともにつくる、取り組み。</h2><h3>アクセル</h3><p>n8nによる自動化、データベース管理、サイト設計。</p><h3>Tokyo Global Hub</h3><p>交流をきっかけに、一緒に活動できるコミュニティづくり。</p><a href="https://note.com/tokyoglobalhub">Tokyo Global Hubの活動</a><h3>ちいきのかまど</h3><p>地域で動く人とプロジェクトを支える取り組み。</p><a href="https://chiikinokamado.jp/">ちいきのかまどの活動</a></section>
+    <section id="projects"><h2>ともにつくる、取り組み。</h2><h3>アクセル</h3><p>n8nによる自動化、データベース管理、サイト設計。</p><h3>Tokyo Global Hub</h3><p>交流をきっかけに、一緒に活動できるコミュニティづくり。</p><a href="https://www.instagram.com/tokyoglobalhub/">Tokyo Global Hubの活動</a><h3>ちいきのかまど</h3><p>地域で動く人とプロジェクトを支える取り組み。</p><a href="https://chiikinokamado.jp/">ちいきのかまどの活動</a></section>
     <section id="company"><h2>Classlessについて</h2><dl><dt>会社名</dt><dd>合同会社Classless</dd><dt>代表者</dt><dd>丸山 侑太</dd><dt>所在地</dt><dd>東京都渋谷区円山町5-3 MIEUX渋谷ビル 5階</dd><dt>設立</dt><dd>2025年10月1日</dd></dl></section>
     <p><a href="/contact">相談する</a> / <a href="/blog">ニュース・ナレッジ</a></p>
   </main>`
